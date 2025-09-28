@@ -1,0 +1,23 @@
+[
+  {
+    "conversion_type": "same",
+    "label": "log",
+    "type": "function",
+    "section": "Factorio",
+    "info": "Params: [LocalisedString]\n log() can print LocalisedStrings to the Factorio log file. This, in combination with the serpent library, makes debugging in the data stage easier because it allows the inspection of entire prototype tables. For example, printing all properties of the sulfur item prototype can be done like so: log(serpent.block(data.raw['item']['sulfur']))"
+  },
+  {
+    "conversion_type": "same",
+    "label": " localised_print",
+    "type": "function",
+    "section": "Factorio",
+    "info": "Params: [LocalisedString]\n localised_print() allows printing LocalisedString to stdout without polluting the Factorio log file. This is primarily useful when communicating with external tools that launch Factorio as a child process."
+  },
+  {
+    "conversion_type": "same",
+    "label": "table_size",
+    "type": "function",
+    "section": "Factorio",
+    "info": "Params: [table]\nReturns: uint\n Factorio provides the table_size() function as a simple way to determine the size of tables with non-continuous keys, as the standard # operator does not work correctly for these. The function is a C++ implementation, which is faster than doing the same in Lua. Note that table_size() does not work correctly for LuaCustomTable, their size has to be determined with LuaCustomTable::length_operator instead."
+  }
+]

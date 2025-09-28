@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "type": "item",
+      "stack_size": 100,
+      "icon": "__fmcs-template__/graphics/icons/fmcs-item.png",
+      "icon_size": 64,
+      "subgroup": "raw-resource",
+      "name": "fmcs-test-item"
+    },
+    {
+      "type": "recipe",
+      "name": "fmcs-test-item",
+      "enabled": true,
+      "energy_required": 1,
+      "ingredients": [{ "type": "item", "name": "wood", "amount": 1 }],
+      "results": [{ "type": "item", "name": "fmcs-test-item", "amount": 1 }]
+    }
+  ]
+}

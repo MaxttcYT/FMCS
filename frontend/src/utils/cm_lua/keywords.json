@@ -1,0 +1,157 @@
+[
+    {
+      "conversion_type": "same",
+      "label": "and",
+      "type": "condition",
+      "info": "Logical AND.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "break",
+      "type": "flow",
+      "info": "Exits a loop.",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "do",
+      "type": "block",
+      "info": "Begins a block of code (used in loops and conditionals).",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "else",
+      "type": "condition",
+      "info": "Specifies an alternative condition for an if statement.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "elseif",
+      "type": "condition",
+      "info": "Adds additional conditions to an if statement.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "end",
+      "type": "block",
+      "info": "Marks the end of a block (e.g., for loops, functions, and conditionals).",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "false",
+      "type": "value",
+      "info": "Represents the boolean value false.",
+      "section": "Values"
+    },
+    {
+      "conversion_type": "same",
+      "label": "for",
+      "type": "loop",
+      "info": "Defines a for loop.",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "function",
+      "type": "definition",
+      "info": "Defines a function.",
+      "section": "Functions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "goto",
+      "type": "flow",
+      "info": "Transfers control to a labeled statement (not commonly used).",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "if",
+      "type": "condition",
+      "info": "Starts an if statement for conditional execution.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "in",
+      "type": "condition",
+      "info": "Used in a for loop to iterate over ranges or tables.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "local",
+      "type": "variable",
+      "info": "Declares a local variable (variable scope limited to the block).",
+      "section": "Variables"
+    },
+    {
+      "conversion_type": "same",
+      "label": "nil",
+      "type": "value",
+      "info": "Represents the absence of a value or a null value.",
+      "section": "Values"
+    },
+    {
+      "conversion_type": "same",
+      "label": "not",
+      "type": "condition",
+      "info": "Logical NOT.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "or",
+      "type": "condition",
+      "info": "Logical OR.",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "repeat",
+      "type": "loop",
+      "info": "Starts a repeat-until loop.",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "return",
+      "type": "flow",
+      "info": "Exits from a function and optionally returns values.",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "then",
+      "type": "condition",
+      "info": "Specifies the code block to execute if a condition is true (used in if statements).",
+      "section": "Conditions"
+    },
+    {
+      "conversion_type": "same",
+      "label": "true",
+      "type": "value",
+      "info": "Represents the boolean value true.",
+      "section": "Values"
+    },
+    {
+      "conversion_type": "same",
+      "label": "until",
+      "type": "loop",
+      "info": "Marks the end condition of a repeat loop.",
+      "section": "Control Flow"
+    },
+    {
+      "conversion_type": "same",
+      "label": "while",
+      "type": "loop",
+      "info": "Starts a while loop.",
+      "section": "Control Flow"
+    }
+  ]
+  

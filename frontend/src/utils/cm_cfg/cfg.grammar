@@ -1,0 +1,15 @@
+@skip { space }
+@top Unit { line* Section* }
+Section { SectionHeader eol line* }
+SectionHeader { "[" Name "]" }
+Property { Name "=" Value }
+line { (Comment | Property) eol | "\n" }
+
+@tokens {
+  eol { @eof | "\n" }
+  space { $[ \t]+ }
+  Comment { $[#;] ![\n]* }
+  Name { (@asciiLetter | @digit)+ }
+  Value { (![\n]|"\\\n")+ }
+  @precedence { space Value }
+}

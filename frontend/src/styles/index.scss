@@ -1,0 +1,363 @@
+@use "tailwindcss/base";
+@use "tailwindcss/utilities";
+@use "tailwindcss/components";
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Helvetica Neue,
+    Arial,
+    Noto Sans,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji,
+    Segoe UI Symbol,
+    Noto Color Emoji;
+}
+
+.accentuated-t {
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.accentuated-r {
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.accentuated-b {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.accentuated-l {
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.accentuated {
+  @apply accentuated-t accentuated-r accentuated-b accentuated-l;
+}
+
+.accentuated-2 {
+  box-shadow:
+    inset 0px 4px 1px -2px #c5c5c5,
+    inset 0px 4px 1px -2px #888888,
+    inset 0px -4px 1px -2px #2d2d2d,
+    inset 4px 0px 1px -2px #7a7a7a,
+    inset -4px 0px 1px -2px #372f2a;
+}
+
+.accentuated-2.active {
+  box-shadow:
+    inset 0px 4px 1px -2px #686665,
+    inset 4px 0px 1px -2px #372f2b,
+    inset -4px 0px 1px -2px #262220,
+    0px 6px 4px #414040,
+    0px 0px 4px #101010;
+  color: #ffe6c0;
+}
+
+.input-boxshadow {
+  box-shadow:
+    inset 0px 4px 1px -2px #000,
+    inset 0px -4px 1px -2px #c5c5c5,
+    inset 2px 0px 1px 0px #5f5f5f,
+    inset -2px 0px 1px 0px #5f5f5f,
+    inset 0px -2px 2px 0px #5f5f5f,
+    0px 0px 4px 1px #2e2521;
+}
+
+.hover\:glow-orange2:hover {
+  box-shadow:
+    inset 0px 4px 1px -2px #d4c5ae,
+    inset 0px 4px 1px -2px #cf994b,
+    inset 0px -4px 1px -2px #4a300c,
+    inset 4px 0px 1px -2px #8b6325,
+    inset -4px 0px 1px -2px #4a300c,
+    0px 0px 8px #e39827;
+}
+
+.accentuated-x {
+  @apply accentuated-r accentuated-l;
+}
+
+.accentuated-y {
+  @apply accentuated-t accentuated-b;
+}
+
+.hover\:glow-orange:hover {
+  box-shadow: 0 0 3px 1px rgba(227, 152, 39, 0.8);
+}
+
+.hover\:glow-green:hover {
+  box-shadow: 0 0 3px 1px rgba(94, 182, 99, 0.8);
+}
+
+.hover\:glow-red:hover {
+  box-shadow: 0 0 3px 1px rgba(254, 90, 90, 0.8);
+}
+
+.hover\:glow-blue:hover {
+  box-shadow: 0 0 3px 1px rgba(92, 143, 255, 0.8);
+}
+
+.variable-icon {
+  width: 16px;
+  height: 16px;
+  background-image: url("https://www.bestinfood.shop/media/image/product/10116/lg/pink-donut-72x-57g.jpg");
+  background-size: contain;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.lua-editor-tab .cm-scroller {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  border-left: 3px solid rgba(0, 0, 0, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  border-right: 3px solid rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar styles */
+.lua-editor-tab .cm-scroller::-webkit-scrollbar {
+  width: 8px; /* Adjust width of the scrollbar */
+}
+
+.lua-editor-tab .cm-scroller::-webkit-scrollbar-thumb {
+  background-color: #346e86; /* Set thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.lua-editor-tab .cm-scroller::-webkit-scrollbar-track {
+  background-color: #3c434b; /* Set track color */
+}
+
+.cm-scroller::-webkit-scrollbar-corner {
+  background: #45484d;
+}
+
+.scroll-gray::-webkit-scrollbar-corner {
+  background: #45484d;
+}
+.scroll-gray::-webkit-scrollbar-thumb {
+  background-color: #575a5f; /* Set thumb color */
+  border-radius: 0px; /* Rounded corners for the thumb */
+}
+.scroll-gray::-webkit-scrollbar-track {
+  background-color: #292b2e; /* Set track color */
+}
+
+::-webkit-scrollbar {
+  width: 8px; /* Adjust width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #346e86; /* Set thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+::-webkit-scrollbar-track {
+  background-color: #292b2e; /* Set track color */
+}
+
+.markdown-preview-content * {
+  color: theme("colors.dirty-white") !important;
+}
+
+.tab-bar-scrollbar ::-webkit-scrollbar {
+  height: 8px !important;
+}
+.tab-bar-scrollbar ::-webkit-scrollbar-track {
+  background-color: rgba(98, 101, 107, 0.5);
+}
+
+.tab-bar-scrollbar ::-webkit-scrollbar-thumb {
+  background-color: rgba(98, 101, 107, 0.6);
+  border-radius: 0;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center; /* Vertically center the items */
+  justify-content: center; /* Horizontally center the items */
+  position: relative;
+  cursor: pointer;
+  line-height: 1.2;
+  break-inside: avoid;
+}
+
+/* Hide the default checkbox input */
+.checkbox > input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  line-height: 1.25;
+}
+
+/* Style for the text label next to the checkbox */
+.checkbox > div {
+  width: 100%;
+  padding-left: 8px;
+}
+
+/* Custom checkbox appearance */
+.checkbox > .checkmark {
+  position: relative;
+  cursor: pointer;
+  width: 16px;
+  height: 16px; /* Ensure consistent height */
+  background: #8e8e8e;
+  box-shadow:
+    inset 0px 4px 2.5px -2.5px #111,
+    inset 2px 0px 2px 0px #323232,
+    inset -2px 0px 2px 0px #323232,
+    inset 0px -1px 1px 0px #fff,
+    inset 0px -4px 2px -2px #8e8e8e,
+    0px 0px 4px 1px #2e2521;
+  margin-right: 8px; /* Space between checkbox and text */
+}
+
+/* Checkbox checked state */
+.checkbox input:checked ~ .checkmark {
+  background: #e39827; /* Color for checked state */
+}
+
+.checkbox input:focus,
+.checkbox input:hover ~ .checkmark {
+  background: #e39827;
+  box-shadow:
+    inset 0px 4px 2px -2px #412a07,
+    inset 2px 0px 2px 0px #5a3c10,
+    inset -2px 0px 2px 0px #5a3c10,
+    inset 0px -2px 2px 0px #d0ae79,
+    inset 0px -2px 4px 0px #c78627,
+    0px 0px 4px 1px #786b4f;
+}
+
+/* Checkmark appearance when checked */
+.checkbox input:checked ~ .checkmark::after {
+  content: "";
+  position: absolute;
+  transform: rotate(45deg) scale(1);
+  opacity: 1;
+  left: 5.5px;
+  top: 3.5px; /* Adjusted to ensure the checkmark aligns properly */
+  width: 4px; /* Adjusted for better visibility */
+  height: 8px;
+  border: solid #282728;
+  border-width: 0 2.5px 2.5px 0; /* Adjusted for better checkmark shape */
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.slider-input {
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  z-index: 2;
+  background: transparent;
+  outline: none;
+  box-shadow:
+    inset 0px 4px 2.5px -2.5px #111,
+    inset 2px 0px 2px 0px #323232,
+    inset -2px 0px 2px 0px #323232,
+    inset 0px -1px 1px 0px #fff,
+    inset 0px -4px 2px -2px #8e8e8e,
+    0px 0px 4px 1px #2e2521;
+}
+
+/* Background progress bar */
+.slider-input::before {
+  content: "";
+  position: absolute;
+  height: 24px;
+  width: var(--value, 57%);
+  @apply bg-orange;
+  z-index: 1;
+  margin-top: -12px;
+  box-shadow:
+    inset 0px 4px 2.5px -2.5px #111,
+    inset 2px 0px 2px 0px #323232,
+    inset -2px 0px 2px 0px #323232,
+    inset 0px -1px 1px 0px #fff,
+    inset 0px -4px 2px -2px #8e8e8e,
+    0px 0px 4px 1px #2e2521;
+}
+
+/* Thumb */
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 25px;
+  width: 40px;
+  margin-bottom: 2px;
+  background-position: -64px -48px;
+  background-image: url("http://localhost:8000/asset/core/gui-new.png");
+  background-repeat: no-repeat;
+  z-index: 3;
+  position: relative;
+}
+
+.slider-input.jagged::-webkit-slider-thumb {
+  width: 24px;
+  height: 35px;
+  margin-bottom: 9px;
+  background-position: 0px -189px;
+  background-image: url("http://localhost:8000/asset/core/gui-new.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.slider-step-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.slider-step-indicator {
+  width: 4px;
+  height: 16px;
+  background: url("http://localhost:8000/asset/core/gui-new.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: -138px -200px;
+  transform: translateX(-50%);
+  margin-left: 15px;
+  padding-left: 10px;
+}
+
+/* In your CSS file */
+.custom-toast {
+  background-color: #252425 !important;
+  color: #fff !important;
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0 !important;
+  padding: 1.2rem;
+}
+
+.custom-toast-body {
+  font-size: 1rem;
+  border-radius: 0 !important;
+  padding: 1rem;
+}
+
+.custom-progress-bar {
+  background: #80e685 !important;
+  border-radius: 0 !important;
+}
+
+.custom-toast .Toastify__progress-bar--wrp {
+  border-radius: 0 !important;
+  background-color: #4a8b4d;
+}
+
+.hover\:accentuated:hover {
+  @apply accentuated;
+}

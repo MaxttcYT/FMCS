@@ -1,0 +1,16 @@
+[
+  {
+    "conversion_type": "same",
+    "label": "_G",
+    "type": "core_variable",
+    "info": "Global environment table",
+    "section": "Core: Spcial Global Variables"
+  },
+  {
+    "conversion_type": "same",
+    "label": "__VERSION",
+    "type": "core_variable",
+    "info": "Lua version string (e.g. \"Lua 5.2\")",
+    "section": "Core: Spcial Global Variables"
+  }
+]

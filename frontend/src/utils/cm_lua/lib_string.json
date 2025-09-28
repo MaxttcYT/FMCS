@@ -1,0 +1,108 @@
+[
+    {
+      "conversion_type": "same",
+      "label": "string",
+      "type": "package",
+      "section":"Packages",
+      "info": "String functions",
+      "properties": [
+        {
+          "label": "byte",
+          "type": "function",
+          "info": "Params: [s, i, j]\nReturns the internal numerical codes of the characters in the string s, starting at position i and up to position j (inclusive)."
+        },
+        {
+          "label": "char",
+          "type": "function",
+          "info": "Params: [...]\nReturns a string containing the characters that have the internal numerical codes passed as arguments."
+        },
+        {
+          "label": "dump",
+          "type": "function",
+          "info": "Params: [function]\nReturns a string containing a binary representation of the function."
+        },
+        {
+          "label": "find",
+          "type": "function",
+          "info": "Params: [s, pattern, init, plain]\nSearches for the first occurrence of pattern in the string s. Returns the start and end indices of the match."
+        },
+        {
+          "label": "format",
+          "type": "function",
+          "info": "Params: [formatstring, ...]\nReturns a formatted version of the string similar to the C function sprintf."
+        },
+        {
+          "label": "gmatch",
+          "type": "function",
+          "info": "Params: [s, pattern]\nReturns an iterator function that can be used in a for loop to iterate over all occurrences of the pattern in the string s."
+        },
+        {
+          "label": "gsub",
+          "type": "function",
+          "info": "Params: [s, pattern, repl, n]\nReplaces occurrences of the pattern in string s with the replacement string repl. Optionally, the number of replacements can be limited by n."
+        },
+        {
+          "label": "len",
+          "type": "function",
+          "info": "Params: [s]\nReturns the length of the string s."
+        },
+        {
+          "label": "lower",
+          "type": "function",
+          "info": "Params: [s]\nReturns a copy of the string s with all its characters converted to lowercase."
+        },
+        {
+          "label": "match",
+          "type": "function",
+          "info": "Params: [s, pattern, init]\nSearches for the first match of pattern in string s and returns the match."
+        },
+        {
+          "label": "rep",
+          "type": "function",
+          "info": "Params: [s, n]\nReturns a string that is the concatenation of n copies of string s."
+        },
+        {
+          "label": "reverse",
+          "type": "function",
+          "info": "Params: [s]\nReturns a string with the characters of s reversed."
+        },
+        {
+          "label": "sub",
+          "type": "function",
+          "info": "Params: [s, i, j]\nReturns the substring of s from position i to position j (inclusive)."
+        },
+        {
+          "label": "upper",
+          "type": "function",
+          "info": "Params: [s]\nReturns a copy of the string s with all its characters converted to uppercase."
+        },
+        {
+          "label": "string",
+          "type": "variable",
+          "info": "The Lua string library contains functions for string manipulation."
+        },
+        {
+          "label": "match",
+          "type": "function",
+          "info": "Params: [s, pattern, init]\nLooks for a pattern in the string and returns the result of the match."
+        },
+        {
+          "label": "reverse",
+          "type": "function",
+          "info": "Params: [s]\nReturns a string with the characters of s reversed."
+        },
+        {
+          "label": "find",
+          "type": "function",
+          "info": "Params: [s, pattern, init, plain]\nFinds the first match of a pattern in string s and returns the indices of the match."
+        },
+        {
+          "label": "sub",
+          "type": "function",
+          "info": "Params: [s, i, j]\nReturns a substring of s from the ith to the jth position."
+        }
+      ]
+      
+    }
+  ]
+  

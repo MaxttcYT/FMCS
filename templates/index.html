@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PNG Viewer</title>
+    <style>
+        body { font-family: sans-serif; }
+        .grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 150px;
+            text-align: center;
+        }
+        img { width: 100%; height: auto; cursor: pointer; }
+        #search { margin-bottom: 20px; padding: 5px; width: 300px; }
+        .break-text {
+            word-wrap: break-word;     /* For older support */
+            overflow-wrap: break-word; /* Standard */
+            white-space: normal;       /* Allows wrapping */
+          }
+          
+    </style>
+</head>
+<body>
+    <input type="text" id="search" placeholder="Search images...">
+    <div class="grid" id="imageGrid"></div>
+
+<script>
+    const search = document.getElementById('search');
+    const grid = document.getElementById('imageGrid');
+    let debounceTimeout;
+
+    search.addEventListener('input', async () => {
+        clearTimeout(debounceTimeout); // Cancel the previous timeout
+
+        const query = search.value.trim();
+        if (query.length === 0) {
+            grid.innerHTML = ''; // Clear the grid if the query is empty
+            return;
+        }
+
+        // Set a new timeout to wait before sending the request
+        debounceTimeout = setTimeout(async () => {
+            const res = await fetch(`/search_images?q=${encodeURIComponent(query)}`);
+            const images = await res.json();
+
+            grid.innerHTML = ''; // Clear the grid
+            images.forEach(img => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-path', img);
+
+                const image = document.createElement('img');
+                image.src = `/static/${img}`;
+                image.alt = img;
+                image.loading = "lazy";
+                image.onclick = () => copyToClipboard(img);
+
+                const label = document.createElement('div');
+                label.className = 'break-text';
+                label.textContent = img;
+
+                card.appendChild(image);
+                card.appendChild(label);
+                grid.appendChild(card);
+            });
+        }, 300); // 300ms debounce delay (adjust as needed)
+    });
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert(`Copied: ${text}`);
+        });
+    }
+</script>
+
+    
+    
+</body>
+</html>

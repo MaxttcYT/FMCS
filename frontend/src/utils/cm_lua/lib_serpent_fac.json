@@ -1,0 +1,36 @@
+[
+  {
+    "conversion_type": "same",
+    "label": "serpent",
+    "type": "package",
+    "section": "Packages",
+    "info": "Lua serializer and pretty printer. Auto included in Factorios Lua Api, so you can use it",
+    "properties": [
+      {
+        "label": "dump",
+        "type": "function",
+        "info": "Params: [table, options]\nSerializes a Lua value (usually a table) into a Lua source string that can be safely loaded back with load/loadstring."
+      },
+      {
+        "label": "line",
+        "type": "function",
+        "info": "Params: [table, options]\nReturns a compact one-line version of the serialization. Useful for logging or inline display."
+      },
+      {
+        "label": "block",
+        "type": "function",
+        "info": "Params: [table, options]\nReturns a pretty-printed, multi-line serialization of the table. Good for configuration files or readable dumps."
+      },
+      {
+        "label": "load",
+        "type": "function",
+        "info": "Params: [serialized_string]\nLoads the Lua object back from a serialized string (if `safe` option is disabled and Lua supports loadstring/load)."
+      },
+      {
+        "label": "_VERSION",
+        "type": "core_variable",
+        "info": "Contains the version string of the Serpent library (e.g., 'Serpent 0.303')."
+      }
+    ]
+  }
+]

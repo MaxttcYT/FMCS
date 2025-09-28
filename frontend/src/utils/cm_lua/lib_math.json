@@ -1,0 +1,156 @@
+[
+  {
+    "conversion_type": "same",
+    "label": "math",
+    "type": "package",
+    "section": "Packages",
+    "info": "Mathematical functions",
+    "properties": [
+      {
+        "label": "abs",
+        "type": "function",
+        "info": "Params: [x]\nReturns the absolute value of x."
+      },
+      {
+        "label": "acos",
+        "type": "function",
+        "info": "Params: [x]\nReturns the arc cosine of x in radians."
+      },
+      {
+        "label": "asin",
+        "type": "function",
+        "info": "Params: [x]\nReturns the arc sine of x in radians."
+      },
+      {
+        "label": "atan",
+        "type": "function",
+        "info": "Params: [x]\nReturns the arc tangent of x in radians."
+      },
+      {
+        "label": "atan2",
+        "type": "function",
+        "info": "Params: [y, x]\nReturns the arc tangent of y/x in radians, considering the signs of both arguments to determine the correct quadrant."
+      },
+      {
+        "label": "ceil",
+        "type": "function",
+        "info": "Params: [x]\nReturns the smallest integer greater than or equal to x."
+      },
+      {
+        "label": "cos",
+        "type": "function",
+        "info": "Params: [x]\nReturns the cosine of x (where x is in radians)."
+      },
+      {
+        "label": "deg",
+        "type": "function",
+        "info": "Params: [x]\nConverts x from radians to degrees."
+      },
+      {
+        "label": "exp",
+        "type": "function",
+        "info": "Params: [x]\nReturns the value of e raised to the power of x (i.e., e^x)."
+      },
+      {
+        "label": "floor",
+        "type": "function",
+        "info": "Params: [x]\nReturns the largest integer less than or equal to x."
+      },
+      {
+        "label": "fmod",
+        "type": "function",
+        "info": "Params: [x, y]\nReturns the remainder of x divided by y."
+      },
+      {
+        "label": "frexp",
+        "type": "function",
+        "info": "Params: [x]\nReturns two values: the mantissa and the exponent of x such that x = mantissa * 2^exponent."
+      },
+      {
+        "label": "huge",
+        "type": "constant",
+        "info": "Represents positive infinity."
+      },
+      {
+        "label": "ldexp",
+        "type": "function",
+        "info": "Params: [m, e]\nReturns m * 2^e. It is the inverse of math.frexp."
+      },
+      {
+        "label": "log",
+        "type": "function",
+        "info": "Params: [x]\nReturns the natural logarithm (base e) of x."
+      },
+      {
+        "label": "log10",
+        "type": "function",
+        "info": "Params: [x]\nReturns the base-10 logarithm of x."
+      },
+      {
+        "label": "max",
+        "type": "function",
+        "info": "Params: [x, ...]\nReturns the largest of its arguments."
+      },
+      {
+        "label": "min",
+        "type": "function",
+        "info": "Params: [x, ...]\nReturns the smallest of its arguments."
+      },
+      {
+        "label": "modf",
+        "type": "function",
+        "info": "Params: [x]\nReturns the integer and fractional parts of x as a pair (integer, fractional)."
+      },
+      {
+        "label": "pi",
+        "type": "constant",
+        "info": "The constant pi, approximately 3.14159."
+      },
+      {
+        "label": "pow",
+        "type": "function",
+        "info": "Params: [x, y]\nReturns x raised to the power of y (x^y)."
+      },
+      {
+        "label": "rad",
+        "type": "function",
+        "info": "Params: [x]\nConverts x from degrees to radians."
+      },
+      {
+        "label": "random",
+        "type": "function",
+        "info": "Params: [m, n] (optional)\nIf two arguments are given, returns a random integer between m and n. If no arguments are provided, returns a floating-point number in the range [0, 1)."
+      },
+      {
+        "label": "randomseed",
+        "type": "function",
+        "info": "Params: [x]\nSeeds the random number generator with the value x."
+      },
+      {
+        "label": "sin",
+        "type": "function",
+        "info": "Params: [x]\nReturns the sine of x (where x is in radians)."
+      },
+      {
+        "label": "sinh",
+        "type": "function",
+        "info": "Params: [x]\nReturns the hyperbolic sine of x."
+      },
+      {
+        "label": "sqrt",
+        "type": "function",
+        "info": "Params: [x]\nReturns the square root of x."
+      },
+      {
+        "label": "tan",
+        "type": "function",
+        "info": "Params: [x]\nReturns the tangent of x (where x is in radians)."
+      },
+      {
+        "label": "tanh",
+        "type": "function",
+        "info": "Params: [x]\nReturns the hyperbolic tangent of x."
+      }
+    ]
+  }
+]

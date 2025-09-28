@@ -1,0 +1,9 @@
+ #Example for Factorio installed on Windows with Steam
+
+FACTORIO_STEAM_ID: 427520 #Shouldn't change
+FACTORIO_PATH: "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio"
+FACTORIO_EXE_PATH: "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio\\bin\\x64\\factorio.exe" 
+STEAM_PATH: "C:/Program Files (x86)/Steam/steam.exe"
+
+#Change {username} to actual username
+FACTORIO_DATA_PATH: "C:\\Users\\{username}\\AppData\\Roaming\\Factorio"

@@ -1,0 +1,120 @@
+.cm-s-myTheme {
+    line-height: 1.3em;
+}
+.cm-s-myTheme.CodeMirror {
+    background: #262626;
+    color: #ebefe7;
+    text-shadow: 0 -1px 1px #262626;
+    border: none;
+}
+.cm-s-myTheme div.CodeMirror-selected {
+    background: #45443b;
+}
+.cm-s-myTheme .CodeMirror-line::selection,
+.cm-s-myTheme .CodeMirror-line > span::selection,
+.cm-s-myTheme .CodeMirror-line > span > span::selection {
+    background: rgba(69, 68, 59, 0.99);
+}
+.cm-s-myTheme .CodeMirror-line::-moz-selection,
+.cm-s-myTheme .CodeMirror-line > span::-moz-selection,
+.cm-s-myTheme .CodeMirror-line > span > span::-moz-selection {
+    background: rgba(69, 68, 59, 0.99);
+}
+.cm-s-myTheme .CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+.cm-s-myTheme pre {
+    padding: 0 8px;
+}
+.cm-s-myTheme.CodeMirror span.CodeMirror-matchingbracket {
+    color: #7efc7e;
+}
+.cm-s-myTheme .CodeMirror-gutters {
+    background: #262626;
+    border-right: 1px solid rgb(92, 92, 92)
+}
+.cm-s-myTheme .CodeMirror-guttermarker {
+    color: #599eff;
+}
+.cm-s-myTheme .CodeMirror-guttermarker-subtle {
+    color: #777;
+}
+.cm-s-myTheme .CodeMirror-linenumber {
+    color: #777;
+}
+.cm-s-myTheme span.cm-header {
+    color: #a0a;
+}
+.cm-s-myTheme span.cm-quote {
+    color: #090;
+}
+.cm-s-myTheme span.cm-keyword {
+    color: #599eff;
+}
+.cm-s-myTheme span.cm-atom {
+    color: #c2b470;
+}
+.cm-s-myTheme span.cm-number {
+    color: #b35e4d;
+}
+.cm-s-myTheme span.cm-def {
+    color: #fff;
+}
+.cm-s-myTheme span.cm-variable {
+    color: #d9bf8c;
+}
+.cm-s-myTheme span.cm-variable-2 {
+    color: #669199;
+}
+.cm-s-myTheme span.cm-type, .cm-s-myTheme span.cm-variable-3 {
+    color: #fff;
+}
+.cm-s-myTheme span.cm-property {
+    color: #92a75c;
+}
+.cm-s-myTheme span.cm-operator {
+    color: #92a75c;
+}
+.cm-s-myTheme span.cm-comment {
+    color: #666;
+}
+.cm-s-myTheme span.cm-string {
+    color: #bcd279;
+}
+.cm-s-myTheme span.cm-string-2 {
+    color: #f50;
+}
+.cm-s-myTheme span.cm-meta {
+    color: #738c73;
+}
+.cm-s-myTheme span.cm-qualifier {
+    color: #555;
+}
+.cm-s-myTheme span.cm-builtin {
+    color: #ff9e59;
+}
+.cm-s-myTheme span.cm-bracket {
+    color: #ebefe7;
+}
+.cm-s-myTheme span.cm-tag {
+    color: #669199;
+}
+.cm-s-myTheme span.cm-attribute {
+    color: #81a4d5;
+}
+.cm-s-myTheme span.cm-hr {
+    color: #999;
+}
+.cm-s-myTheme span.cm-link {
+    color: #7070e6;
+}
+.cm-s-myTheme span.cm-error {
+    color: #9d1e15;
+}
+.cm-s-myTheme .CodeMirror-activeline-background {
+    background: #3c3a3a;
+}
+.cm-s-myTheme .CodeMirror-matchingbracket {
+    outline: 1px solid grey;
+    color: #fff !important;
+}

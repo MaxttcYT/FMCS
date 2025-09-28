@@ -1,0 +1,156 @@
+[
+  {
+    "conversion_type": "same",
+    "label": "assert",
+    "type": "function",
+    "info": "Params: [v, message?]\n Throws an error (with param message if given) if the first argument is/returns false.",
+    "section": "Error Handling"
+  },
+  {
+    "conversion_type": "same",
+    "label": "error",
+    "type": "error",
+    "info": "Params: [message, level?]\n Raises an error message.",
+    "section": "Error Handling"
+  },
+  {
+    "conversion_type": "same",
+    "label": "pcall",
+    "type": "function",
+    "info": "Params: [function, **args]\n Runs function in protected mode. Returns true if the function runs without errors, false otherwise. If the function returns an error, the error message is returned as the second value.",
+    "section": "Error Handling"
+  },
+  {
+    "conversion_type": "same",
+    "label": "xpcall",
+    "type": "function",
+    "info": "Params: [function, error]\n Runs function in protected mode with a custom error handler. Returns true if the function runs without errors, false otherwise. If an error occurs, the error handler is called, and the error message is returned as the second value.",
+    "section": "Error Handling"
+  },
+  {
+    "conversion_type": "same",
+    "label": "ipairs",
+    "type": "function",
+    "info": "Params: [table]\n Iterates over the elements in a table in order, returning index-value pairs for array-like tables.",
+    "section": "Control Flow"
+  },
+  {
+    "conversion_type": "same",
+    "label": "pairs",
+    "type": "function",
+    "info": "Params: [table]\n Iterates over all key-value pairs in a table, including non-array elements.",
+    "section": "Control Flow"
+  },
+  {
+    "conversion_type": "same",
+    "label": "next",
+    "type": "function",
+    "info": "Params: [table, index?]\n Returns the next key-value pair in a table. If index is nil, returns the first pair.",
+    "section": "Control Flow"
+  },
+  {
+    "conversion_type": "same",
+    "label": "select",
+    "type": "function",
+    "info": "Params: [index, [**args]]\n Returns arguments starting from the given index. If index is '#', returns the total count of arguments.",
+    "section": "Control Flow"
+  },
+  {
+    "conversion_type": "same",
+    "label": "getmetatable",
+    "type": "function",
+    "info": "Params: [table]\n Returns the metatable of the given table, or nil if it doesn't have one.",
+    "section": "Metatables"
+  },
+  {
+    "conversion_type": "same",
+    "label": "setmetatable",
+    "type": "function",
+    "info": "Params: [table, metatable]\n Sets the metatable for the given table. Returns the table.",
+    "section": "Metatables"
+  },
+  {
+    "conversion_type": "same",
+    "label": "rawequal",
+    "type": "function",
+    "info": "Params: [v1, v2]\n Checks whether two values are equal without invoking metamethods.",
+    "section": "Raw Operations"
+  },
+  {
+    "conversion_type": "same",
+    "label": "rawget",
+    "type": "function",
+    "info": "Params: [table, key]\n Returns the value of the given key in a table without invoking metamethods.",
+    "section": "Raw Operations"
+  },
+  {
+    "conversion_type": "same",
+    "label": "rawset",
+    "type": "function",
+    "info": "Params: [table, key, value]\n Sets the value of the given key in a table without invoking metamethods. Returns the table.",
+    "section": "Raw Operations"
+  },
+  {
+    "conversion_type": "same",
+    "label": "rawlen",
+    "type": "function",
+    "info": "Params: [table]\n Returns the length of a table without invoking metamethods.",
+    "section": "Raw Operations"
+  },
+  {
+    "conversion_type": "same",
+    "label": "tonumber",
+    "type": "function",
+    "info": "Params: [e, base?]\n Converts the given value to a number. If the conversion fails, returns nil. Optionally, a base can be specified for string-to-number conversion.",
+    "section": "Type Conversion"
+  },
+  {
+    "conversion_type": "same",
+    "label": "tostring",
+    "type": "function",
+    "info": "Params: [value]\n Converts the given value to a string. If the value has a metatable with a '__tostring' field, it will be used for the conversion.",
+    "section": "Type Conversion"
+  },
+  {
+    "conversion_type": "same",
+    "label": "type",
+    "type": "function",
+    "info": "Params: [value]\n Returns the type of the given value as a string (e.g., 'nil', 'number', 'string', etc.).",
+    "section": "Type Checking"
+  },
+  {
+    "conversion_type": "same",
+    "label": "dofile",
+    "type": "function",
+    "info": "Params: [filename]\n Executes a Lua file and returns the result of its last expression. Errors if the file cannot be opened or contains invalid code.",
+    "section": "File Execution"
+  },
+  {
+    "conversion_type": "same",
+    "label": "loadfile",
+    "type": "function",
+    "info": "Params: [filename, mode?, env?]\n Loads a Lua file as a chunk but does not execute it. Returns the chunk as a function or an error message if loading fails.",
+    "section": "File Execution"
+  },
+  {
+    "conversion_type": "same",
+    "label": "load",
+    "type": "function",
+    "info": "Params: [chunk, chunkname?, mode?, env?]\n Loads a chunk (string or reader function) as a function. Returns the function or an error message if loading fails.",
+    "section": "Chunk Loading"
+  },
+  {
+    "conversion_type": "same",
+    "label": "collectgarbage",
+    "type": "function",
+    "info": "Params: [option, **args?]\n Controls the garbage collector. Options include 'stop', 'restart', 'collect', 'count', etc. Optional argument depends on the option.",
+    "section": "Garbage Collection"
+  },
+  {
+    "conversion_type": "same",
+    "label": "print",
+    "type": "function",
+    "info": "Params: [**args]\n Outputs the given arguments to the standard output, converting them to strings if necessary.",
+    "section": "Output"
+  }
+]
