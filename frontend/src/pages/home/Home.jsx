@@ -21,20 +21,16 @@ import {
 import * as editorViews from "@/editorViews";
 import Button from "@/components/Button";
 import BuildLog from "@/components/BuildLog";
+import { Inventory } from "@/components/Inventory";
+import ItemPicker from "@/components/ItemPicker";
 
 export default function Home() {
   const { socket, reconnectSocket } = useSocketIO();
   const { projectId } = useParams();
 
-  const {
-    status: factorioStatus,
-    start: handleStart,
-    stop: handleStop,
-    kill: handleKill,
-  } = useFactorioStatus(socket);
-
   const tabControlRef = useRef(null);
   const modalManagerRef = useRef(null);
+  const itemPickerRef = useRef(null);
 
   const {
     projectInfo,
@@ -42,6 +38,13 @@ export default function Home() {
     error,
     refresh: refreshProjectInfo,
   } = useProjectInfo(projectId);
+
+  const {
+    status: factorioStatus,
+    start: handleStartFactorio,
+    stop: handleStop,
+    kill: handleKill,
+  } = useFactorioStatus(socket, projectInfo);
 
   const [showFileTree, setShowFileTree] = useState(true);
   const [fsStatus, setFsStatus] = useState("Idle");
@@ -125,36 +128,73 @@ export default function Home() {
   };
 
   const handleStartBuild = () => {
-    modalManagerRef.current?.addModal({
-      id: "build_modal",
-      title: `Building: ${projectInfo.name} [${projectInfo.version}]`,
-      content: <BuildLog socket={socket} projectId={projectId} projectInfo={projectInfo} reconnectSocket={reconnectSocket} />,
-      actions: (
-        <>
-          <Button
-            size="sm"
-            type="danger"
-            onClick={() =>
-              modalManagerRef.current.closeModal({ id: "build_modal" })
-            }
-          >
-            Cancel
-          </Button>
-        </>
-      ),
+    return new Promise((resolve, reject) => {
+      modalManagerRef.current?.addModal({
+        id: "build_modal",
+        title: `Building: ${projectInfo.name} [${projectInfo.version}]`,
+        content: (
+          <BuildLog
+            socket={socket}
+            projectId={projectId}
+            projectInfo={projectInfo}
+            reconnectSocket={reconnectSocket}
+            onBuildComplete={(result) => {
+              resolve(result);
+              modalManagerRef.current.updateModal({
+                id: "build_modal",
+                actions: (
+                  <Button
+                    size="sm"
+                    type="danger"
+                    onClick={() => {
+                      modalManagerRef.current.closeModal({ id: "build_modal" });
+                    }}
+                  >
+                    Close
+                  </Button>
+                ),
+              });
+            }}
+            onBuildError={(error) => {
+              reject(error);
+              modalManagerRef.current.updateModal({
+                id: "build_modal",
+                actions: (
+                  <Button
+                    size="sm"
+                    type="danger"
+                    onClick={() => {
+                      modalManagerRef.current.closeModal({ id: "build_modal" });
+                    }}
+                  >
+                    Close
+                  </Button>
+                ),
+              });
+            }}
+          />
+        ),
+      });
     });
+  };
+  const handleStart = async () => {
+    try {
+      await handleStartBuild(); // will throw if it fails
+      handleStartFactorio(); // only runs if build succeeds
+    } catch (error) {
+      console.error("Build failed, Factorio will not start:", error);
+    }
   };
 
   useEffect(() => {
-    if (!loadingProjectInfo) {
-      handleStartBuild();
-    }
-  }, [loadingProjectInfo]);
+    //itemPickerRef.current?.open()
+  }, []);
 
   return (
     <ProjectProvider projectId={projectId}>
       <div className="grid grid-cols-5 grid-rows-[60px_repeat(4,_1fr)] w-full h-screen overflow-hidden">
         <ModalManager ref={modalManagerRef} />
+        <ItemPicker ref={itemPickerRef} modalManagerRef={modalManagerRef} />
         {/* Top Nav */}
         <TopNav
           showFileTree={showFileTree}
@@ -166,6 +206,7 @@ export default function Home() {
           handleKill={handleKill}
           reconnectSocket={reconnectSocket}
           handleSave={handleSave}
+          handleStartBuild={handleStartBuild}
         />
 
         <LeftSidebar

@@ -2,19 +2,36 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { RefreshCcw } from "lucide-react";
 
-function BuildLog({ socket, projectId, projectInfo, reconnectSocket }) {
+function BuildLog({ socket, projectId, projectInfo, reconnectSocket, onBuildComplete, onBuildError }) {
   const [buildLog, setBuildLog] = useState([
     { content: "Initializing Build...", logType: "default" },
   ]);
 
   const logContainerRef = useRef(null);
+  const addLog = (content, logType = "default", overrideLast = false) => {
+    const now = new Date();
+    const formattedTime = now.toLocaleTimeString();
 
-  const addLog = (content, logType = "default") => {
     const newLog = {
-      content: content,
-      logType: logType,
+      content,
+      logType,
+      timestamp: formattedTime,
     };
-    setBuildLog((prevLogs) => [...prevLogs, newLog]);
+
+    setBuildLog((prevLogs) => {
+      if (overrideLast && prevLogs.length > 0) {
+        // Replace the last log
+        return [...prevLogs.slice(0, -1), newLog];
+      }
+      // Add a new log
+      return [...prevLogs, newLog];
+    });
+
+    if (logType === "success") {
+        onBuildComplete?.()
+    } else if (logType === "error") {
+        onBuildError?.()
+    }
   };
 
   const logClassNames = {
@@ -32,10 +49,10 @@ function BuildLog({ socket, projectId, projectInfo, reconnectSocket }) {
   useEffect(() => {
     if (!socket) return;
 
-    const handler = (s) => addLog(s.content, s.logType);
+    const handler = (s) => addLog(s.content, s.logType, s.overrideLast);
     socket.on("build_log", handler);
 
-    socket.emit("start_build", { abc: "abc" }, (response) => {
+    socket.emit("start_build", { projectId: projectId }, (response) => {
       if (response === "ok") {
         addLog("Build initialized", "default");
       } else {
@@ -75,7 +92,9 @@ function BuildLog({ socket, projectId, projectInfo, reconnectSocket }) {
             key={index}
             className={`${logClassNames[log.logType]} px-5 py-1`}
           >
-            <h1>{log.content}</h1>
+            <pre className="whitespace-pre-line">
+              {log.timestamp && <span>[{log.timestamp}]</span>} {log.content}
+            </pre>
           </div>
         );
       })}

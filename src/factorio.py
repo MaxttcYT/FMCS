@@ -93,7 +93,7 @@ def getSpaceAge():
     space_age_path = os.path.join(factorio_path, "data", "space-age")
     return os.path.exists(space_age_path)
 
-def load_preview_mods():
+def load_preview_mods(projectInfo):
     kill_factorio()
     
     mods_path = os.path.join(factorio_data_path, "mods")
@@ -121,14 +121,14 @@ def load_preview_mods():
         f.seek(0)
         json.dump(modlist_preview(space_age), f, indent=4)
     
-    shutil.copy(os.path.join(preview_path, "dev-mod", "fmcs-template_1.0.0.zip"), mods_path)
+    shutil.copy(os.path.join(preview_path, "dev-mod", f"{projectInfo["name"]}_{projectInfo["version"]}.zip"), mods_path)
 
 def load_user_mods():
     mods_path = os.path.join(factorio_data_path, "mods")
     shutil.copytree(os.path.join(project_dir, ".mod-preview", "mods"), mods_path, dirs_exist_ok=True)
 
-def start_factorio_preview():
-    load_preview_mods()
+def start_factorio_preview(projectInfo):
+    load_preview_mods(projectInfo)
     start_factorio()
 
 def stop_factorio_preview(kill):

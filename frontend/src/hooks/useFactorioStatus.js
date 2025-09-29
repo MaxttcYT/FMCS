@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default  function useFactorioStatus(socket) {
+export default  function useFactorioStatus(socket, projectInfo) {
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default  function useFactorioStatus(socket) {
     return () => socket.off("factorio_running", handler);
   }, [socket]);
 
-  const start = () => socket?.emit("start_factorio");
+  const start = () => socket?.emit("start_factorio", {projectId: projectInfo["id"]});
   const stop = () => socket?.emit("stop_factorio");
   const kill = () => socket?.emit("kill_factorio");
 

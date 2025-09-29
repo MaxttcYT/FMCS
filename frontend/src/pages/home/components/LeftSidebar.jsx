@@ -5,7 +5,7 @@ import { Wizard, WizardContent, WizardStep } from "@/components/Wizard";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
 import HelpIcon from "@/components/HelpIcon";
-import { GraphicConfigWizardStep, ItemConfigWizardStep, SelectWizardStep } from "./AddItemWizardSteps";
+import { GraphicConfigWizardStep, ItemConfigWizardStep, RecipeConfigWizardStep, SelectWizardStep } from "./AddItemWizardSteps";
 import SliderInput from "@/components/SliderInput";
 
 function AddItemWizard({ open, setOpen, iconMapping }) {
@@ -37,6 +37,7 @@ function AddItemWizard({ open, setOpen, iconMapping }) {
       />
       {selected == "item" && <ItemConfigWizardStep asStep={true} />}
       {selected == "graphic" && <GraphicConfigWizardStep asStep={true} />}
+      {selected == "recipe" && <RecipeConfigWizardStep asStep={true} />}
     </Wizard>
   );
 }

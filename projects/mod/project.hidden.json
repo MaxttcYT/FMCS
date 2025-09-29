@@ -1,0 +1,43 @@
+{
+  "content": {
+    "recipes": [
+      {
+        "name": "fmc-test-item-recipe",
+        "enabled": true,
+        "energy_required": 1,
+        "ingredients": [
+          {
+            "type": "item",
+            "name": "wood",
+            "amount": 1
+          }
+        ],
+        "results": [
+          {
+            "type": "item",
+            "name": "fmcs-test-item",
+            "amount": 10
+          }
+        ]
+      }
+    ],
+    "items": [
+      {
+        "name": "fmcs-test-item",
+        "subgroup": "belt",
+        "icon": "__base__/graphics/icons/beacon.png",
+        "icon_size": 64,
+        "order": "z[u]",
+        "stack_size": 50
+      }
+    ],
+    "tech": [],
+    "commands": [
+      {
+        "name": "hello",
+        "description": "Says Hello",
+        "code": "game.player.print(\"Hello, \" .. (command.player_index and game.players[command.player_index].name or \"Console\") .. \"!\")"
+      }
+    ]
+  }
+}

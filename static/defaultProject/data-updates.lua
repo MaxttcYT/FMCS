@@ -1,4 +1,4 @@
--- Update existing definitions here
+-- Used to modify prototypes after all mods have loaded
 
 --Example: updates iron ore to stack size 1000
 local function update_item_prototype()
@@ -8,4 +8,4 @@ local function update_item_prototype()
     end
   end
   
-  update_item_prototype()
+update_item_prototype()

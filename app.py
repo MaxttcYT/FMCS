@@ -1,9 +1,10 @@
-from flask import Flask, render_template, jsonify, send_file, request, abort
+from flask import Flask, Response, render_template, jsonify, send_file, request, abort
 from flask_socketio import SocketIO
 from flask_apscheduler import APScheduler
 from flask_cors import CORS, cross_origin
 import os
 import shutil
+import src.build as modBuilder
 import src.factorio as factorio
 import requests
 import json
@@ -13,7 +14,7 @@ from PIL import Image
 import io
 import stat
 import colorama
-from colorama import Fore, Back
+from src.projects import getProjectRegister
 
 app = Flask(__name__)
 
@@ -33,21 +34,6 @@ class Config:
 app.config.from_object(Config())
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-
-
-def sendBuildLog(content, logType="default"):
-    log_styles = {
-        "info": Fore.BLUE
-        + Back.LIGHTBLACK_EX,  # bg-blue/20 -> LIGHTBLACK_EX (approx), text-blue -> Fore.BLUE
-        "default": Fore.WHITE,
-        "error": Fore.RED
-        + Back.RED,  # bg-red/20 -> LIGHTBLACK_EX (approx), text-red -> Fore.RED
-        "success": Fore.GREEN
-        + Back.LIGHTGREEN_EX,  # bg-green-light/30 -> LIGHTGREEN_EX, text-green-light -> Fore.GREEN
-    }
-
-    print("[BUILD LOG]: " + log_styles[logType] + content)
-    socketio.emit("build_log", {"content": content, "logType": logType})
 
 
 def fileIcons(filepath):
@@ -318,7 +304,8 @@ def save_item(project):
         register = getProjectRegister()
 
         with open(
-            os.path.join(project_dir, register[int(project)], "project.json"), "r"
+            os.path.join(project_dir, register[int(project)], "project.hidden.json"),
+            "r",
         ) as f:
             project_registry = json.load(f)
 
@@ -345,7 +332,8 @@ def save_item(project):
         item.update(content)
 
         with open(
-            os.path.join(project_dir, register[int(project)], "project.json"), "w"
+            os.path.join(project_dir, register[int(project)], "project.hidden.json"),
+            "w",
         ) as f:
             json.dump(project_registry, f, indent=4)
 
@@ -429,7 +417,6 @@ def list_icons():
 def func_name():
     return render_template("index.html")
 
-
 @app.route("/icon/<scope>/<path:subpath>")
 def icon_provider(subpath, scope):
     image_path = os.path.join(
@@ -440,22 +427,42 @@ def icon_provider(subpath, scope):
         abort(404)
 
     try:
-        with Image.open(image_path) as img:
-            crop_param = request.args.get("crop", "64x64")  # default crop size
-
-            if crop_param.lower() == "false":
-                output_img = img
-            else:
-                # Expecting format RIGHTxLOWER or numeric like 64x64
+        with Image.open(image_path).convert("RGBA") as img:
+            # --- Crop ---
+            crop_param = request.args.get("crop", "64x64")
+            if crop_param.lower() != "false":
                 try:
                     right, lower = map(int, crop_param.upper().split("X"))
-                    output_img = img.crop((0, 0, right, lower))
+                    img = img.crop((0, 0, right, lower))
                 except ValueError:
-                    # fallback to default crop if parsing fails
-                    output_img = img.crop((0, 0, 64, 64))
+                    img = img.crop((0, 0, 64, 64))
 
+            # --- Tint visible pixels ---
+            tint_param = request.args.get("tint")
+            if tint_param:
+                try:
+                    r, g, b, strength = map(float, tint_param.split(","))
+                    r, g, b = [int(x * 255) for x in (r, g, b)]
+                    strength = max(0.0, min(1.0, strength))  # clamp
+            
+                    img = img.convert("RGBA")
+                    pixels = img.load()
+            
+                    for y in range(img.height):
+                        for x in range(img.width):
+                            pr, pg, pb, pa = pixels[x, y]
+                            if pa > 0:
+                                # Multiply original by tint, scaled by strength
+                                new_r = int(pr * ((r / 255) * strength + (1 - strength)))
+                                new_g = int(pg * ((g / 255) * strength + (1 - strength)))
+                                new_b = int(pb * ((b / 255) * strength + (1 - strength)))
+                                pixels[x, y] = (new_r, new_g, new_b, pa)
+                except Exception:
+                    pass
+
+            # --- Send image ---
             img_io = io.BytesIO()
-            output_img.save(img_io, format="PNG")
+            img.save(img_io, format="PNG")
             img_io.seek(0)
             return send_file(img_io, mimetype="image/png")
     except Exception:
@@ -471,8 +478,15 @@ def asset_provider(subpath, scope):
 
 # Factorio-related socket events
 @socketio.on("start_factorio")
-def start_factorio_socket():
-    factorio.start_factorio_preview()
+def start_factorio_socket(data):
+    projectId = data["projectId"]
+    project_dir = os.path.join(script_dir, "projects")
+    register = getProjectRegister()
+    with open(os.path.join(project_dir, register[int(projectId)], "info.json"), "r") as f:
+        project_info = json.load(f)
+        project_info["path"] = os.path.join(project_dir, register[int(projectId)])
+        project_info["id"] = projectId
+    factorio.start_factorio_preview(project_info)
 
 
 @socketio.on("kill_factorio")
@@ -486,37 +500,18 @@ def stop_factorio_socket():
 
 
 @socketio.on("start_build")
-def start_build_socket(json):
-    print(json)
-    print("start build")
+def start_build_socket(data):
+    print("start build for: " + str(data))
+    socketio.start_background_task(
+        target=modBuilder.startBuild,
+        socketio=socketio,
+        projectId=data["projectId"]
+    )
     return "ok"
-
 
 @scheduler.task("interval", id="send_message_task", seconds=1, max_instances=1)
 def send_message_task():
-    sendBuildLog("TEST LOG", "error")
     socketio.emit("factorio_running", factorio.is_factorio_running())
-
-
-def getProjectRegister():
-    project_dir = os.path.join(script_dir, "projects")
-    register_dir = os.path.join(project_dir, "register.json")
-    os.makedirs(project_dir, exist_ok=True)
-    defaultProjectsFile = []
-    # Check if the file exists, if not, create it
-    if not os.path.exists(register_dir):
-        with open(register_dir, "w") as f:
-            json.dump(defaultProjectsFile, f, indent=4)
-
-    with open(register_dir, "r+") as f:
-        content = f.read()
-        try:
-            data = json.loads(content)
-            return data
-        except Exception:
-            f.seek(0)
-            json.dump(defaultProjectsFile, f, indent=4)
-            return defaultProjectsFile
 
 
 def add_project_to_register(project_data):
@@ -662,13 +657,23 @@ def project_info(project):
         project_info["id"] = project
 
     with open(
-        os.path.join(project_dir, register[int(project)], "project.json"), "r"
+        os.path.join(project_dir, register[int(project)], "project.hidden.json"), "r"
     ) as f:
         project_registry = json.load(f)
 
     project_info["registry"] = project_registry
     return jsonify(project_info)
 
+
+@app.route("/api/inventory/items", methods=["GET"])
+def get_inventory_items():
+    dataRaw_path = os.path.join(script_dir, "dataRaw")
+    file_path = os.path.join(dataRaw_path, "inv.json")
+
+    with open(file_path, "r") as f:
+        content = f.read()
+
+    return Response(content, mimetype="application/json")
 
 def del_rw(action, name, exc):
     os.chmod(name, stat.S_IWRITE)

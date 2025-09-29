@@ -4,6 +4,11 @@ A tool to assist with editing and managing Factorio mods.
 
 > ⚠️ **IMPORTANT:** This is only tested on Windows, ussage on MacOS or Linux might need further modification
 
+## Testing your mod
+
+> ⚠️ **VERY IMPORTANT:** Make a backup of your `mods` folder! I **cannot guarantee** that your mods will be restored after playtesting your mod.  
+> **Important:** Do **not** close Factorio via the main menu—always close it using the **Stop** button in the editor GUI!
+
 ## Requirements
 
 - [Python](https://www.python.org/downloads/) (version 3.7 or higher)

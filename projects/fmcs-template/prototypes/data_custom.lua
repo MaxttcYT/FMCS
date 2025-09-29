@@ -1,5 +1,5 @@
 --  Add custom data definitions here
 
-data:extend({
-    --
-});
+--data:extend({
+--uncomment this, if its empty game will crash
+--});

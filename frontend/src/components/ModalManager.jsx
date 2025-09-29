@@ -14,6 +14,8 @@ const ModalManager = forwardRef((props, ref) => {
         title: modalData.title,
         content: modalData.content,
         actions: modalData.actions,
+        noInnerPadding: modalData.noInnerPadding,
+        panelCN: modalData.panelCN,
       };
       setModals([...modals, newModal]);
     },
@@ -202,6 +204,20 @@ const ModalManager = forwardRef((props, ref) => {
     closeModal: (modalData) => {
       setModals(modals.filter((modal) => modal.id !== modalData.id));
     },
+    updateModal: ({ id, title, content, actions }) => {
+      setModals((prev) =>
+        prev.map((modal) =>
+          modal.id === id
+            ? {
+                ...modal,
+                title: title !== undefined ? title : modal.title,
+                content: content !== undefined ? content : modal.content,
+                actions: actions !== undefined ? actions : modal.actions,
+              }
+            : modal
+        )
+      );
+    },
   }));
 
   return (
@@ -213,6 +229,8 @@ const ModalManager = forwardRef((props, ref) => {
           isOpen={modal.isOpen}
           content={modal.content}
           actions={modal.actions}
+          noInnerPadding={modal.noInnerPadding}
+          panelCN={modal.panelCN}
         />
       ))}
     </div>

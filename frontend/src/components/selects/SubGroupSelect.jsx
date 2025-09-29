@@ -14,23 +14,23 @@ function SubGroupSelect({ ...props }) {
           url: `${process.env.API_URL}/icon/base/item-group/logistics.png?crop=128x128`,
         }}
       >
-        <SelectOption value="logistics-storage">Storage</SelectOption>
-        <SelectOption value="logistics-belt">Belt</SelectOption>
-        <SelectOption value="logistics-inserter">Inserter</SelectOption>
-        <SelectOption value="logistics-energy-pipe-distribution">
+        <SelectOption value="storage">Storage</SelectOption>
+        <SelectOption value="belt">Belt</SelectOption>
+        <SelectOption value="inserter">Inserter</SelectOption>
+        <SelectOption value="energy-pipe-distribution">
           Energy pipe distribution
         </SelectOption>
-        <SelectOption value="logistics-train-transport">
+        <SelectOption value="train-transport">
           Train transport
         </SelectOption>
-        <SelectOption value="logistics-transport">Transport</SelectOption>
-        <SelectOption value="logistics-logistic-network">
+        <SelectOption value="transport">Transport</SelectOption>
+        <SelectOption value="logistic-network">
           Logistic network
         </SelectOption>
-        <SelectOption value="logistics-circuit-network">
+        <SelectOption value="circuit-network">
           Circuit network
         </SelectOption>
-        <SelectOption value="logistics-terrain">Terrain</SelectOption>
+        <SelectOption value="terrain">Terrain</SelectOption>
       </SelectGroup>
       <SelectGroup
         label="Production"

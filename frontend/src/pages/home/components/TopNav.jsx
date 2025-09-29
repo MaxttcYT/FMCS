@@ -14,10 +14,13 @@ function TopNav({
   handleKill,
   reconnectSocket,
   handleSave,
+  handleStartBuild,
 }) {
   const menuData = {
     File: {
       Save: () => handleSave(),
+      Build: () => handleStartBuild(),
+      "Build and Run": () => handleStart(),
       New: {
         Project: () => (window.location.href = "/?newproject=true"),
       },

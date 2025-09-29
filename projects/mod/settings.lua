@@ -1,0 +1,1 @@
+-- Defines mod startup, runtime, and map settings (can be changed by the player in the mod settings menu).
