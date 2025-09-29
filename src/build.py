@@ -74,16 +74,21 @@ def format_elapsed(seconds: float) -> str:
 
 
 def startBuild(socketio, projectId):
+    os.makedirs(dev_mod_dir, exist_ok=True)
+    
     start = time.perf_counter()
     project_info = retriveProjectInfo(projectId)
     project_content = project_info["registry"]["content"]
     project_path = project_info["path"]
     build_output_zip_path = os.path.join(main_dir, dev_mod_dir, f"{project_info["name"]}_{project_info["version"]}.zip")
-    build_output_dir = os.path.join(main_dir, dev_mod_dir, "build")
 
     #Remove old build zip
     if os.path.exists(build_output_zip_path):
         os.remove(build_output_zip_path)
+        
+    if os.path.exists(dev_mod_dir):
+        shutil.rmtree(dev_mod_dir, ignore_errors=True)
+        os.makedirs(dev_mod_dir, exist_ok=True)
 
     os.makedirs(os.path.join(project_path, "prototypes", "autogen"), exist_ok=True)
     os.makedirs(os.path.join(project_path, "controls", "autogen"), exist_ok=True)

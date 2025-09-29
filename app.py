@@ -4,6 +4,7 @@ from flask_apscheduler import APScheduler
 from flask_cors import CORS, cross_origin
 import os
 import shutil
+import src.config as config
 import src.build as modBuilder
 import src.factorio as factorio
 import requests
@@ -35,6 +36,9 @@ app.config.from_object(Config())
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+checkConfigResult = config.checkConfig()
+if checkConfigResult:
+    raise ValueError("[settings.yaml] " + checkConfigResult)
 
 def fileIcons(filepath):
     filename = os.path.basename(filepath)

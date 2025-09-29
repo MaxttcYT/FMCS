@@ -11,7 +11,7 @@ if not steam_path:
 
 # Starte das Spiel via Steam
 print("Starte Factorio über Steam...")
-subprocess.run([steam_path, f"steam://rungameid/{app_id}"])
+subprocess.run([steam_path, "-applaunch", app_id])
 
 def is_factorio_running():
     for proc in psutil.process_iter(['name']):

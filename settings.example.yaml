@@ -1,9 +1,28 @@
- #Example for Factorio installed on Windows with Steam
+# COPY THIS FILE TO settings.yaml
+# COPY THIS FILE TO settings.yaml
+# COPY THIS FILE TO settings.yaml
 
-FACTORIO_STEAM_ID: 427520 #Shouldn't change
+# These are default values for windows
+
+# https://wiki.factorio.com/Application_directory#Locations
+# Path where Factorios gamefiles live (folders like data/)
 FACTORIO_PATH: "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio"
-FACTORIO_EXE_PATH: "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio\\bin\\x64\\factorio.exe" 
-STEAM_PATH: "C:/Program Files (x86)/Steam/steam.exe"
 
-#Change {username} to actual username
+# https://wiki.factorio.com/Application_directory#User_data_directory
+# Path where folders like save, mods, config etc. are located
 FACTORIO_DATA_PATH: "C:\\Users\\{username}\\AppData\\Roaming\\Factorio"
+
+
+
+#-----Game Execution-----
+
+# Only steam is supportet yet!
+STARTUP_MODE: "STEAM" # [BINARY/STEAM]
+
+# FOR STARTUP_MODE -BINARY-:
+#FACTORIO_BINARY_PATH: "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio\\bin\\x64\\factorio.exe" 
+
+# FOR STARTUP_MODE -STEAM-:
+FACTORIO_STEAM_ID: 427520 # Always the same
+
+STEAM_PATH: "C:/Program Files (x86)/Steam/steam.exe" # only needed on windows for STARTUP_MODE=STEAM
