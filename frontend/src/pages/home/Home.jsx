@@ -199,14 +199,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    itemPickerRef.current
-      ?.open()
-      .then((chosenItem) => {
-        console.log("Accepted:", chosenItem);
-      })
-      .catch(() => {
-        console.log("Rejected (canceled)");
-      });
+    //itemPickerRef.current
+    //  ?.open()
+    //  .then((chosenItem) => {
+    //    console.log("Accepted:", chosenItem);
+    //  })
+    //  .catch(() => {
+    //    console.log("Rejected (canceled)");
+    //  });
   }, []);
 
   return (

@@ -1,10 +1,9 @@
 {
-    "name": "fmcs-template",
+    "name": "defaultProject",
     "author": "FMCS",
     "version": "1.0.0",
-    "title": "FMCS TEMPLATE",
-    "description": "A template created in FMCS",
-    "homepage": "https://maxttc.me",
+    "title": "defaultProject",
+    "description": "",
     "factorio_version": "2.0",
     "dependencies": [
         "base >= 2.0"
