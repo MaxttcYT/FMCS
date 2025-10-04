@@ -15,6 +15,7 @@ const Input = forwardRef(({
   disabled = false,
   className = "",
   noShadow = false,
+  ...props
 }, ref) => {
   // Conditionally apply the value and onChange props only if they exist
   const isControlled = value !== undefined;
@@ -40,6 +41,7 @@ const Input = forwardRef(({
       onBlur={onBlur}
       value={isControlled ? value : undefined} // Only apply value if controlled
       disabled={disabled}
+      {...props}
     />
   );
 });

@@ -97,9 +97,14 @@ const MainEditorTabControl = forwardRef(
         );
       },
       updateTabTitle: (id, title) => {
-        console.log("NEW TITLE ",title, " FOR ID ", id)
+        console.log("NEW TITLE ", title, " FOR ID ", id);
         setTabs((tabs) =>
           tabs.map((tab) => (tab.id === id ? { ...tab, title } : tab))
+        );
+      },
+      updateTabMessage: (id, message, messageClassnames="") => {
+        setTabs((tabs) =>
+          tabs.map((tab) => (tab.id === id ? { ...tab, message, messageClassnames } : tab))
         );
       },
       setSelectedTab: (index) => {
@@ -141,6 +146,20 @@ const MainEditorTabControl = forwardRef(
       }
     }, [selectedTab, tabs]);
 
+    useEffect(() => {
+      const container = tabContainerRef.current;
+      if (!container) return;
+
+      const handleWheel = (e) => {
+        if (e.deltaY === 0) return;
+        e.preventDefault();
+        container.scrollLeft -= e.deltaY;
+      };
+
+      container.addEventListener("wheel", handleWheel, { passive: false });
+      return () => container.removeEventListener("wheel", handleWheel);
+    }, []);
+
     return (
       <div
         className={`h-full w-full flex flex-col ${className} tab-bar-scrollbar`}
@@ -148,7 +167,7 @@ const MainEditorTabControl = forwardRef(
       >
         <div
           ref={tabContainerRef}
-          className="px-4 pt-3 flex-shrink-0 flex-nowrap overflow-x-auto overflow-y-hidden"
+          className="flex px-4 pt-3 flex-shrink-0 flex-nowrap overflow-x-auto overflow-y-hidden"
           style={{ whiteSpace: "nowrap" }}
         >
           {tabs.map((tab, index) => (
@@ -158,7 +177,7 @@ const MainEditorTabControl = forwardRef(
               style={{ display: "inline-block" }}
             >
               <TabTitle
-              key={tab.id + tab.title}
+                key={tab.id + tab.title}
                 className={`${tab.className || ""}`}
                 title={tab.title}
                 index={index}
@@ -167,6 +186,8 @@ const MainEditorTabControl = forwardRef(
                 onTabClose={() => handleClose(tab.id)}
                 icon={tab.icon || <X />}
                 hoverIcon={tab.hoverIcon || tab.icon}
+                TypeIcon={tab.typeIcon}
+                tabType={tab.dataStorage?.editorType}
               />
             </div>
           ))}
@@ -179,7 +200,7 @@ const MainEditorTabControl = forwardRef(
             } ${selectedChild?.message ? "pb-7" : ""}`}
             style={{ overflow: "hidden" }}
           >
-            <span className="text-gray-light">{selectedChild?.message}</span>
+            <span className={`text-gray-light ${selectedChild?.messageClassnames}`}>{selectedChild?.message}</span>
             <div
               className="h-full overflow-auto"
               style={{ padding: tabHasSmallPadding ? "0" : "0.5rem" }}

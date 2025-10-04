@@ -92,7 +92,6 @@ def func_name():
 def send_message_task():
     socketio.emit("factorio_running", factorio.is_factorio_running())
 
-
 @app.route("/api/inventory/items/<projectid>", methods=["GET"])
 def get_inventory_items(projectid):
     dataRaw_path = os.path.join(script_dir, "dataRaw")
@@ -138,6 +137,50 @@ def get_inventory_items(projectid):
     return Response(json_content, mimetype="application/json")
 
 
+@app.route("/api/inventory/science/<projectid>", methods=["GET"])
+def get_inventory_science(projectid):
+    dataRaw_path = os.path.join(script_dir, "dataRaw")
+    file_path = os.path.join(dataRaw_path, "science.json")
+    project_dir = os.path.join(script_dir, "projects")
+    register = getProjectRegister()
+
+    with open(
+        os.path.join(project_dir, register[int(projectid)], "project.hidden.json"), "r"
+    ) as f:
+        project_registry = json.load(f)
+
+    project_items = project_registry["content"]["items"]
+    for d in project_items:
+        d["fmcs_item_type"] = "custom"
+    project_items = {d["name"]: d for d in project_items}
+
+    with open(file_path, "r") as f:
+        content = json.load(f, object_pairs_hook=OrderedDict)
+
+    content["mod_added"] = {}
+
+    mod_added_group = content["mod_added"]
+    mod_added_group["data"] = {
+        "icon": "__base__/graphics/icons/signal/signal-plus.png",
+        "icon_size": 64,
+        "name": "mod_added",
+        "order": "zz",
+        "type": "item-group",
+    }
+    mod_added_group["subgroups"] = {}
+
+    mod_added_group["subgroups"]["added_items"] = {}
+    mod_added_group["subgroups"]["added_items"]["data"] = {
+        "group": "mod_added",
+        "name": "added_items",
+        "order": "a",
+        "type": "item-subgroup",
+    }
+    mod_added_group["subgroups"]["added_items"]["items"] = project_items
+
+    json_content = json.dumps(content)
+    return Response(json_content, mimetype="application/json")
+
 @app.route("/api/dataRaw/items/<itemName>/<projectid>", methods=["GET"])
 def get_item_info(itemName, projectid):
     dataRaw_path = os.path.join(script_dir, "dataRaw")
@@ -161,7 +204,6 @@ def get_item_info(itemName, projectid):
         return abort(404)
 
     return Response(json.dumps(content[itemName]), mimetype="application/json")
-
 
 if __name__ == "__main__":
     scheduler.start()

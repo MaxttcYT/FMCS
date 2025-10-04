@@ -51,13 +51,15 @@ const RecipeEditor = forwardRef(
       getContent: () => values,
       validate: () => {
         const nameRegex = /^[A-Za-z0-9-]+$/;
-        if (!values.name.trim()) return "Item name is required";
+        if (!values.name.trim()) return "Recipe name is required";
         if (!nameRegex.test(values.name))
           return "Name can only contain letters, numbers, and hyphens";
-        if (!values.subgroup) return "Please select a sub group";
-        if (!values.icon) return "Please select an icon";
-        if (!values.stack_size || values.stack_size <= 0)
-          return "Stack size must be one or more";
+        if (!values.energy_required || values.energy_required <= 0)
+          return "energy_required must be one or more";
+        if (!values.results || values.results.length <= 0)
+          return "Recipe has to include at least one result";
+        if (!values.ingredients || values.ingredients.length <= 0)
+          return "Recipe has to include at least one ingredient";
         return true;
       },
     }));
@@ -83,8 +85,8 @@ const RecipeEditor = forwardRef(
       handleChange();
     };
 
-    const handleEnabledChange = (e) => {
-      setValues((prev) => ({ ...prev, enabled: e.target.value }));
+    const handleEnabledChange = (enabled) => {
+      setValues((prev) => ({ ...prev, enabled: enabled }));
       handleChange();
     };
 
@@ -235,7 +237,8 @@ const RecipeEditor = forwardRef(
               Energy Required (Base crafting time)
               <HelpIcon>
                 Energy Required: Base value in seconds for calculating, how long
-                it will take to craft item
+                it will take to craft item Example: Recipe [Energy Required=2]
+                in Assembler [Crafting Speed=1] = 2s
               </HelpIcon>
             </Label>
             <NumberInput
@@ -251,7 +254,12 @@ const RecipeEditor = forwardRef(
                 researched or otherwise unlocked
               </HelpIcon>
             </Label>
-            <Checkbox checked={values.enabled} onChange={handleEnabledChange} className="w-fit" text={"Enabled from beginning"} />
+            <Checkbox
+              checked={values.enabled}
+              onChange={handleEnabledChange}
+              className="w-fit"
+              text={"Enabled from beginning"}
+            />
           </div>
           <div>
             <Label>

@@ -1,4 +1,4 @@
-import React, { useRef, useImperativeHandle, forwardRef } from "react";
+import React, { useRef, useImperativeHandle, forwardRef, useEffect } from "react";
 import { lua } from "@codemirror/legacy-modes/mode/lua";
 import { luaCompletions } from "../utils/completions";
 import { luaLinter } from "../utils/linter";
@@ -45,17 +45,27 @@ const luaFold = foldService.of((state, lineStart) => {
 });
 
 export default forwardRef(function LuaEditor(
-  { read_only = false, defaultValue, handleChange },
+  { read_only = false, defaultValue, handleChange=()=>{} },
   ref
 ) {
   const editorRef = useRef();
+  console.log(handleChange)
 
   useImperativeHandle(ref, () => ({
     getContent: () => {
       return editorRef.current?.getContent();
     },
+    setContent: () => {
+      return editorRef.current?.setContent();
+    },
   }));
-  console.log(read_only);
+  useEffect(() => {
+    console.log("REOUNT LUAEDITOR")
+  }, [])
+  useEffect(() => {
+    console.log("DEFAULTVALUECHANGE LUAEDITOR")
+  }, [defaultValue])
+  
 
   return (
     <CodeMirror

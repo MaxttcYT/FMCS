@@ -1,0 +1,107 @@
+{
+    "content": {
+        "recipes": [
+            {
+                "name": "fmcs-item-recipe",
+                "energy_required": 1,
+                "results": [
+                    {
+                        "FMCS_REFERENCES": [
+                            {
+                                "FIELDS": [
+                                    "name"
+                                ],
+                                "FMCS_ID": "e846506e-5d42-4ecb-b079-64ec196ce785"
+                            }
+                        ],
+                        "amount": 10,
+                        "name": "fmcs-item",
+                        "type": "item"
+                    }
+                ],
+                "ingredients": [
+                    {
+                        "amount": 1,
+                        "name": "steel-plate",
+                        "type": "item"
+                    }
+                ],
+                "enabled": false,
+                "fmcs_id": "88d564a9-f976-4bc2-84e8-be23502a9820"
+            }
+        ],
+        "items": [
+            {
+                "name": "fmcs-item",
+                "subgroup": "storage",
+                "icon": "__defaultProject__/graphics/icons/fmcs-item.png",
+                "icon_size": 64,
+                "order": "z[u]",
+                "stack_size": 100,
+                "fmcs_id": "e846506e-5d42-4ecb-b079-64ec196ce785"
+            }
+        ],
+        "tech": [
+            {
+                "name": "super-metallurgy",
+                "fmcs_id": "a975378e-0ecd-450d-adc6-ac4c826a1aad",
+                "icon": "__base__/graphics/technology/steel-processing.png",
+                "icon_size": 256,
+                "prerequisites": [
+                    "steel-processing"
+                ],
+                "effects": [
+                    {
+                        "type": "unlock-recipe",
+                        "FMCS_REFERENCES": [
+                            {
+                                "FMCS_ID": "88d564a9-f976-4bc2-84e8-be23502a9820",
+                                "FIELDS": [
+                                    [
+                                        "name",
+                                        "recipe"
+                                    ]
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "unit": {
+                    "count": 50,
+                    "ingredients": [
+                        [
+                            "automation-science-pack",
+                            1
+                        ],
+                        [
+                            "logistic-science-pack",
+                            1
+                        ]
+                    ],
+                    "time": 30
+                },
+                "order": "c-a"
+            }
+        ],
+        "commands": [
+            {
+                "name": "hello",
+                "description": "Prints \"Hello, [Player Name]!\" to console",
+                "code": "game.player.print(\n    \"Hello, \" .. \n    (command.player_index and game.players[command.player_index].name or \"Console\") .. \n    \"!\"\n)"
+            }
+        ],
+        "icons": [
+            {
+                "name": "fmcs-item",
+                "type": "icon",
+                "path": "/graphics/icons/fmcs-item.png",
+                "sizes": [
+                    64,
+                    32,
+                    16,
+                    8
+                ]
+            }
+        ]
+    }
+}

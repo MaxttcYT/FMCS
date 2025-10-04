@@ -14,12 +14,21 @@ import FilePicker, { FilePickerButton } from "@/components/FilePicker";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
+const typeToEditor = {
+  command: "CommandEditor",
+  item: "ItemEditor",
+  recipe: "RecipeEditor",
+  technology: "TechEditor",
+  icon: "IconEditor",
+};
+
 const handleCreateItem = async (
   values,
   itemType,
   itemName,
   refreshProjectInfo,
-  projectId
+  projectId,
+  openItemEditor
 ) => {
   const content = values;
   const item = {
@@ -45,14 +54,19 @@ const handleCreateItem = async (
       if (!response.ok) throw new Error("Failed to create item");
 
       const responseData = await response.json();
-      const createdItem = { ...responseData.createdItem, type: item.type };
+      const createdItem = {
+        ...responseData.createdItem,
+        type: item.type,
+        editor: typeToEditor[item.type],
+      };
 
       if (!responseData.success) {
         alert("create error");
         return;
       }
 
-      console.log(refreshProjectInfo)
+      console.log(refreshProjectInfo);
+      openItemEditor?.(createdItem);
       refreshProjectInfo();
     } catch (error) {
       console.error("create error:", error);
@@ -66,13 +80,113 @@ const handleCreateItem = async (
   }
 };
 
-export function ItemConfigWizardStep({ ...props }) {
+export function RecipeConfigWizardStep({
+  refreshProjectInfo,
+  openItemEditor,
+  ...props
+}) {
+  const [values, setValues] = useState({
+    name: "",
+    energy_required: 1,
+    ingredients: [],
+    results: [],
+    enabled: true,
+  });
+  const { projectId } = useParams();
+
+  const handleChange = (field) => (value) => {
+    setValues((prev) => {
+      const newValues = { ...prev, [field]: value };
+      return newValues;
+    });
+  };
+
+  const validate = () => {
+    const nameRegex = /^[A-Za-z0-9-]+$/;
+
+    if (!values.name.trim()) return "Recipe name is required";
+    if (!nameRegex.test(values.name))
+      return "Name can only contain letters, numbers, and hyphens";
+    if (!values.energy_required || values.energy_required <= 0)
+      return "energy_required must be one or more";
+
+    handleCreateItem(
+      values,
+      "recipe",
+      values.name,
+      refreshProjectInfo,
+      projectId,
+      openItemEditor
+    );
+
+    return true;
+  };
+
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    // Only allow letters, numbers, and hyphens
+    const filtered = value.replace(/[^A-Za-z0-9-]/g, "");
+    setValues((prev) => ({ ...prev, name: filtered }));
+  };
+
+  return (
+    <WizardStep validate={validate} {...props}>
+      <WizardContent>
+        <div className="flex flex-col gap-4">
+          <div>
+            <Label htmlFor="newRecipe-name">
+              Recipe Name:
+              <HelpIcon>
+                Recipe name: Internal identifier used for reference and
+                localization. Can contain: letters, numbers, hyphens
+              </HelpIcon>
+            </Label>
+            <Input
+              id="newRecipe-name"
+              value={values.name}
+              onChange={(e) => {
+                handleChange("name")(e.target.value);
+                handleNameChange(e);
+              }}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="newRecipe-energy_required">
+              Energy Required (Base crafting time):
+              <HelpIcon>
+                Energy Required: Base value in seconds for calculating, how long
+                it will take to craft item
+                Example: Recipe [Energy Required=2] in Assembler [Crafting Speed=1] = 2s
+              </HelpIcon>
+            </Label>
+              <NumberInput
+              id="newRecipe-energy_required"
+              value={values.energy_required}
+              onChange={handleChange("energy_required")}
+              max={9999}
+              min={1}
+            />
+          </div>
+        </div>
+      </WizardContent>
+    </WizardStep>
+  );
+}
+
+export function ItemConfigWizardStep({
+  modalManagerRef,
+  refreshProjectInfo,
+  openItemEditor,
+  ...props
+}) {
   const [values, setValues] = useState({
     name: "",
     subgroup: "",
     icon: "",
-    stackSize: 100,
+    stack_size: 100,
   });
+  const { projectId } = useParams();
 
   const handleChange = (field) => (value) => {
     setValues((prev) => {
@@ -89,8 +203,18 @@ export function ItemConfigWizardStep({ ...props }) {
       return "Name can only contain letters, numbers, and hyphens";
     if (!values.subgroup) return "Please select a sub group";
     if (!values.icon) return "Please select an icon";
-    if (!values.stackSize || values.stackSize <= 0)
+    if (!values.stack_size || values.stack_size <= 0)
       return "Stack size must be one or more";
+
+    handleCreateItem(
+      values,
+      "item",
+      values.name,
+      refreshProjectInfo,
+      projectId,
+      openItemEditor
+    );
+
     return true;
   };
 
@@ -154,8 +278,8 @@ export function ItemConfigWizardStep({ ...props }) {
             </Label>
             <NumberInput
               id="newItem-stacksize"
-              value={values.stackSize}
-              onChange={handleChange("stackSize")}
+              value={values.stack_size}
+              onChange={handleChange("stack_size")}
               max={99999}
               min={1}
             />
@@ -164,22 +288,6 @@ export function ItemConfigWizardStep({ ...props }) {
       </WizardContent>
     </WizardStep>
   );
-}
-
-export function RecipeConfigWizardStep({ ...props }) {
-  const [values, setValues] = useState({
-    name: "",
-    energy_required: 1,
-    ingredients: [],
-    results: [],
-  });
-
-  const handleChange = (field) => (value) => {
-    setValues((prev) => {
-      const newValues = { ...prev, [field]: value };
-      return newValues;
-    });
-  };
 }
 
 function GraphicConfigSizesList({ value, onChange = () => {} }) {
@@ -233,6 +341,7 @@ function GraphicConfigSizesRow({ size, onRemove, onChange }) {
 export function GraphicConfigWizardStep({
   modalManagerRef,
   refreshProjectInfo,
+  openItemEditor,
   ...props
 }) {
   const [values, setValues] = useState({
@@ -257,7 +366,7 @@ export function GraphicConfigWizardStep({
     if (!values.name.trim()) return "Icon name is required";
     if (!nameRegex.test(values.name))
       return "Name can only contain letters, numbers, and hyphens";
-    if (!values.selectedFile) return "Please select a file";
+    if (!values.selectedFile?.path) return "Please select a file";
 
     const filteredValues = Object.fromEntries(
       Object.entries(values).filter(([key]) => key !== "selectedFile")
@@ -268,7 +377,8 @@ export function GraphicConfigWizardStep({
       "icon",
       values.name,
       refreshProjectInfo,
-      projectId
+      projectId,
+      openItemEditor
     );
     return true;
   };

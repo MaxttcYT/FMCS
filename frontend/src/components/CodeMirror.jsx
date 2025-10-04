@@ -40,6 +40,9 @@ export default forwardRef(function CodeMirror(
       }
       return null;
     },
+    setContent: () => {
+      viewRef.current.state.doc.from
+    },
     getView: () => viewRef.current,
     getDiagnostics: () => {
       if (!viewRef.current) return [];
@@ -112,7 +115,7 @@ export default forwardRef(function CodeMirror(
     viewRef.current = view;
 
     return () => view.destroy();
-  }, [defaultValue, mode, modeType, cmLinter, onChange]);
+  }, [mode, modeType, cmLinter, onChange]);
 
   return (
     <div

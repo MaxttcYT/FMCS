@@ -74,6 +74,59 @@ def save_item(project):
         print(e)
         return handle_error(f"Error saving file: {str(e)}")
 
+@items_bp.route("/api/items/<project>/delete-item", methods=["POST"])
+@cross_origin()
+def delete_item(project):
+    data = request.get_json()
+    name = data.get("name")
+    item_type = data.get("type")
+
+    if not name:
+        return handle_error("No name provided")
+
+    if not item_type:
+        return handle_error("No type provided")
+
+    try:
+        project_dir = os.path.join(main_dir, "projects")
+        register = getProjectRegister()
+
+        project_path = os.path.join(project_dir, register[int(project)], "project.hidden.json")
+        with open(project_path, "r") as f:
+            project_registry = json.load(f)
+
+        if item_type not in ["item", "recipe", "command", "technology", "icon"]:
+            return handle_error("Invalid type provided")
+
+        registry_category_mapping = {
+            "item": "items",
+            "recipe": "recipes",
+            "command": "commands",
+            "technology": "tech",
+            "icon": "icons",
+        }
+
+        item_category = registry_category_mapping[item_type]
+
+        items_of_type = project_registry["content"].get(item_category, [])
+
+        # Remove the item from the list
+        updated_items = [d for d in items_of_type if d.get("name") != name]
+
+        if len(updated_items) == len(items_of_type):
+            return handle_error("Invalid name provided")
+
+        # Update the registry
+        project_registry["content"][item_category] = updated_items
+
+        with open(project_path, "w") as f:
+            json.dump(project_registry, f, indent=4)
+
+        return jsonify({"success": True}), 200
+
+    except Exception as e:
+        print(e)
+        return handle_error(f"Error saving file: {str(e)}")
 
 @items_bp.route("/api/items/<project>/create-item", methods=["POST"])
 @cross_origin()

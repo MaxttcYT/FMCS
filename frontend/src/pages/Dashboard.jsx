@@ -68,7 +68,9 @@ export default function Dashboard() {
   };
 
   const handleDeleteProject = (id, name) => {
-    if (!confirm(`Do you really want to delete "${name}"? This is irreversible!`))
+    if (
+      !confirm(`Do you really want to delete "${name}"? This is irreversible!`)
+    )
       return;
 
     fetch(`${process.env.API_URL}/api/projects/${id}/delete`)
@@ -80,19 +82,34 @@ export default function Dashboard() {
   return (
     <div>
       {/* Wizard rendered in JSX */}
-      <Wizard open={wizardOpen} setOpen={setWizardOpen} title="Create New Project" onFinish={handleFinish}>
+      <Wizard
+        open={wizardOpen}
+        setOpen={setWizardOpen}
+        title="Create New Project"
+        onFinish={handleFinish}
+      >
         <WizardStep>
           <div className="flex flex-col gap-2">
             <div>
               <Label htmlFor="newProj-name">Project Name:</Label>
-              <Input id="newProj-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="My cool mod" />
+              <Input
+                id="newProj-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="My cool mod"
+              />
             </div>
             <div>
               <Label htmlFor="newProj-author">Author:</Label>
-              <Input id="newProj-author" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="MrModDev" />
+              <Input
+                id="newProj-author"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="MrModDev"
+              />
             </div>
             <div>
-              <Label text="Version:" htmlFor="newProj-version" />
+              <Label htmlFor="newProj-version">Version:</Label>
               <div className="flex gap-2 items-end" id="newProj-version">
                 <NumberInput value={version1} onChange={setVersion1} />
                 <span>.</span>
@@ -102,10 +119,15 @@ export default function Dashboard() {
               </div>
             </div>
             <div>
-              <Label text="Factorio version:" htmlFor="newProj-fversion" />
-                <CustomSelect id="newProj-fversion" value={factorioVersion} onChange={(value) => setFactorioVersion(value)} searchable={false}>
-                  <SelectOption value={"2.0"}>2.0.*</SelectOption>
-                </CustomSelect>
+              <Label htmlFor="newProj-version">Factorio version:</Label>
+              <CustomSelect
+                id="newProj-fversion"
+                value={factorioVersion}
+                onChange={(value) => setFactorioVersion(value)}
+                searchable={false}
+              >
+                <SelectOption value={"2.0"}>2.0.*</SelectOption>
+              </CustomSelect>
             </div>
           </div>
         </WizardStep>
@@ -113,7 +135,11 @@ export default function Dashboard() {
         <WizardStep>
           <div className="flex flex-col gap-2">
             <Label htmlFor="newProj-description">Description (Optional):</Label>
-            <Textarea id="newProj-description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <Textarea
+              id="newProj-description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
         </WizardStep>
       </Wizard>
@@ -148,7 +174,12 @@ export default function Dashboard() {
                   </div>
                 </div>
                 <div className="mx-4 mt-auto w-full">
-                  <ButtonLink type="success" size="sm" className="w-full text-center" href={`/${mod.id}`}>
+                  <ButtonLink
+                    type="success"
+                    size="sm"
+                    className="w-full text-center"
+                    href={`/${mod.id}`}
+                  >
                     Open
                   </ButtonLink>
                 </div>
@@ -171,7 +202,12 @@ export default function Dashboard() {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                 </div>
               </div>

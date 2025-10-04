@@ -36,6 +36,9 @@ function TopNav({
       [`${showFileTree ? "✓ " : ""}Show File Viewer`]: () => {
         setShowFileTree(!showFileTree);
       },
+      [`Docs`]: () => {
+        window.open('https://docs.fmcs.maxttc.me', '_blank');
+      },
     },
   };
 

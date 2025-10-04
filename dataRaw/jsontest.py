@@ -1,7 +1,7 @@
 import json
 
 # Load JSON data
-with open("dataRaw.json", "r", encoding="utf-8") as f:
+with open("data-raw-dump.json", "r", encoding="utf-8") as f:
     python_dict = json.load(f)
 
 
@@ -25,6 +25,7 @@ item_dict = {
     **python_dict["deconstruction-item"],
     **python_dict["module"],
     **python_dict["armor"],
+    **python_dict["tool"],
 }
 
 item_name_filter = [
@@ -131,3 +132,35 @@ with open("items.json", "w", encoding="utf-8") as f:
     json.dump(items_json, f, indent=2, ensure_ascii=False)
 
 print("items.json created!")
+
+science_hierarchy = {}
+
+for g_key, g_val in hierarchy.items():
+    for sg_key, sg_val in g_val["subgroups"].items():
+        science_items = {
+            i_key: i_val
+            for i_key, i_val in sg_val["items"].items()
+            if "science" in i_key
+        }
+
+        if science_items:
+            if g_key not in science_hierarchy:
+                science_hierarchy[g_key] = {"data": g_val["data"], "subgroups": {}}
+            science_hierarchy[g_key]["subgroups"][sg_key] = {
+                "data": sg_val["data"],
+                "items": science_items,
+            }
+            
+with open("science.json", "w", encoding="utf-8") as f:
+    json.dump(science_hierarchy, f, indent=2, ensure_ascii=False)
+
+print("science.json created!")
+
+with open("technologies.json", "w", encoding="utf-8") as f:
+    json.dump(python_dict["technology"], f, indent=2, ensure_ascii=False)
+
+print("technologies.json created!")
+
+for tech_key, tech in python_dict["technology"].items():
+    print(tech["name"])
+print(len(python_dict["technology"]))

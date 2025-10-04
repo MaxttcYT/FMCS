@@ -18,7 +18,7 @@ const ItemEditor = forwardRef(
       subgroup: item.subgroup,
       icon: item.icon,
       icon_size: 64,
-      order: item.order,
+      order: item.order || "z[u]",
       stack_size: Number(item.stack_size),
       fmcs_id: item.fmcs_id,
     });
@@ -117,7 +117,7 @@ const ItemEditor = forwardRef(
           </div>
         </div>
 
-        {true && (
+        {false && (
           <div className="grid grid-cols-2 mt-5 gap-2">
             <Textarea value={"OLD \n" + JSON.stringify(item, null, 2)} />
             <Textarea value={"NEW \n" + JSON.stringify(values, null, 2)} />

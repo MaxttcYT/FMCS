@@ -1,11 +1,13 @@
-import { Loader2Icon, X } from "lucide-react";
+import { FileIcon, Loader2Icon, X } from "lucide-react";
 import { toast } from "react-toastify";
 import React from "react";
 import { DotFilled } from "@/components/CustomIcons";
 import * as editorViews from "@/editorViews";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as itemEditorViews from "@/editorViews/itemEditorViews";
+import * as setiIcons from "seti-icons-react";
+import { contentItemIconMapping } from "@/config";
 
 export const handleItemSave = async (
   tabControlRef,
@@ -17,6 +19,13 @@ export const handleItemSave = async (
   const tab = tabControlRef.current.getSelectedTab();
 
   if (tab?.dataStorage?.isEditor && tab?.dataStorage?.editorRef?.current) {
+    const isValid = tab.dataStorage.editorRef.current.validate();
+    if (isValid !== true) {
+      tabControlRef.current.updateTabMessage(tab.id, isValid, "text-red");
+      return;
+    } else {
+      tabControlRef.current.updateTabMessage(tab.id, "", "");
+    }
     setFsStatus("Saving");
     tabControlRef.current.updateTabIcon(
       tab.id,
@@ -234,9 +243,20 @@ export const handleFileOpening = async (
 ) => {
   const tabId = file.path;
 
+  const iconKey = file.icon?.icon;
+  const IconComponent = setiIcons[iconKey];
+  const iconTheme = file.icon?.theme || file.icon?.extension;
+
+  const RenderedIcon = IconComponent ? (
+    <IconComponent theme={iconTheme} style={{ width: 22, height: 22 }} />
+  ) : (
+    <FileIcon />
+  );
+
   const tabData = {
     id: tabId,
     title: file.name,
+    typeIcon: RenderedIcon,
     dataStorage: {
       isEditor: true,
       file: file,
@@ -279,7 +299,7 @@ export const getEditorForItem = async (
   projectId,
   refreshProjectInfo,
   handleSave,
-  modalManagerRef,
+  modalManagerRef
 ) => {
   const EditorComponent = itemEditorViews[item.editor];
 
@@ -326,12 +346,20 @@ export const handleOpenItemEditor = async (
   projectId,
   refreshProjectInfo,
   handleSave,
-  modalManagerRef,
+  modalManagerRef
 ) => {
   const tabId = item.name + "_" + item.type;
+
+  const RenderedIcon = false ? (
+    <IconComponent theme={""} style={{ width: 22, height: 22 }} />
+  ) : (
+    <FileIcon />
+  );
+
   const tabData = {
     id: tabId,
     title: item.name,
+    typeIcon: <img src={contentItemIconMapping[item.type]} className="h-[22px]" />,
     dataStorage: {
       isEditor: true,
       item: item,
@@ -353,7 +381,7 @@ export const handleOpenItemEditor = async (
     projectId,
     refreshProjectInfo,
     handleSave,
-    modalManagerRef,
+    modalManagerRef
   );
   if (editorResult) {
     tabControlRef.current?.updateTabContent(tabId, editorResult.component);

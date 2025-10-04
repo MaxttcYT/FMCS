@@ -8,7 +8,7 @@ import Panel from "./Panel";
 import { DotFilled } from "./CustomIcons";
 import { ItemIconRenderer } from "./ItemIconRenderer";
 
-export const Inventory = forwardRef(({ onSelect = () => {}, projectid }, ref) => {
+export const Inventory = forwardRef(({ onSelect = () => {}, projectid, dataUrl=`${process.env.API_URL}/api/inventory/items/${projectid}` }, ref) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
   const [selectedTab, setSelectedTab] = useState(null);
@@ -17,7 +17,7 @@ export const Inventory = forwardRef(({ onSelect = () => {}, projectid }, ref) =>
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${process.env.API_URL}/api/inventory/items/${projectid}`)
+    fetch(dataUrl)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
