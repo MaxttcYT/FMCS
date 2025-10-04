@@ -1,14 +1,10 @@
-import React, {
-  useImperativeHandle,
-  forwardRef,
-  useState,
-  useRef,
-} from "react";
+import React, { useImperativeHandle, forwardRef, useRef } from "react";
 import { Inventory } from "./Inventory";
 import Button from "./Button";
 
-const ItemPicker = forwardRef(({ modalManagerRef }, ref) => {
+const ItemPicker = forwardRef(({ modalManagerRef, projectId }, ref) => {
   const inventoryRef = useRef(null);
+  const promiseRef = useRef({ resolve: null, reject: null });
 
   const handleClose = () => {
     inventoryRef.current = null;
@@ -16,13 +12,17 @@ const ItemPicker = forwardRef(({ modalManagerRef }, ref) => {
   };
 
   const handleCancel = () => {
-    console.log("[ITEM PCIKER] Cancel");
+    console.log("[ITEM PICKER] Cancel");
     handleClose();
+    promiseRef.current.reject?.();
+    promiseRef.current = { resolve: null, reject: null };
   };
 
   const handleChoose = (chosen) => {
-    console.log("[ITEM PCIKER] Chosen:", chosen.name);
+    console.log("[ITEM PICKER] Chosen:", chosen.name);
     handleClose();
+    promiseRef.current.resolve?.(chosen);
+    promiseRef.current = { resolve: null, reject: null };
   };
 
   const onSelect = (selected) => {
@@ -30,13 +30,10 @@ const ItemPicker = forwardRef(({ modalManagerRef }, ref) => {
       id: "inventory_picker",
       actions: (
         <>
-          <Button
-            type={"success"}
-            onClick={(e) => handleChoose(selected)}
-          >
+          <Button type="success" onClick={() => handleChoose(selected)}>
             Choose {selected?.name}
           </Button>
-          <Button onClick={handleCancel} type={"danger"}>
+          <Button type="danger" onClick={handleCancel}>
             Cancel
           </Button>
         </>
@@ -44,7 +41,6 @@ const ItemPicker = forwardRef(({ modalManagerRef }, ref) => {
     });
   };
 
-  // Expose methods to parent via ref
   useImperativeHandle(ref, () => ({
     open() {
       modalManagerRef.current?.addModal({
@@ -52,10 +48,30 @@ const ItemPicker = forwardRef(({ modalManagerRef }, ref) => {
         title: `Item Picker`,
         noInnerPadding: true,
         panelCN: "!w-[600px]",
-        content: <Inventory ref={inventoryRef} onSelect={onSelect} />,
+        content: (
+          <Inventory
+            ref={inventoryRef}
+            onSelect={onSelect}
+            projectid={projectId}
+          />
+        ),
+        actions: (
+          <>
+            <Button type="danger" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </>
+        ),
+      });
+
+      // Return a promise that resolves/rejects based on user action
+      return new Promise((resolve, reject) => {
+        promiseRef.current = { resolve, reject };
       });
     },
   }));
+
+  return null;
 });
 
 export default ItemPicker;

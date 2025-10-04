@@ -4,6 +4,7 @@ import zipfile
 import os
 import json
 
+from src.items import resolve_project_registry
 import src.build_lua as build_lua
 from src.build_logging import sendBuildLog
 from src.projects import getProjectRegister
@@ -49,6 +50,8 @@ def retriveProjectInfo(projectId):
     ) as f:
         project_registry = json.load(f)
 
+    project_registry = resolve_project_registry(project_registry)
+    
     project_info["registry"] = project_registry
     return project_info
 

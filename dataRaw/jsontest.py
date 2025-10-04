@@ -12,7 +12,6 @@ def sort_key(key, value):
 
 item_dict = {
     **python_dict["item"],
-    **python_dict["tool"],
     **python_dict["ammo"],
     **python_dict["gun"],
     **python_dict["ammo-turret"],
@@ -24,7 +23,29 @@ item_dict = {
     **python_dict["blueprint-book"],
     **python_dict["upgrade-item"],
     **python_dict["deconstruction-item"],
+    **python_dict["module"],
+    **python_dict["armor"],
 }
+
+item_name_filter = [
+    "empty-module-slot",
+    "science",
+    "spidertron-rocket-launcher-1",
+    "spidertron-rocket-launcher-2",
+    "spidertron-rocket-launcher-3",
+    "spidertron-rocket-launcher-4",
+    "tank-cannon",
+    "tank-flamethrower",
+    "tank-machine-gun",
+    "vehicle-machine-gun",
+    "artillery-wagon-cannon",
+    # WEIRD "OTHER" TAB STUFF
+    "electric-energy-interface",
+    "proxy-container",
+    "bottomless-chest",
+    "simple-entity-with-force",
+    "simple-entity-with-owner",
+]
 
 # Step 1: sort groups
 groups = sorted(
@@ -38,6 +59,9 @@ subgroups = sorted(
 
 # Step 3: sort items
 items = sorted(item_dict.items(), key=lambda item: sort_key(item[0], item[1]))
+
+for i_key, i_val in items:
+    i_val["fmcs_item_type"] = "base"
 
 # Step 4: build hierarchy
 hierarchy = {}
@@ -53,12 +77,14 @@ for g_key, g_val in groups:
         hierarchy[g_key]["subgroups"][sg_key] = {"data": sg_val, "items": {}}
 
         subgroup_items = [
-            (i_key, i_val) for i_key, i_val in items if i_val.get("subgroup") == sg_key
+            (i_key, i_val)
+            for i_key, i_val in items
+            if i_val.get("subgroup") == sg_key and i_key not in item_name_filter
         ]
 
         for i_key, i_val in subgroup_items:
             hierarchy[g_key]["subgroups"][sg_key]["items"][i_key] = i_val
-            
+
 # Step 5: filter out empty subgroups
 for g_key in list(hierarchy.keys()):
     subgroups = hierarchy[g_key]["subgroups"]
@@ -94,3 +120,14 @@ with open("output.md", "w", encoding="utf-8") as md_file:
     md_file.write(markdown_content)
 
 print("Markdown file 'output.md' created!")
+
+items_json = {}
+
+for i_key, i_val in items:
+    if i_key not in item_name_filter:
+        items_json[i_key] = i_val
+
+with open("items.json", "w", encoding="utf-8") as f:
+    json.dump(items_json, f, indent=2, ensure_ascii=False)
+
+print("items.json created!")

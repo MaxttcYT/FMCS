@@ -39,6 +39,16 @@ export default function Home() {
     refresh: refreshProjectInfo,
   } = useProjectInfo(projectId);
 
+  useEffect(() => {
+    if (!loadingProjectInfo) {
+      console.group("PROJECT INFO")
+      console.log("PROJECT INFO")
+      console.log(projectInfo)
+      console.groupEnd()
+    }
+  }, [loadingProjectInfo])
+  
+
   const {
     status: factorioStatus,
     start: handleStartFactorio,
@@ -47,6 +57,7 @@ export default function Home() {
   } = useFactorioStatus(socket, projectInfo);
 
   const [showFileTree, setShowFileTree] = useState(true);
+  
   const [fsStatus, setFsStatus] = useState("Idle");
 
   const handleSave = async () => {
@@ -187,14 +198,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-    //itemPickerRef.current?.open()
+    //itemPickerRef.current
+    //  ?.open()
+    //  .then((chosenItem) => {
+    //    console.log("Accepted:", chosenItem);
+    //  })
+    //  .catch(() => {
+    //    console.log("Rejected (canceled)");
+    //  });
   }, []);
 
   return (
     <ProjectProvider projectId={projectId}>
       <div className="grid grid-cols-5 grid-rows-[60px_repeat(4,_1fr)] w-full h-screen overflow-hidden">
         <ModalManager ref={modalManagerRef} />
-        <ItemPicker ref={itemPickerRef} modalManagerRef={modalManagerRef} />
         {/* Top Nav */}
         <TopNav
           showFileTree={showFileTree}
@@ -213,6 +230,7 @@ export default function Home() {
           modalManagerRef={modalManagerRef}
           projectInfo={projectInfo}
           loadingInfo={loadingProjectInfo}
+          refreshProjectInfo={refreshProjectInfo}
           handleEditItem={(item) =>
             handleOpenItemEditor(
               item,
@@ -221,7 +239,7 @@ export default function Home() {
               projectId,
               refreshProjectInfo,
               handleSave,
-              modalManagerRef
+              modalManagerRef,
             )
           }
         />

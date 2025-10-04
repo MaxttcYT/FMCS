@@ -5,10 +5,21 @@ import { Wizard, WizardContent, WizardStep } from "@/components/Wizard";
 import Input from "@/components/Input";
 import Label from "@/components/Label";
 import HelpIcon from "@/components/HelpIcon";
-import { GraphicConfigWizardStep, ItemConfigWizardStep, RecipeConfigWizardStep, SelectWizardStep } from "./AddItemWizardSteps";
+import {
+  GraphicConfigWizardStep,
+  ItemConfigWizardStep,
+  RecipeConfigWizardStep,
+  SelectWizardStep,
+} from "./AddItemWizardSteps";
 import SliderInput from "@/components/SliderInput";
 
-function AddItemWizard({ open, setOpen, iconMapping }) {
+function AddItemWizard({
+  open,
+  setOpen,
+  iconMapping,
+  modalManagerRef,
+  refreshProjectInfo,
+}) {
   const debug = { enabled: false, selected: "item" };
   const initalSelected = debug.enabled ? debug.selected : null;
 
@@ -25,7 +36,7 @@ function AddItemWizard({ open, setOpen, iconMapping }) {
     <Wizard
       open={open}
       setOpen={setOpen}
-      title="Add new item"
+      title="Add new content"
       onFinish={handleWizardFinish}
       onCancle={resetWizard}
       startStep={debug.enabled ? 1 : 0}
@@ -35,14 +46,36 @@ function AddItemWizard({ open, setOpen, iconMapping }) {
         selected={selected}
         iconMapping={iconMapping}
       />
-      {selected == "item" && <ItemConfigWizardStep asStep={true} />}
-      {selected == "graphic" && <GraphicConfigWizardStep asStep={true} />}
-      {selected == "recipe" && <RecipeConfigWizardStep asStep={true} />}
+      {selected == "item" && (
+        <ItemConfigWizardStep
+          asStep={true}
+          refreshProjectInfo={refreshProjectInfo}
+        />
+      )}
+      {selected == "graphic" && (
+        <GraphicConfigWizardStep
+          asStep={true}
+          modalManagerRef={modalManagerRef}
+          refreshProjectInfo={refreshProjectInfo}
+        />
+      )}
+      {selected == "recipe" && (
+        <RecipeConfigWizardStep
+          asStep={true}
+          refreshProjectInfo={refreshProjectInfo}
+        />
+      )}
     </Wizard>
   );
 }
 
-function LeftSidebar({ loadingInfo, projectInfo, handleEditItem }) {
+function LeftSidebar({
+  loadingInfo,
+  projectInfo,
+  handleEditItem,
+  modalManagerRef,
+  refreshProjectInfo,
+}) {
   const [wizardOpen, setWizardOpen] = useState(false);
 
   if (loadingInfo) {
@@ -52,15 +85,28 @@ function LeftSidebar({ loadingInfo, projectInfo, handleEditItem }) {
     ...projectInfo.registry.content.commands.map((c) => ({
       ...c,
       type: "command",
-      editor: "CommandEditor"
+      editor: "CommandEditor",
     })),
-    ...projectInfo.registry.content.items.map((i) => ({ ...i, type: "item", editor: "ItemEditor" })),
+    ...projectInfo.registry.content.items.map((i) => ({
+      ...i,
+      type: "item",
+      editor: "ItemEditor",
+    })),
     ...projectInfo.registry.content.recipes.map((r) => ({
       ...r,
       type: "recipe",
-      editor: "RecipeEditor"
+      editor: "RecipeEditor",
     })),
-    ...projectInfo.registry.content.tech.map((t) => ({ ...t, type: "technology", editor: "TechEditor"  })),
+    ...projectInfo.registry.content.tech.map((t) => ({
+      ...t,
+      type: "technology",
+      editor: "TechEditor",
+    })),
+    ...projectInfo.registry.content.icons.map((t) => ({
+      ...t,
+      type: "icon",
+      editor: "IconEditor",
+    })),
   ];
 
   const iconMapping = {
@@ -70,6 +116,7 @@ function LeftSidebar({ loadingInfo, projectInfo, handleEditItem }) {
     technology: `${process.env.API_URL}/icon/base/icons/lab.png`,
     custom: `${process.env.API_URL}/icon/base/icons/repair-pack.png`,
     graphic: `${process.env.API_URL}/icon/base/icons/blueprint.png`,
+    icon: `${process.env.API_URL}/icon/base/icons/blueprint.png`,
   };
 
   return (
@@ -92,12 +139,18 @@ function LeftSidebar({ loadingInfo, projectInfo, handleEditItem }) {
             setOpen={setWizardOpen}
             open={wizardOpen}
             iconMapping={iconMapping}
+            modalManagerRef={modalManagerRef}
+            refreshProjectInfo={refreshProjectInfo}
           />
 
           <div className="flex flex-col gap-1 pl-4">
             {content.map((element, index, array) => {
               return (
-                <div className="flex items-center gap-3 border-2 border-transparent hover:accentuated p-2 select-none" onClick={() => handleEditItem(element)} key={index}>
+                <div
+                  className="flex items-center gap-3 border-2 border-transparent hover:accentuated p-2 select-none"
+                  onClick={() => handleEditItem(element)}
+                  key={index}
+                >
                   <img src={iconMapping[element.type]} className="h-8" />
                   <span>{element.name || "item-no-name"}</span>
                 </div>

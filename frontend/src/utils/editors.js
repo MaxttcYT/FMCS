@@ -279,7 +279,7 @@ export const getEditorForItem = async (
   projectId,
   refreshProjectInfo,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   const EditorComponent = itemEditorViews[item.editor];
 
@@ -293,8 +293,9 @@ export const getEditorForItem = async (
   const editorRef = React.createRef();
   const component = (
     <EditorComponent
+      key={item.name + "_" + item.type}
       ref={editorRef}
-      item={item}
+      data={item}
       handleChange={() =>
         handleEditorChange(tabControlRef, handleSave, modalManagerRef)
       }
@@ -307,6 +308,8 @@ export const getEditorForItem = async (
           refreshProjectInfo
         )
       }
+      modalManagerRef={modalManagerRef}
+      projectId={projectId}
     />
   );
 
@@ -323,7 +326,7 @@ export const handleOpenItemEditor = async (
   projectId,
   refreshProjectInfo,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   const tabId = item.name + "_" + item.type;
   const tabData = {
@@ -350,7 +353,7 @@ export const handleOpenItemEditor = async (
     projectId,
     refreshProjectInfo,
     handleSave,
-    modalManagerRef
+    modalManagerRef,
   );
   if (editorResult) {
     tabControlRef.current?.updateTabContent(tabId, editorResult.component);
@@ -360,9 +363,7 @@ export const handleOpenItemEditor = async (
   } else {
     tabControlRef.current?.updateTabContent(
       tabId,
-      <div className="p-4 text-red">
-        Error loading editor for "{item.name}"
-      </div>
+      <div className="p-4 text-red">Error loading editor for "{item.name}"</div>
     );
   }
 };

@@ -185,6 +185,7 @@ body {
   cursor: pointer;
   line-height: 1.2;
   break-inside: avoid;
+  width: fit-content;
 }
 
 /* Hide the default checkbox input */
@@ -195,6 +196,8 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.25;
+  aspect-ratio: 1/1;
+  left: 0;
 }
 
 /* Style for the text label next to the checkbox */
@@ -217,7 +220,6 @@ body {
     inset 0px -1px 1px 0px #fff,
     inset 0px -4px 2px -2px #8e8e8e,
     0px 0px 4px 1px #2e2521;
-  margin-right: 8px; /* Space between checkbox and text */
 }
 
 /* Checkbox checked state */

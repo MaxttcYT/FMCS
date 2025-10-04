@@ -29,6 +29,6 @@ export function parseCompletionList(data) {
         return null; // or filter out unknown types
     }
   }).filter(Boolean); // Remove null values
-  console.log(result)
+  //console.log(result)
   return result;
 }

@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as setiIcons from "seti-icons-react";
 import {
+  CopyMinusIcon,
   EyeClosed,
   EyeOff,
   FilePlus,
@@ -72,6 +73,7 @@ function NewEntryInput({ parentPath, onDone, type = "file" }) {
 
 const FileTreeItem = ({
   node,
+  parentNode,
   openMap,
   setOpenMap,
   onFileOpen = () => {},
@@ -85,12 +87,29 @@ const FileTreeItem = ({
   draggedOverPath,
   setDraggedOverPath,
   onContextMenuNode,
+  showAddControls,
+  visibleFileExtensions = null,
 }) => {
   const PROJECT_ID = useProject();
   const isOpen = openMap[node.path] || false;
   const isSelected = selectedNode.path === node.path;
+  // Determine if the node should be visible
+  const isVisible =
+    node.type == "file"
+      ? // If the node is a file, check if file extensions filtering is active
+        visibleFileExtensions !== null
+        ? // If filtering is active, check if the file's extension is in the allowed list
+          visibleFileExtensions.includes(node.extension)
+        : // If no filter is set, all files are visible
+          true
+      : // If the node is not a file (e.g., a folder), always visible
+        true;
 
   const normalizeFilePath = (filename) => filename?.replace(/\\/g, "/") || "";
+
+  if (!isVisible) {
+    return null; // 🔹 Skip rendering if node should not be shown
+  }
 
   const toggle = () => {
     if (node.type === "folder") {
@@ -216,17 +235,31 @@ const FileTreeItem = ({
 
         {isRoot && !node.is_readonly && (
           <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+            {showAddControls && (
+              <>
+                <span
+                  className="text-white rounded-lg p-1 hover:text-blue hover:bg-gray-medium"
+                  onClick={handleAddFile}
+                >
+                  <FilePlus size={18} />
+                </span>
+                <span
+                  className="text-white rounded-lg p-1 hover:text-blue hover:bg-gray-medium"
+                  onClick={handleAddFolder}
+                >
+                  <FolderPlus size={18} />
+                </span>
+              </>
+            )}
             <span
               className="text-white rounded-lg p-1 hover:text-blue hover:bg-gray-medium"
-              onClick={handleAddFile}
+              onClick={() => {
+                const closedMap = {};
+                Object.keys(openMap).forEach((key) => (closedMap[key] = false));
+                setOpenMap(closedMap);
+              }}
             >
-              <FilePlus size={18} />
-            </span>
-            <span
-              className="text-white rounded-lg p-1 hover:text-blue hover:bg-gray-medium"
-              onClick={handleAddFolder}
-            >
-              <FolderPlus size={18} />
+              <CopyMinusIcon size={18} />
             </span>
             <span
               className="text-white rounded-lg p-1 hover:text-blue hover:bg-gray-medium"
@@ -244,30 +277,35 @@ const FileTreeItem = ({
       </div>
 
       {isOpen &&
-        node.children?.map((child) => (
-          <FileTreeItem
-            key={normalizeFilePath(child.path) || child.name}
-            node={child}
-            openMap={openMap}
-            setOpenMap={setOpenMap}
-            onFileOpen={onFileOpen}
-            isRoot={false}
-            onRefresh={onRefresh}
-            isRefreshing={isRefreshing}
-            selectedNode={selectedNode}
-            setSelectedNode={setSelectedNode}
-            addingEntry={addingEntry}
-            setAddingEntry={setAddingEntry}
-            draggedOverPath={draggedOverPath}
-            setDraggedOverPath={setDraggedOverPath}
-            onContextMenuNode={onContextMenuNode}
-          />
-        ))}
+        node.children?.map((child) => {
+          return (
+            <FileTreeItem
+              key={normalizeFilePath(child.path) || child.name}
+              node={child}
+              openMap={openMap}
+              setOpenMap={setOpenMap}
+              onFileOpen={onFileOpen}
+              isRoot={false}
+              onRefresh={onRefresh}
+              isRefreshing={isRefreshing}
+              selectedNode={selectedNode}
+              setSelectedNode={setSelectedNode}
+              addingEntry={addingEntry}
+              setAddingEntry={setAddingEntry}
+              draggedOverPath={draggedOverPath}
+              setDraggedOverPath={setDraggedOverPath}
+              onContextMenuNode={onContextMenuNode}
+              visibleFileExtensions={visibleFileExtensions}
+              showAddControls={showAddControls}
+              parentNode={node}
+            />
+          );
+        })}
 
       {normalizeFilePath(addingEntry?.path) ===
         normalizeFilePath(node.path) && (
         <NewEntryInput
-          parentPath={node.path}
+          parentPath={node.type === "folder" ? node.path : parentNode?.path}
           type={addingEntry.type}
           onDone={() => {
             setAddingEntry(null);
@@ -279,7 +317,13 @@ const FileTreeItem = ({
   );
 };
 
-export default function FileTree({ onFileOpen = () => {} }) {
+export default function FileTree({
+  onFileOpen = () => {},
+  mode = "default",
+  selectorType = "none",
+  selectorExtensions,
+  rootPath = "",
+}) {
   const PROJECT_ID = useProject();
   const [tree, setTree] = useState(null);
   const [openMap, setOpenMap] = useState({});
@@ -289,11 +333,13 @@ export default function FileTree({ onFileOpen = () => {} }) {
   const [menuPos, setMenuPos] = useState(null);
   const [contextNode, setContextNode] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const isSelector = mode == "selector";
+  const showAddControls = isSelector ? false : true;
   const modalManagrRef = useRef();
 
   const fetchTree = () => {
     setIsRefreshing(true);
-    fetch(`${process.env.API_URL}/api/files/${PROJECT_ID}`)
+    fetch(`${process.env.API_URL}/api/files/${PROJECT_ID}?rootPath=${rootPath}`)
       .then((res) => res.json())
       .then((data) => {
         setTree(data);
@@ -389,7 +435,7 @@ export default function FileTree({ onFileOpen = () => {} }) {
 
   return (
     <div
-      className="p-2 text-sm box-content w-full overflow-hidden"
+      className="p-2 text-sm box-content w-[97%] overflow-hidden"
       style={{ overflowY: "auto", minHeight: "300px" }}
     >
       <ModalManager ref={modalManagrRef} />
@@ -410,6 +456,9 @@ export default function FileTree({ onFileOpen = () => {} }) {
             draggedOverPath={draggedOverPath}
             setDraggedOverPath={setDraggedOverPath}
             onContextMenuNode={handleContextMenuNode}
+            showAddControls={showAddControls}
+            visibleFileExtensions={isSelector ? selectorExtensions : null}
+            parentNode={tree}
           />
           {menuPos && contextNode && (
             <CustomContextMenu

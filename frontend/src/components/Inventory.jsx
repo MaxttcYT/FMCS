@@ -6,8 +6,9 @@ import React, {
 } from "react";
 import Panel from "./Panel";
 import { DotFilled } from "./CustomIcons";
+import { ItemIconRenderer } from "./ItemIconRenderer";
 
-export const Inventory = forwardRef(({onSelect=()=>{}}, ref) => {
+export const Inventory = forwardRef(({ onSelect = () => {}, projectid }, ref) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
   const [selectedTab, setSelectedTab] = useState(null);
@@ -16,7 +17,7 @@ export const Inventory = forwardRef(({onSelect=()=>{}}, ref) => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${process.env.API_URL}/api/inventory/items`)
+    fetch(`${process.env.API_URL}/api/inventory/items/${projectid}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -45,6 +46,7 @@ export const Inventory = forwardRef(({onSelect=()=>{}}, ref) => {
             key={key}
             label={key}
             icon={value.data.icon}
+            icon_size={value.data.icon_size}
             isActive={selectedTab === key}
             onClick={() => setSelectedTab(key)}
             isActiveItemTab={selectedItemTab === key}
@@ -91,7 +93,8 @@ export const Inventory = forwardRef(({onSelect=()=>{}}, ref) => {
                                       onClick={() => {
                                         setSelectedItem(item);
                                         setSelectedItemTab(selectedTab);
-                                        onSelect?.(item)
+                                        onSelect?.(item);
+                                        console.log(item);
                                       }}
                                       isActive={
                                         selectedItem?.name === item.name
@@ -136,6 +139,7 @@ export function InventoryTab({
   isActive,
   isActiveItemTab,
   onClick,
+  icon_size=128,
 }) {
   function transformPath(inputPath) {
     return inputPath
@@ -160,7 +164,7 @@ export function InventoryTab({
         />
       )}
       <img
-        src={`${process.env.API_URL}${transformPath(icon)}?crop=128x128`}
+        src={`${process.env.API_URL}${transformPath(icon)}?crop=${icon_size}x${icon_size}`}
         width={66}
       />
     </button>
@@ -168,46 +172,6 @@ export function InventoryTab({
 }
 
 export function InventoryItem({ data, isActive, onClick }) {
-  function transformPath(inputPath) {
-    return inputPath
-      .replace(/^__/, "")
-      .replace(/\/?__(?=\/|$)/g, "")
-      .replace(/graphics/, "")
-      .replace(/\/+/g, "/")
-      .replace(/^\/?/, "/icon/");
-  }
-
-  function renderIcon(iconData, itemData, index = 0, single = false) {
-    const icon_size = itemData.icon_size || 64;
-
-    const hasTint = !!iconData?.tint;
-    const src = `${process.env.API_URL}${transformPath(
-      iconData.icon ?? iconData
-    )}${
-      hasTint
-        ? `?tint=${iconData.tint.r ?? 0},${iconData.tint.g ?? 0},${
-            iconData.tint.b ?? 0
-          },${iconData.tint.a ?? 1}&crop=${icon_size}x${icon_size}`
-        : `?crop=${icon_size}x${icon_size}`
-    }`;
-
-    return (
-      <img
-        key={index}
-        src={src}
-        width={32}
-        height={32}
-        className="h-auto w-[32px]"
-        style={{
-          position: single ? "static" : "absolute",
-          top: 0,
-          left: 0,
-          filter: "drop-shadow(0px 0px 4px #000)",
-        }}
-      />
-    );
-  }
-
   let iconsToRender;
   let single = false;
 
@@ -230,15 +194,9 @@ export function InventoryItem({ data, isActive, onClick }) {
       title={data.name}
     >
       {iconsToRender.length > 0 ? (
-        single ? (
-          renderIcon(iconsToRender[0], data, 0, true)
-        ) : (
-          <div className="relative w-8 h-8">
-            {iconsToRender.map((iconData, i) => renderIcon(iconData, data, i))}
-          </div>
-        )
+        <ItemIconRenderer icons={iconsToRender} itemData={data} />
       ) : (
-        <h1>{data.name}</h1>
+        <ItemIconRenderer icons={["__base__/graphics/icons/signal/signal-question-mark.png"]} itemData={data} />
       )}
     </button>
   );

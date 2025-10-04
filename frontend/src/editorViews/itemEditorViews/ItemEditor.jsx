@@ -12,7 +12,7 @@ import IconSelect from "@/components/selects/IconSelect";
 import NumberInput from "@/components/NumberInput";
 
 const ItemEditor = forwardRef(
-  ({ item, handleChange, handleSaveChanges }, ref) => {
+  ({ data: item, handleChange, handleSaveChanges }, ref) => {
     const [values, setValues] = useState({
       name: item.name,
       subgroup: item.subgroup,
@@ -20,6 +20,7 @@ const ItemEditor = forwardRef(
       icon_size: 64,
       order: item.order,
       stack_size: Number(item.stack_size),
+      fmcs_id: item.fmcs_id,
     });
 
     // Imperative handlers
@@ -61,7 +62,7 @@ const ItemEditor = forwardRef(
 
     return (
       <div>
-        <div className="flex justify-end w-full">
+        {/*<div className="flex justify-end w-full">
           <Button
             type="blue"
             title="Strg+S"
@@ -69,7 +70,7 @@ const ItemEditor = forwardRef(
           >
             <FontAwesomeIcon icon={faFloppyDisk} className="w-4 h-4" /> Save
           </Button>
-        </div>
+        </div>*/}
 
         <div className="flex flex-col gap-4">
           <div>
@@ -116,10 +117,12 @@ const ItemEditor = forwardRef(
           </div>
         </div>
 
-        <div className="grid grid-cols-2 mt-5 gap-2">
-          <Textarea value={"OLD \n" + JSON.stringify(item, null, 2)} />
-          <Textarea value={"NEW \n" + JSON.stringify(values, null, 2)} />
-        </div>
+        {true && (
+          <div className="grid grid-cols-2 mt-5 gap-2">
+            <Textarea value={"OLD \n" + JSON.stringify(item, null, 2)} />
+            <Textarea value={"NEW \n" + JSON.stringify(values, null, 2)} />
+          </div>
+        )}
       </div>
     );
   }

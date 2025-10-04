@@ -22,11 +22,6 @@ const MainEditorTabControl = forwardRef(
       setTabHistory((prev) => [...prev.filter((i) => i !== index), index]);
     };
 
-    useEffect(() => {
-      console.log(tabs[selectedTab])
-    }, [tabs])
-    
-
     useImperativeHandle(ref, () => ({
       addTab: (newTab) => {
         setTabs((prevTabs) => {

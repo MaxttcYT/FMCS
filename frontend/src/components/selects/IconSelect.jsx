@@ -10,10 +10,11 @@ import { useParams } from "react-router-dom";
 function IconSelect({ ...props }) {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const { projectId } = useParams();
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${process.env.API_URL}/api/list_icons`)
+    fetch(`${process.env.API_URL}/api/list_icons/${projectId}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -29,27 +30,28 @@ function IconSelect({ ...props }) {
       onChange={(val) => console.log(val)}
       {...props}
       disabled={isLoading}
-      noSelectionLabel={
-        isLoading ? "Loading..." : "Select..."
-      }
+      noSelectionLabel={isLoading ? "Loading..." : "Select..."}
     >
-      <SelectGroup
-        label="Base"
-        icon={{
-          url: `${process.env.API_URL}/icon/base/icons/iron-gear-wheel.png`,
-        }}
-      >
-        {data.map((element, index, array) => {
-          return (
+      {data.map((group, index) => (
+        <SelectGroup
+          key={index}
+          label={group.data.title}
+          icon={{
+            url: `${process.env.API_URL}${group.data.icon_url}`,
+            width: 44,
+          }}
+        >
+          {group.icons.map((icon, iconIndex) => (
             <SelectOption
-              value={element.value}
-              icon={{ url: `${process.env.API_URL}${element.path}` }}
+              key={iconIndex}
+              value={icon.value}
+              icon={{ url: `${process.env.API_URL}${icon.url}` }}
             >
-              {element.name}
+              {icon.name}
             </SelectOption>
-          );
-        })}
-      </SelectGroup>
+          ))}
+        </SelectGroup>
+      ))}
     </CustomSelect>
   );
 }

@@ -8,7 +8,10 @@
   },
   "scripts": {
     "start": "webpack serve --mode development --progress",
-    "build": "webpack --mode production --progress"
+    "build": "webpack --mode production --progress",
+    "docs": "npm --prefix docs start",
+    "docs:build": "npm --prefix docs run build",
+    "docs:serve": "npm --prefix docs run serve"
   },
   "keywords": [],
   "author": "",

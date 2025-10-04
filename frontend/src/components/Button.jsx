@@ -42,6 +42,9 @@ const Button = ({
     case "sm":
       padding = "py-1 px-2";
       break;
+    case "xsm":
+      padding = "py-0 px-1";
+      break;
     case "xs":
       padding = "py-0 px-1";
       break;

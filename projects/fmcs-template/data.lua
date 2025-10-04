@@ -3,5 +3,6 @@
 
 require("prototypes.autogen.fmcs-auto-items")
 require("prototypes.autogen.fmcs-auto-recipes")
+require("prototypes.autogen.fmcs-auto-technologies")
 
 require("prototypes.data_custom")

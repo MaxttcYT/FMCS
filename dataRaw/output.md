@@ -123,7 +123,15 @@
 
 ### module
 - beacon
-- empty-module-slot
+- speed-module
+- speed-module-2
+- speed-module-3
+- efficiency-module
+- efficiency-module-2
+- efficiency-module-3
+- productivity-module
+- productivity-module-2
+- productivity-module-3
 
 ### space-related
 - rocket-silo
@@ -183,34 +191,17 @@
 - nuclear-fuel
 
 ### science-pack
-- automation-science-pack
-- logistic-science-pack
-- military-science-pack
-- chemical-science-pack
-- production-science-pack
-- utility-science-pack
-- space-science-pack
 - coin
-- science
 
 ## combat
 
 ### gun
 - pistol
 - submachine-gun
-- tank-machine-gun
-- vehicle-machine-gun
-- tank-flamethrower
 - shotgun
 - combat-shotgun
 - rocket-launcher
 - flamethrower
-- artillery-wagon-cannon
-- spidertron-rocket-launcher-1
-- spidertron-rocket-launcher-2
-- spidertron-rocket-launcher-3
-- spidertron-rocket-launcher-4
-- tank-cannon
 
 ### ammo
 - firearm-magazine
@@ -236,6 +227,13 @@
 - defender-capsule
 - distractor-capsule
 - destroyer-capsule
+
+### armor
+- light-armor
+- heavy-armor
+- modular-armor
+- power-armor
+- power-armor-mk2
 
 ### equipment
 - solar-panel-equipment
@@ -289,10 +287,7 @@
 - artillery-targeting-remote
 
 ### other
-- electric-energy-interface
 - linked-chest
-- proxy-container
-- bottomless-chest
 - heat-interface
 - lane-splitter
 - linked-belt
@@ -302,6 +297,4 @@
 - infinity-cargo-wagon
 - infinity-chest
 - infinity-pipe
-- simple-entity-with-force
-- simple-entity-with-owner
 - burner-generator
