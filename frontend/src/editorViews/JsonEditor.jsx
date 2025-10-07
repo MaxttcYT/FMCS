@@ -12,7 +12,7 @@ import { linter, lintGutter } from "@codemirror/lint";
 
 export default forwardRef(function JsonEditor(
   { defaultValue, handleChange },
-  ref
+  ref,
 ) {
   const editorRef = useRef();
   const [lintingErrors, setLintingErrors] = useState([]);

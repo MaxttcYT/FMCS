@@ -146,7 +146,7 @@ function LeftSidebar({
                 name: element.name,
                 type: element.type,
               }),
-            }
+            },
           );
 
           if (!response.ok) throw new Error("Failed to remove item");
@@ -158,7 +158,7 @@ function LeftSidebar({
             return;
           }
 
-          tabControlRef.current.removeTab(element.name + "_" + element.type)
+          tabControlRef.current.removeTab(element.name + "_" + element.type);
           refreshProjectInfo();
         } catch (error) {
           console.error("remove error:", error);
@@ -217,7 +217,10 @@ function LeftSidebar({
                   key={index}
                 >
                   <div className="flex gap-3 items-center">
-                    <img src={contentItemIconMapping[element.type]} className="h-8" />
+                    <img
+                      src={contentItemIconMapping[element.type]}
+                      className="h-8"
+                    />
                     <span>{element.name || "item-no-name"}</span>
                   </div>
                   {editing && (

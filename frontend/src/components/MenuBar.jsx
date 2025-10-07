@@ -53,8 +53,16 @@ const MenuItem = ({ label, submenu, clickHandler, closeMenu }) => {
             <MenuItem
               key={subLabel}
               label={subLabel}
-              submenu={typeof subClickHandler === "object" ? subClickHandler : undefined}
-              clickHandler={typeof subClickHandler === "function" ? subClickHandler : undefined} // Correctly pass click handler
+              submenu={
+                typeof subClickHandler === "object"
+                  ? subClickHandler
+                  : undefined
+              }
+              clickHandler={
+                typeof subClickHandler === "function"
+                  ? subClickHandler
+                  : undefined
+              } // Correctly pass click handler
               closeMenu={closeMenu} // Pass the closeMenu function down
             />
           ))}
@@ -126,7 +134,9 @@ const MenuBar = ({ menuData }) => {
                   key={itemLabel}
                   label={itemLabel}
                   submenu={typeof subMenu === "object" ? subMenu : undefined}
-                  clickHandler={typeof subMenu === "function" ? subMenu : undefined}
+                  clickHandler={
+                    typeof subMenu === "function" ? subMenu : undefined
+                  }
                   closeMenu={() => setActiveMenu(null)}
                 />
               ))}
@@ -137,7 +147,5 @@ const MenuBar = ({ menuData }) => {
     </div>
   );
 };
-
-  
 
 export default MenuBar;

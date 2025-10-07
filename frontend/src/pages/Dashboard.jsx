@@ -9,6 +9,7 @@ import NumberInput from "../components/NumberInput";
 import Label from "../components/Label";
 import { Trash2 } from "lucide-react";
 import { CustomSelect, SelectOption } from "@/components/CustomSelect";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const [mods, setMods] = useState([]);
@@ -24,6 +25,8 @@ export default function Dashboard() {
   const [version3, setVersion3] = useState(0);
   const [factorioVersion, setFactorioVersion] = useState("2.0");
   const [description, setDescription] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${process.env.API_URL}/api/projects/list`)
@@ -59,7 +62,7 @@ export default function Dashboard() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) window.location.href = `/${data.id}`;
+        if (data.success) navigate(`/${data.id}`);
         else alert("Error creating project");
       })
       .catch((err) => console.error("Failed to create project:", err));
@@ -168,7 +171,7 @@ export default function Dashboard() {
                     <img
                       src={`${process.env.API_URL}/api/files/${mod.id}/thumbnail.png`}
                       alt="Project Thumbnail"
-                      className="w-32 h-32 object-cover"
+                      className="w-32 h-32 object-cover aspect-square"
                       onError={handleImageError}
                     />
                   </div>

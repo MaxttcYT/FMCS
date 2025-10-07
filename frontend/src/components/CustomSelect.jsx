@@ -27,7 +27,7 @@ export const CustomSelect = forwardRef(
       noSelectionLabel = "Select...",
       showGroupIconAsIcon = false,
     },
-    ref
+    ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(defaultValue);
@@ -75,7 +75,8 @@ export const CustomSelect = forwardRef(
         }
       };
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     // Focus search input
@@ -98,7 +99,7 @@ export const CustomSelect = forwardRef(
           return React.cloneElement(child, {
             children: injectGroupIcons(
               child.props.children,
-              child.props.icon || parentIcon
+              child.props.icon || parentIcon,
             ),
           });
         }
@@ -111,7 +112,10 @@ export const CustomSelect = forwardRef(
     const findSelectedOption = (childrenArray) => {
       for (let child of React.Children.toArray(childrenArray)) {
         if (!child) continue;
-        if (child.type === SelectOption && String(child.props.value) === String(currentValue))
+        if (
+          child.type === SelectOption &&
+          String(child.props.value) === String(currentValue)
+        )
           return child;
         if (child.type === SelectGroup) {
           const found = findSelectedOption(child.props.children);
@@ -137,9 +141,13 @@ export const CustomSelect = forwardRef(
               : null;
           }
           if (child.type === SelectGroup) {
-            const filteredChildren = filterChildren(child.props.children).filter(Boolean);
+            const filteredChildren = filterChildren(
+              child.props.children,
+            ).filter(Boolean);
             if (
-              child.props.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              child.props.label
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
               filteredChildren.length > 0
             ) {
               return React.cloneElement(child, { children: filteredChildren });
@@ -178,7 +186,9 @@ export const CustomSelect = forwardRef(
                   alt="icon"
                 />
               )}
-              {selectedOption ? selectedOption.props.children : noSelectionLabel}
+              {selectedOption
+                ? selectedOption.props.children
+                : noSelectionLabel}
             </span>
             <FontAwesomeIcon icon={faCaretDown} className="w-4 h-4" />
           </div>
@@ -202,7 +212,7 @@ export const CustomSelect = forwardRef(
         </div>
       </SelectContext.Provider>
     );
-  }
+  },
 );
 
 export const LazyImage = ({ src, width = 32, alt = "icon" }) => {
@@ -217,7 +227,7 @@ export const LazyImage = ({ src, width = 32, alt = "icon" }) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -225,7 +235,11 @@ export const LazyImage = ({ src, width = 32, alt = "icon" }) => {
     return () => observer.disconnect();
   }, []);
 
-  return <div ref={ref}>{isVisible && <img src={src} width={width} alt={alt} />}</div>;
+  return (
+    <div ref={ref}>
+      {isVisible && <img src={src} width={width} alt={alt} />}
+    </div>
+  );
 };
 
 export const SelectOption = ({ value, children, icon }) => {

@@ -19,7 +19,7 @@ Speaking of that, let's add our new icon to the item we created last time!
 ### Using Icon in Item
 
 Select the `iron-spring` item from the Content Panel and
-set the Icon prop to our freshly created `iron-spring` icon.  
+set the Icon prop to our freshly created `iron-spring` icon.
 
 Don't forget to save! ( <kbd>Ctrl</kbd> + <kbd>S</kbd> )
 

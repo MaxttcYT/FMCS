@@ -32,7 +32,7 @@ const RecipeEditor = forwardRef(
       modalManagerRef,
       projectId,
     },
-    ref
+    ref,
   ) => {
     console.log(recipe);
     const [values, setValues] = useState({
@@ -309,7 +309,7 @@ const RecipeEditor = forwardRef(
         )}
       </div>
     );
-  }
+  },
 );
 
 function ItemList({

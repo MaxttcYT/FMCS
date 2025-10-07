@@ -1,8 +1,11 @@
-import React, {useImperativeHandle, forwardRef, useRef} from "react";
+import React, { useImperativeHandle, forwardRef, useRef } from "react";
 
 import CodeMirror from "../components/CodeMirror";
 
-export default forwardRef(function TextEditor({ defaultValue, handleChange }, ref) {
+export default forwardRef(function TextEditor(
+  { defaultValue, handleChange },
+  ref,
+) {
   const editorRef = useRef();
 
   useImperativeHandle(ref, () => ({

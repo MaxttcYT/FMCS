@@ -2,9 +2,16 @@ import Panel from "./Panel";
 import React from "react";
 import * as ReactDom from "react-dom";
 
-const modalRoot = document.getElementById('modal-root');
+const modalRoot = document.getElementById("modal-root");
 
-const Modal = ({ title, content, isOpen, actions = null, noInnerPadding=false, panelCN="" }) => {
+const Modal = ({
+  title,
+  content,
+  isOpen,
+  actions = null,
+  noInnerPadding = false,
+  panelCN = "",
+}) => {
   return ReactDom.createPortal(
     isOpen && (
       <div className="relative z-40">
@@ -19,7 +26,7 @@ const Modal = ({ title, content, isOpen, actions = null, noInnerPadding=false, p
         </div>
       </div>
     ),
-    modalRoot
+    modalRoot,
   );
 };
 

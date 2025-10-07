@@ -1,6 +1,6 @@
 import { getDefinedVariablesFromEditor } from "./helpers";
 import { addIconsToCompletion } from "./icons";
-import { core,demo,mathLib } from "./lua-completion-list";
+import { core, demo, mathLib } from "./lua-completion-list";
 
 function handleNestedCompletions(context, options, word) {
   const before = context.state.sliceDoc(0, word.from); // Get the text before the cursor
@@ -14,13 +14,13 @@ function handleNestedCompletions(context, options, word) {
   let currentLevel = options;
 
   // Find the matching object (e.g., 'math')
-  const entry = currentLevel.find(item => item.label === path);
+  const entry = currentLevel.find((item) => item.label === path);
   if (!entry || !entry.properties) {
     return []; // If no matching object or no properties, return empty completions
   }
 
   // Return the nested properties as completions, showing just the property (e.g., .abs)
-  return entry.properties.map(item => ({
+  return entry.properties.map((item) => ({
     label: `${item.label}`, // Only show the property with a dot (e.g., .abs)
     type: item.type,
     info: item.info,
@@ -33,7 +33,7 @@ export function luaCompletions(context) {
 
   // Get local variables from the editor
   const definedVars = getDefinedVariablesFromEditor(context.state);
-  const locals = definedVars.map(variable => ({
+  const locals = definedVars.map((variable) => ({
     label: variable.name,
     type: variable.type,
     info: `Local variable: ${variable.name}`,
@@ -42,7 +42,7 @@ export function luaCompletions(context) {
 
   // Combine local variables and global completions (like math, string)
   const globalsAndFunctions = [
-    ...core,   // Include demo completions for math, string
+    ...core, // Include demo completions for math, string
     ...locals, // Include local variables
   ];
 

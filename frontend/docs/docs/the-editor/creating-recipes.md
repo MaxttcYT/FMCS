@@ -20,9 +20,9 @@ Now click on `Finish`
 Select the `iron-spring-recipe` recipe from the Content Panel
 and click on the big `+ Add` button in the Ingredients category.  
 A new entry will now be added.  
-Change the item by clicking the pipette button or by clicking on   the icon.  
+Change the item by clicking the pipette button or by clicking on the icon.  
 Select the `iron-stick` (Its called iron rod ingame) from `intermediate-products`.
-Click on `Choose iron-stick`.  
+Click on `Choose iron-stick`.
 
 Repeat the same for the Results category,
 but choose our `iron-spring` item from the `Mod Added` tab

@@ -56,5 +56,5 @@ export const betterAutocomplete = EditorView.theme(
       borderRadius: "10px", // Rounded corners for the track
     },
   },
-  { dark: true }
+  { dark: true },
 );

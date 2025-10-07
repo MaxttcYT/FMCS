@@ -28,7 +28,7 @@ const handleCreateItem = async (
   itemName,
   refreshProjectInfo,
   projectId,
-  openItemEditor
+  openItemEditor,
 ) => {
   const content = values;
   const item = {
@@ -48,7 +48,7 @@ const handleCreateItem = async (
             name: itemName,
             type: itemType,
           }),
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Failed to create item");
@@ -116,7 +116,7 @@ export function RecipeConfigWizardStep({
       values.name,
       refreshProjectInfo,
       projectId,
-      openItemEditor
+      openItemEditor,
     );
 
     return true;
@@ -156,11 +156,11 @@ export function RecipeConfigWizardStep({
               Energy Required (Base crafting time):
               <HelpIcon>
                 Energy Required: Base value in seconds for calculating, how long
-                it will take to craft item
-                Example: Recipe [Energy Required=2] in Assembler [Crafting Speed=1] = 2s
+                it will take to craft item Example: Recipe [Energy Required=2]
+                in Assembler [Crafting Speed=1] = 2s
               </HelpIcon>
             </Label>
-              <NumberInput
+            <NumberInput
               id="newRecipe-energy_required"
               value={values.energy_required}
               onChange={handleChange("energy_required")}
@@ -212,7 +212,7 @@ export function ItemConfigWizardStep({
       values.name,
       refreshProjectInfo,
       projectId,
-      openItemEditor
+      openItemEditor,
     );
 
     return true;
@@ -369,7 +369,7 @@ export function GraphicConfigWizardStep({
     if (!values.selectedFile?.path) return "Please select a file";
 
     const filteredValues = Object.fromEntries(
-      Object.entries(values).filter(([key]) => key !== "selectedFile")
+      Object.entries(values).filter(([key]) => key !== "selectedFile"),
     );
 
     handleCreateItem(
@@ -378,7 +378,7 @@ export function GraphicConfigWizardStep({
       values.name,
       refreshProjectInfo,
       projectId,
-      openItemEditor
+      openItemEditor,
     );
     return true;
   };

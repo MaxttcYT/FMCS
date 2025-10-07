@@ -182,7 +182,7 @@ const FileTreeItem = ({
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ source: draggedPath, destination }),
-              }
+              },
             );
 
             if (!res.ok) throw new Error("Fehler beim Verschieben der Datei");

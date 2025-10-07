@@ -4,15 +4,15 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from "prism-react-renderer";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'FMCS - Docs',
-  tagline: 'FMCS is a tool for creating Factorio modifications',
-  favicon: 'img/favicon.ico',
+  title: "FMCS - Docs",
+  tagline: "FMCS is a tool for creating Factorio modifications",
+  favicon: "img/favicon.ico",
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -20,35 +20,34 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://docs.fmcs.maxttc.me/',
+  url: "https://docs.fmcs.maxttc.me/",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'MaxttcYT', // Usually your GitHub org/user name.
-  projectName: 'FMCS', // Usually your repo name.
+  organizationName: "MaxttcYT", // Usually your GitHub org/user name.
+  projectName: "FMCS", // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: "throw",
 
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: './sidebars.js',
-          editUrl:
-            'https://github.com/MaxttcYT/FMCS/tree/main/frontend/docs/',
+          sidebarPath: "./sidebars.js",
+          editUrl: "https://github.com/MaxttcYT/FMCS/tree/main/frontend/docs/",
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: "./src/css/custom.css",
         },
       }),
     ],
@@ -61,43 +60,43 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'FMCS DOCS',
+        title: "FMCS DOCS",
         logo: {
-          alt: 'FMCS Logo',
-          src: 'img/logo.svg',
+          alt: "FMCS Logo",
+          src: "img/logo.svg",
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
+            type: "docSidebar",
+            sidebarId: "tutorialSidebar",
+            position: "left",
+            label: "Tutorial",
           },
           {
-            href: 'https://github.com/MaxttcYT/FMCS',
-            label: 'FMCS on GitHub',
-            position: 'right',
+            href: "https://github.com/MaxttcYT/FMCS",
+            label: "FMCS on GitHub",
+            position: "right",
           },
         ],
       },
       footer: {
-        style: 'dark',
+        style: "dark",
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: "Tutorial",
+                to: "/docs/intro",
               },
             ],
           },
           {
-            title: 'More',
+            title: "More",
             items: [
               {
-                label: 'GitHub',
-                href: 'https://github.com/MaxttcYT/FMCS',
+                label: "GitHub",
+                href: "https://github.com/MaxttcYT/FMCS",
               },
             ],
           },
@@ -107,7 +106,7 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
-        additionalLanguages: ['powershell', "bash"],
+        additionalLanguages: ["powershell", "bash"],
       },
     }),
 };

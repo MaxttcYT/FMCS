@@ -19,7 +19,7 @@ export function ItemIconRenderer({ icons, itemData }) {
     const hasTint = !!iconData?.tint;
 
     const src = `${process.env.API_URL}${transformPath(
-      iconData.icon ?? iconData
+      iconData.icon ?? iconData,
     )}${
       hasTint
         ? `?tint=${iconData.tint.r ?? 0},${iconData.tint.g ?? 0},${

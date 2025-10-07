@@ -73,7 +73,7 @@ export function addIconsToCompletion(completionItems) {
       const icon = customIcons[type] || Settings;
 
       if (!item.info) {
-        item.info = ""
+        item.info = "";
       }
 
       let info = "";

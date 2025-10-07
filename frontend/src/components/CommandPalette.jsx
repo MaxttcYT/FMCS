@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-export default function CommandPalette({ getTabs, setActiveTab=()=>{} }) {
+export default function CommandPalette({ getTabs, setActiveTab = () => {} }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -20,7 +20,7 @@ export default function CommandPalette({ getTabs, setActiveTab=()=>{} }) {
 
   // Filter commands based on query
   const filtered = commands.filter((cmd) =>
-    cmd.name.toLowerCase().includes(query.toLowerCase())
+    cmd.name.toLowerCase().includes(query.toLowerCase()),
   );
 
   // Keyboard shortcuts
@@ -46,7 +46,7 @@ export default function CommandPalette({ getTabs, setActiveTab=()=>{} }) {
         setIsOpen(false);
       }
     },
-    [isOpen, filtered, selectedIndex]
+    [isOpen, filtered, selectedIndex],
   );
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function CommandPalette({ getTabs, setActiveTab=()=>{} }) {
           autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onBlur={()=>setIsOpen(false)}
+          onBlur={() => setIsOpen(false)}
           className="w-full bg-[#252526] text-white px-4 py-3 outline-none border-b border-[#333]"
         />
         <ul className="max-h-64 overflow-y-auto">

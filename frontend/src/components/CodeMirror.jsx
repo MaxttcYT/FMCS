@@ -28,7 +28,7 @@ export default forwardRef(function CodeMirror(
     read_only,
     extensions: passedExtensions = [],
   },
-  ref
+  ref,
 ) {
   const editor = useRef();
   const viewRef = useRef(null);
@@ -41,7 +41,7 @@ export default forwardRef(function CodeMirror(
       return null;
     },
     setContent: () => {
-      viewRef.current.state.doc.from
+      viewRef.current.state.doc.from;
     },
     getView: () => viewRef.current,
     getDiagnostics: () => {

@@ -1,9 +1,15 @@
-import React, { useRef, useImperativeHandle, forwardRef, useEffect } from "react";
+import React, {
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  useEffect,
+} from "react";
 import { lua } from "@codemirror/legacy-modes/mode/lua";
 import { luaCompletions } from "../utils/completions";
 import { luaLinter } from "../utils/linter";
 import CodeMirror from "../components/CodeMirror";
 import { foldService } from "@codemirror/language";
+import MonacoEditor from "@/components/Monaco";
 
 const luaFold = foldService.of((state, lineStart) => {
   const line = state.doc.lineAt(lineStart);
@@ -45,11 +51,11 @@ const luaFold = foldService.of((state, lineStart) => {
 });
 
 export default forwardRef(function LuaEditor(
-  { read_only = false, defaultValue, handleChange=()=>{} },
-  ref
+  { read_only = false, defaultValue, handleChange = () => {} },
+  ref,
 ) {
   const editorRef = useRef();
-  console.log(handleChange)
+  console.log(handleChange);
 
   useImperativeHandle(ref, () => ({
     getContent: () => {
@@ -60,25 +66,27 @@ export default forwardRef(function LuaEditor(
     },
   }));
   useEffect(() => {
-    console.log("REOUNT LUAEDITOR")
-  }, [])
+    console.log("REOUNT LUAEDITOR");
+  }, []);
   useEffect(() => {
-    console.log("DEFAULTVALUECHANGE LUAEDITOR")
-  }, [defaultValue])
-  
+    console.log("DEFAULTVALUECHANGE LUAEDITOR");
+  }, [defaultValue]);
 
   return (
-    <CodeMirror
-      ref={editorRef}
-      key={"lua-editor"}
-      defaultValue={defaultValue}
-      mode={lua}
-      completion={luaCompletions}
-      modeType="legacy"
-      cmLinter={luaLinter}
-      onChange={handleChange}
-      read_only={read_only}
-      extensions={[luaFold]}
-    />
+    <>
+      <CodeMirror
+        ref={editorRef}
+        key={"lua-editor"}
+        defaultValue={defaultValue}
+        mode={lua}
+        completion={luaCompletions}
+        modeType="legacy"
+        cmLinter={luaLinter}
+        onChange={handleChange}
+        read_only={read_only}
+        extensions={[luaFold]}
+      />
+      {/*<MonacoEditor ref={editorRef} key={"lua-editor"} defaultValue={defaultValue} onChange={handleChange} read_only={read_only}  />*/}
+    </>
   );
 });

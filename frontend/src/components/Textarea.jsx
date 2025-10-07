@@ -17,7 +17,7 @@ const Textarea = React.forwardRef(
       noShadow = false,
       rows = 12,
     },
-    ref // ref is passed as a second argument
+    ref, // ref is passed as a second argument
   ) => {
     return (
       <textarea
@@ -40,7 +40,7 @@ const Textarea = React.forwardRef(
         disabled={disabled}
       />
     );
-  }
+  },
 );
 
 export default Textarea;

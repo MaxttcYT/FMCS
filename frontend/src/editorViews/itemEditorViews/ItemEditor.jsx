@@ -125,7 +125,7 @@ const ItemEditor = forwardRef(
         )}
       </div>
     );
-  }
+  },
 );
 
 export default ItemEditor;

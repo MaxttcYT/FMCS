@@ -13,7 +13,7 @@ const NumberInput = React.forwardRef(
       step = 1,
       className = "",
     },
-    ref
+    ref,
   ) => {
     const increment = () => {
       if ((value || 0) + step <= max) onChange((value || 0) + step);
@@ -72,7 +72,7 @@ const NumberInput = React.forwardRef(
         </style>
       </div>
     );
-  }
+  },
 );
 
 export default NumberInput;

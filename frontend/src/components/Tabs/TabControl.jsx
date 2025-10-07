@@ -10,7 +10,7 @@ const TabControl = forwardRef(({ className = "", defaultTabs = [] }, ref) => {
       setTabs((prevTabs) => {
         if (prevTabs.some((tab) => tab.id === newTab.id)) {
           // If tab exists, switch to it
-          const existingIndex = prevTabs.findIndex(t => t.id === newTab.id);
+          const existingIndex = prevTabs.findIndex((t) => t.id === newTab.id);
           setSelectedTab(existingIndex);
           return prevTabs;
         }
@@ -20,7 +20,7 @@ const TabControl = forwardRef(({ className = "", defaultTabs = [] }, ref) => {
     },
     removeTab: (tabId) => {
       setTabs((prevTabs) => {
-        const index = prevTabs.findIndex(tab => tab.id === tabId);
+        const index = prevTabs.findIndex((tab) => tab.id === tabId);
         if (index === selectedTab) {
           // If removing selected tab, select previous tab (or next if no previous)
           setSelectedTab(Math.max(0, index - 1));
@@ -28,13 +28,13 @@ const TabControl = forwardRef(({ className = "", defaultTabs = [] }, ref) => {
           // If removing tab before selected, adjust selected index
           setSelectedTab(selectedTab - 1);
         }
-        return prevTabs.filter(tab => tab.id !== tabId);
+        return prevTabs.filter((tab) => tab.id !== tabId);
       });
-    }
+    },
   }));
 
   const handleClose = (tabId) => {
-    const index = tabs.findIndex(tab => tab.id === tabId);
+    const index = tabs.findIndex((tab) => tab.id === tabId);
     if (index !== -1) {
       setTabs((prevTabs) => {
         if (index === selectedTab) {

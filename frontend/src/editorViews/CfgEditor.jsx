@@ -4,7 +4,7 @@ import CodeMirror from "../components/CodeMirror";
 
 export default forwardRef(function LuaEditor(
   { read_only = false, defaultValue, handleChange },
-  ref
+  ref,
 ) {
   const editorRef = useRef();
 
@@ -15,14 +15,14 @@ export default forwardRef(function LuaEditor(
   }));
 
   return (
-      <CodeMirror
-        ref={editorRef}
-        key={"lua-editor"}
-        defaultValue={defaultValue}
-        mode={properties}
-        modeType="legacy"
-        onChange={handleChange}
-        read_only={read_only}
-      />
+    <CodeMirror
+      ref={editorRef}
+      key={"lua-editor"}
+      defaultValue={defaultValue}
+      mode={properties}
+      modeType="legacy"
+      onChange={handleChange}
+      read_only={read_only}
+    />
   );
 });

@@ -25,7 +25,7 @@ const TabTitle = ({
 
   return (
     <div
-      className={`inline-flex space-x-2 items-center cursor-pointer px-3 py-2 rounded-t font-bold relative accentuated-2 ${
+      className={`inline-flex space-x-2 items-center cursor-pointer px-3 py-2 rounded-t font-bold relative accentuated-2 h-full ${
         isActive
           ? `z-20 text-dirty-white bg-gray-dark active ${className || ""}`
           : `z-0 text-black bg-gray-light hover:glow-orange2 hover:bg-orange ${

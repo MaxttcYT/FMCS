@@ -25,26 +25,26 @@ export function Wizard({
   // Keep refs for each step
   const stepRefs = React.useRef(steps.map(() => React.createRef()));
 
-const handleNext = () => {
-  const stepRef = stepRefs.current[currentStep]?.current;
-  if (stepRef?.validate) {
-    const result = stepRef.validate();
-    console.log("Validation result:", result);
-    if (result !== true) {
-      setErrorMessages(typeof result === "string" ? [result] : result);
-      return;
+  const handleNext = () => {
+    const stepRef = stepRefs.current[currentStep]?.current;
+    if (stepRef?.validate) {
+      const result = stepRef.validate();
+      console.log("Validation result:", result);
+      if (result !== true) {
+        setErrorMessages(typeof result === "string" ? [result] : result);
+        return;
+      }
     }
-  }
 
-  setErrorMessages([]);
-  if (currentStep < steps.length - 1) {
-    setCurrentStep(currentStep + 1);
-  } else {
-    onFinish?.();
-    setCurrentStep(0);
-    setOpen(false);
-  }
-};
+    setErrorMessages([]);
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      onFinish?.();
+      setCurrentStep(0);
+      setOpen(false);
+    }
+  };
 
   return (
     <Modal
@@ -68,7 +68,7 @@ const handleNext = () => {
                     },
                     key: i,
                   })
-                : null
+                : null,
             )}
           </div>
         </div>

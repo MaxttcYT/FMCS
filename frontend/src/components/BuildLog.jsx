@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { RefreshCcw } from "lucide-react";
 
-function BuildLog({ socket, projectId, projectInfo, reconnectSocket, onBuildComplete, onBuildError }) {
+function BuildLog({
+  socket,
+  projectId,
+  projectInfo,
+  reconnectSocket,
+  onBuildComplete,
+  onBuildError,
+}) {
   const [buildLog, setBuildLog] = useState([
     { content: "Initializing Build...", logType: "default" },
   ]);
@@ -28,9 +35,9 @@ function BuildLog({ socket, projectId, projectInfo, reconnectSocket, onBuildComp
     });
 
     if (logType === "success") {
-        onBuildComplete?.()
+      onBuildComplete?.();
     } else if (logType === "error") {
-        onBuildError?.()
+      onBuildError?.();
     }
   };
 

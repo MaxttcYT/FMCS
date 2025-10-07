@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,7 +17,7 @@ const CustomDropdown = forwardRef(
       disabled = false,
       className = "",
     },
-    ref
+    ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(defaultValue);
@@ -41,12 +47,16 @@ const CustomDropdown = forwardRef(
 
     useEffect(() => {
       const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target)
+        ) {
           setIsOpen(false);
         }
       };
       document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
     const selectedOption = options.find((opt) => opt.value === selected);
@@ -85,7 +95,7 @@ const CustomDropdown = forwardRef(
         )}
       </div>
     );
-  }
+  },
 );
 
 export default CustomDropdown;

@@ -42,13 +42,21 @@ const IconEditor = forwardRef(
           </Button>
         </div>*/}
 
-        {true && <div className="grid grid-cols-2 mt-5 gap-2">
-          <Textarea rows={24} value={"OLD \n" + JSON.stringify(iconData, null, 2)} />
-          <Textarea rows={24} value={"NEW \n" + JSON.stringify(values, null, 2)} />
-        </div>}
+        {true && (
+          <div className="grid grid-cols-2 mt-5 gap-2">
+            <Textarea
+              rows={24}
+              value={"OLD \n" + JSON.stringify(iconData, null, 2)}
+            />
+            <Textarea
+              rows={24}
+              value={"NEW \n" + JSON.stringify(values, null, 2)}
+            />
+          </div>
+        )}
       </div>
     );
-  }
+  },
 );
 
 export default IconEditor;

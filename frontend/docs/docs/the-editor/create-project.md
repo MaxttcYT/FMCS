@@ -16,10 +16,10 @@ There will be a project called `FMCS TEMPLATE`, we will be using it for this gui
 
 We will now create our first Project.
 
-1. Click the **Create New Project** button.  
-2. A popup will appear. Fill in the form as shown in the image below, then click **Next**.  
+1. Click the **Create New Project** button.
+2. A popup will appear. Fill in the form as shown in the image below, then click **Next**.
 
-   ![Filled form](./img/newProjectModalFilled.png)  
+   ![Filled form](./img/newProjectModalFilled.png)
 
 3. You can either leave **Description** empty or set it to:  
    **My first mod in FMCS**

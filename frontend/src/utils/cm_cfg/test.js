@@ -1,6 +1,6 @@
-import {parser} from "./parser.js"
-import {foldNodeProp, foldInside, indentNodeProp} from "@codemirror/language"
-import {styleTags, tags as t} from "@lezer/highlight"
+import { parser } from "./parser.js";
+import { foldNodeProp, foldInside, indentNodeProp } from "@codemirror/language";
+import { styleTags, tags as t } from "@lezer/highlight";
 
 let parserWithMetadata = parser.configure({
   props: [
@@ -9,20 +9,21 @@ let parserWithMetadata = parser.configure({
       Boolean: t.bool,
       String: t.string,
       LineComment: t.lineComment,
-      "( )": t.paren
+      "( )": t.paren,
     }),
     indentNodeProp.add({
-      Application: context => context.column(context.node.from) + context.unit
+      Application: (context) =>
+        context.column(context.node.from) + context.unit,
     }),
     foldNodeProp.add({
-      Application: foldInside
-    })
-  ]
-})
+      Application: foldInside,
+    }),
+  ],
+});
 
 export const exampleLanguage = LRLanguage.define({
   parser: parserWithMetadata,
   languageData: {
-    commentTokens: {line: ";"}
-  }
-})
+    commentTokens: { line: ";" },
+  },
+});

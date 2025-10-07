@@ -1,9 +1,12 @@
-import React, {useImperativeHandle, forwardRef, useRef} from "react";
+import React, { useImperativeHandle, forwardRef, useRef } from "react";
 
 import { xml } from "@codemirror/lang-xml";
 import CodeMirror from "../components/CodeMirror";
 
-export default forwardRef(function XmlEditor({ defaultValue, handleChange }, ref) {
+export default forwardRef(function XmlEditor(
+  { defaultValue, handleChange },
+  ref,
+) {
   const editorRef = useRef();
 
   useImperativeHandle(ref, () => ({

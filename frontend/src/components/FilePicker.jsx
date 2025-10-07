@@ -37,21 +37,21 @@ const FilePicker = forwardRef(
       modalManagerRef.current?.updateModal({
         id: "file_picker",
         actions: (
-           <>
-              <div className="flex w-full gap-3 justify-between">
-                <span className="text-white">
-                  {selected?.path || "No file selected"}
-                </span>
-                <div className="flex gap-4">
-                     <Button type="success" onClick={() => handleChoose(selected)}>
-              Use {selected?.name}
-            </Button>
-            <Button type="danger" onClick={handleCancel}>
-              Cancel
-            </Button>
-                </div>
+          <>
+            <div className="flex w-full gap-3 justify-between">
+              <span className="text-white">
+                {selected?.path || "No file selected"}
+              </span>
+              <div className="flex gap-4">
+                <Button type="success" onClick={() => handleChoose(selected)}>
+                  Use {selected?.name}
+                </Button>
+                <Button type="danger" onClick={handleCancel}>
+                  Cancel
+                </Button>
               </div>
-            </>
+            </div>
+          </>
         ),
       });
     };
@@ -97,18 +97,21 @@ const FilePicker = forwardRef(
     }));
 
     return null;
-  }
+  },
 );
 
-export function FilePickerButton({openFilePicker=()=>{}, value="Click on button to select"}) {
-    return (
-        <div className="flex items-center gap-2">
-            <Button onClick={openFilePicker}>
-                <FolderOpenIcon size={20} className="stroke-gray-medium" />
-            </Button>
-            <span>{value}</span>
-        </div>
-    );
+export function FilePickerButton({
+  openFilePicker = () => {},
+  value = "Click on button to select",
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <Button onClick={openFilePicker}>
+        <FolderOpenIcon size={20} className="stroke-gray-medium" />
+      </Button>
+      <span>{value}</span>
+    </div>
+  );
 }
 
 export default FilePicker;

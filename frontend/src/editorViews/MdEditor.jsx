@@ -2,10 +2,18 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import Panel from "../components/Panel";
 import remarkGfm from "remark-gfm";
 import CodeMirror from "../components/CodeMirror";
-import React, { useState, useImperativeHandle, forwardRef, useRef } from "react";
+import React, {
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  useRef,
+} from "react";
 import ReactMarkdown from "react-markdown";
 
-export default forwardRef(function MdEditor({ defaultValue, handleChange }, ref) {
+export default forwardRef(function MdEditor(
+  { defaultValue, handleChange },
+  ref,
+) {
   const [markdownEditor, setMarkdown] = useState("# New MD File");
   const editorRef = useRef();
 

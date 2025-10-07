@@ -43,12 +43,12 @@ export default function HelpIcon({ children }) {
               textAlign: "center",
               maxWidth: "20rem",
               zIndex: 9999,
-              outline: "white 1px solid"
+              outline: "white 1px solid",
             }}
           >
             {children}
           </div>,
-          document.body
+          document.body,
         )}
     </div>
   );

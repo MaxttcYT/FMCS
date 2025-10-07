@@ -13,7 +13,7 @@ export const handleItemSave = async (
   tabControlRef,
   setFsStatus,
   projectId,
-  refreshProjectInfo
+  refreshProjectInfo,
 ) => {
   console.log("ITEM SAVE");
   const tab = tabControlRef.current.getSelectedTab();
@@ -29,7 +29,7 @@ export const handleItemSave = async (
     setFsStatus("Saving");
     tabControlRef.current.updateTabIcon(
       tab.id,
-      <Loader2Icon className="animate-spin" />
+      <Loader2Icon className="animate-spin" />,
     );
     const content = tab.dataStorage.editorRef.current.getContent();
     const item = tab.dataStorage.item;
@@ -46,7 +46,7 @@ export const handleItemSave = async (
               name: item.name,
               type: item.type,
             }),
-          }
+          },
         );
 
         if (!response.ok) throw new Error("Failed to save file");
@@ -68,7 +68,7 @@ export const handleItemSave = async (
         });
         tabControlRef.current?.updateTabId(
           tab.id,
-          updatedItem.name + "_" + updatedItem.type
+          updatedItem.name + "_" + updatedItem.type,
         );
         setFsStatus("Idle");
       } catch (error) {
@@ -88,7 +88,7 @@ export const handleFileSave = async (
   tabControlRef,
   setFsStatus,
   projectId,
-  refreshProjectInfo
+  refreshProjectInfo,
 ) => {
   const tab = tabControlRef.current.getSelectedTab();
 
@@ -112,7 +112,7 @@ export const handleFileSave = async (
               content: content,
               path: tab.dataStorage.file.path,
             }),
-          }
+          },
         );
 
         if (!response.ok) {
@@ -150,7 +150,7 @@ export const handleFileSave = async (
 export const handleEditorChange = (
   tabControlRef,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   //Check if tabControlRef is there
   if (tabControlRef.current) {
@@ -181,7 +181,7 @@ export const getEditorForFileComponent = async (
   projectId,
   tabControlRef,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   const EditorComponent = editorViews[file.preferred_editor];
 
@@ -194,7 +194,7 @@ export const getEditorForFileComponent = async (
   if (file.preferred_editor !== "ImgViewer") {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/files/${projectId}/${file.path}`
+        `http://localhost:8000/api/files/${projectId}/${file.path}`,
       );
       if (!response.ok) throw new Error("Failed to fetch file");
       const data = await response.text();
@@ -239,7 +239,7 @@ export const handleFileOpening = async (
   projectId,
   tabControlRef,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   const tabId = file.path;
 
@@ -248,7 +248,11 @@ export const handleFileOpening = async (
   const iconTheme = file.icon?.theme || file.icon?.extension;
 
   const RenderedIcon = IconComponent ? (
-    <IconComponent theme={iconTheme} style={{ width: 22, height: 22 }} />
+    <IconComponent
+      theme={iconTheme}
+      style={{ width: 22, height: 22 }}
+      className="bg-gray-medium rounded-full p-1 box-content"
+    />
   ) : (
     <FileIcon />
   );
@@ -277,7 +281,7 @@ export const handleFileOpening = async (
     projectId,
     tabControlRef,
     handleSave,
-    modalManagerRef
+    modalManagerRef,
   );
   if (editorResult) {
     tabControlRef.current?.updateTabContent(tabId, editorResult.component);
@@ -287,7 +291,7 @@ export const handleFileOpening = async (
   } else {
     tabControlRef.current?.updateTabContent(
       tabId,
-      <div className="p-4 text-red-400">Error loading file "{file.path}"</div>
+      <div className="p-4 text-red-400">Error loading file "{file.path}"</div>,
     );
   }
 };
@@ -299,7 +303,7 @@ export const getEditorForItem = async (
   projectId,
   refreshProjectInfo,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   const EditorComponent = itemEditorViews[item.editor];
 
@@ -325,7 +329,7 @@ export const getEditorForItem = async (
           tabControlRef,
           setFsStatus,
           projectId,
-          refreshProjectInfo
+          refreshProjectInfo,
         )
       }
       modalManagerRef={modalManagerRef}
@@ -346,20 +350,16 @@ export const handleOpenItemEditor = async (
   projectId,
   refreshProjectInfo,
   handleSave,
-  modalManagerRef
+  modalManagerRef,
 ) => {
   const tabId = item.name + "_" + item.type;
-
-  const RenderedIcon = false ? (
-    <IconComponent theme={""} style={{ width: 22, height: 22 }} />
-  ) : (
-    <FileIcon />
-  );
 
   const tabData = {
     id: tabId,
     title: item.name,
-    typeIcon: <img src={contentItemIconMapping[item.type]} className="h-[22px]" />,
+    typeIcon: (
+      <img src={contentItemIconMapping[item.type]} className="h-[26px]" />
+    ),
     dataStorage: {
       isEditor: true,
       item: item,
@@ -381,7 +381,7 @@ export const handleOpenItemEditor = async (
     projectId,
     refreshProjectInfo,
     handleSave,
-    modalManagerRef
+    modalManagerRef,
   );
   if (editorResult) {
     tabControlRef.current?.updateTabContent(tabId, editorResult.component);
@@ -391,7 +391,9 @@ export const handleOpenItemEditor = async (
   } else {
     tabControlRef.current?.updateTabContent(
       tabId,
-      <div className="p-4 text-red">Error loading editor for "{item.name}"</div>
+      <div className="p-4 text-red">
+        Error loading editor for "{item.name}"
+      </div>,
     );
   }
 };

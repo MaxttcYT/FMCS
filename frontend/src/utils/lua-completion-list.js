@@ -20,6 +20,16 @@ export const special_global_vars = parseCompletionList(special_global_data);
 
 export const core_base = parseCompletionList(core_data);
 
-export const defaultPackages = [...mathLib, ...stringLib, ...factorioLib, ...serpentLib];
+export const defaultPackages = [
+  ...mathLib,
+  ...stringLib,
+  ...factorioLib,
+  ...serpentLib,
+];
 
-export const core = [...keywords, ...special_global_vars, ...defaultPackages, ...core_base];
+export const core = [
+  ...keywords,
+  ...special_global_vars,
+  ...defaultPackages,
+  ...core_base,
+];

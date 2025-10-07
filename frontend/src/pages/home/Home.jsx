@@ -78,7 +78,7 @@ export default function Home() {
             tabControlRef,
             setFsStatus,
             projectId,
-            refreshProjectInfo
+            refreshProjectInfo,
           );
           break;
         case "item":
@@ -86,7 +86,7 @@ export default function Home() {
             tabControlRef,
             setFsStatus,
             projectId,
-            refreshProjectInfo
+            refreshProjectInfo,
           );
           break;
         default:
@@ -211,8 +211,15 @@ export default function Home() {
 
   return (
     <ProjectProvider projectId={projectId}>
-      <SciencePicker ref={itemPickerRef} modalManagerRef={modalManagerRef} projectId={projectId} />
-      <CommandPalette getTabs={()=>tabControlRef.current?.getTabs()} setActiveTab={(id)=>tabControlRef.current?.setSelectedTab(id)} />
+      <SciencePicker
+        ref={itemPickerRef}
+        modalManagerRef={modalManagerRef}
+        projectId={projectId}
+      />
+      <CommandPalette
+        getTabs={() => tabControlRef.current?.getTabs()}
+        setActiveTab={(id) => tabControlRef.current?.setSelectedTab(id)}
+      />
       <div className="grid grid-cols-5 grid-rows-[60px_repeat(4,_1fr)] w-full h-screen overflow-hidden">
         <ModalManager ref={modalManagerRef} />
         {/* Top Nav */}
@@ -244,7 +251,7 @@ export default function Home() {
               projectId,
               refreshProjectInfo,
               handleSave,
-              modalManagerRef
+              modalManagerRef,
             )
           }
         />
@@ -264,7 +271,7 @@ export default function Home() {
                     projectId,
                     tabControlRef,
                     handleSave,
-                    modalManagerRef
+                    modalManagerRef,
                   )
                 }
               />

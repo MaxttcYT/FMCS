@@ -75,7 +75,7 @@ const ModalManager = forwardRef((props, ref) => {
       modalData = {
         title: "Confirmation",
         content: <p>Do you really want to do this?</p>,
-      }
+      },
     ) => {
       const newModal = {
         id: Date.now(),
@@ -214,8 +214,8 @@ const ModalManager = forwardRef((props, ref) => {
                 content: content !== undefined ? content : modal.content,
                 actions: actions !== undefined ? actions : modal.actions,
               }
-            : modal
-        )
+            : modal,
+        ),
       );
     },
   }));

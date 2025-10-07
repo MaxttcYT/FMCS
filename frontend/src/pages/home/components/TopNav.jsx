@@ -3,6 +3,7 @@ import MenuBar from "@/components/MenuBar";
 import { faPlay, faSkull, faStop } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function TopNav({
   showFileTree,
@@ -16,15 +17,17 @@ function TopNav({
   handleSave,
   handleStartBuild,
 }) {
+  const navigate = useNavigate();
+
   const menuData = {
     File: {
       Save: () => handleSave(),
       Build: () => handleStartBuild(),
       "Build and Run": () => handleStart(),
       New: {
-        Project: () => (window.location.href = "/?newproject=true"),
+        Project: () => navigate("/?newproject=true"),
       },
-      "Project Dashboard": () => (window.location.href = "/"),
+      "Project Dashboard": () => navigate("/"),
       Restart: () => window.location.reload(),
     },
     Server: {
@@ -37,7 +40,7 @@ function TopNav({
         setShowFileTree(!showFileTree);
       },
       [`Docs`]: () => {
-        window.open('https://docs.fmcs.maxttc.me', '_blank');
+        window.open("https://docs.fmcs.maxttc.me", "_blank");
       },
     },
   };

@@ -12,6 +12,7 @@ main_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 socketio = SocketIO(cors_allowed_origins="*")
 
+
 @socketio.on("start_factorio")
 def start_factorio_socket(data):
     projectId = data["projectId"]
@@ -35,6 +36,7 @@ def kill_factorio_socket():
 def stop_factorio_socket():
     factorio.stop_factorio_preview(False)
 
+
 def build_with_error_handling(socketio, projectId):
     try:
         modBuilder.startBuild(socketio, projectId)
@@ -49,7 +51,8 @@ def build_with_error_handling(socketio, projectId):
         sendBuildLog(socketio, "TO GET DETAILED INFO, LOOK IN CONSOLE!", logType="info")
         sendBuildLog(socketio, str("BUILD FAILED!"), logType="error")
         raise e
-        
+
+
 @socketio.on("start_build")
 def start_build_socket(data):
     print("start build for: " + str(data))
@@ -58,3 +61,14 @@ def start_build_socket(data):
     )
     return "ok"
 
+
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected")
+
+    socketio.emit("factorio_running", factorio.is_factorio_running())
+
+
+@socketio.on("disconnect")
+def handle_disconnect():
+    print("Client disconnected")

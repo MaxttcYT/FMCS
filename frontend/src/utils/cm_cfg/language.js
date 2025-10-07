@@ -1,8 +1,8 @@
-import {LRLanguage} from "@codemirror/language"
+import { LRLanguage } from "@codemirror/language";
 
 export const exampleLanguage = LRLanguage.define({
   parser: parserWithMetadata,
   languageData: {
-    commentTokens: {line: ";"}
-  }
-})
+    commentTokens: { line: ";" },
+  },
+});

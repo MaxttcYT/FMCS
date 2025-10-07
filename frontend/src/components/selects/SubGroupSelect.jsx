@@ -7,7 +7,11 @@ import React, { useState, useEffect, useRef } from "react";
 
 function SubGroupSelect({ ...props }) {
   return (
-    <CustomSelect onChange={(val) => console.log(val)} showGroupIconAsIcon={true} {...props}>
+    <CustomSelect
+      onChange={(val) => console.log(val)}
+      showGroupIconAsIcon={true}
+      {...props}
+    >
       <SelectGroup
         label="Logistics"
         icon={{
@@ -20,16 +24,10 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="energy-pipe-distribution">
           Energy pipe distribution
         </SelectOption>
-        <SelectOption value="train-transport">
-          Train transport
-        </SelectOption>
+        <SelectOption value="train-transport">Train transport</SelectOption>
         <SelectOption value="transport">Transport</SelectOption>
-        <SelectOption value="logistic-network">
-          Logistic network
-        </SelectOption>
-        <SelectOption value="circuit-network">
-          Circuit network
-        </SelectOption>
+        <SelectOption value="logistic-network">Logistic network</SelectOption>
+        <SelectOption value="circuit-network">Circuit network</SelectOption>
         <SelectOption value="terrain">Terrain</SelectOption>
       </SelectGroup>
       <SelectGroup
@@ -60,22 +58,12 @@ function SubGroupSelect({ ...props }) {
           url: `${process.env.API_URL}/icon/base/item-group/intermediate-products.png?crop=128x128`,
         }}
       >
-        <SelectOption value="fluid-recipes">
-          Fluid recipes
-        </SelectOption>
-        <SelectOption value="raw-resource">
-          Raw resource
-        </SelectOption>
-        <SelectOption value="raw-material">
-          Raw material
-        </SelectOption>
+        <SelectOption value="fluid-recipes">Fluid recipes</SelectOption>
+        <SelectOption value="raw-resource">Raw resource</SelectOption>
+        <SelectOption value="raw-material">Raw material</SelectOption>
         <SelectOption value="barrel">Barrel</SelectOption>
-        <SelectOption value="fill-barrel">
-          Fill barrel
-        </SelectOption>
-        <SelectOption value="empty-barrel">
-          Empty barrel
-        </SelectOption>
+        <SelectOption value="fill-barrel">Fill barrel</SelectOption>
+        <SelectOption value="empty-barrel">Empty barrel</SelectOption>
         <SelectOption value="intermediate-product">
           Intermediate product
         </SelectOption>
@@ -85,12 +73,8 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="uranium-processing">
           Uranium processing
         </SelectOption>
-        <SelectOption value="science-pack">
-          Science pack
-        </SelectOption>
-        <SelectOption value="internal-process">
-          Internal process
-        </SelectOption>
+        <SelectOption value="science-pack">Science pack</SelectOption>
+        <SelectOption value="internal-process">Internal process</SelectOption>
       </SelectGroup>
       <SelectGroup
         label="Combat"
@@ -103,9 +87,7 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="capsule">Capsule</SelectOption>
         <SelectOption value="armor">Armor</SelectOption>
         <SelectOption value="equipment">Equipment</SelectOption>
-        <SelectOption value="utility-equipment">
-          Utility equipment
-        </SelectOption>
+        <SelectOption value="utility-equipment">Utility equipment</SelectOption>
         <SelectOption value="military-equipment">
           Military equipment
         </SelectOption>
@@ -147,9 +129,7 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="virtual-signal-color">
           Virtual signal color
         </SelectOption>
-        <SelectOption value="virtual-signal">
-          Virtual signal
-        </SelectOption>
+        <SelectOption value="virtual-signal">Virtual signal</SelectOption>
         <SelectOption value="shapes">Shapes</SelectOption>
         <SelectOption value="arrows">Arrows</SelectOption>
         <SelectOption value="arrows-misc">Arrows misc</SelectOption>
@@ -174,21 +154,13 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="cliffs">Cliffs</SelectOption>
         <SelectOption value="trees">Trees</SelectOption>
         <SelectOption value="grass">Grass</SelectOption>
-        <SelectOption value="mineable-fluids">
-          Mineable fluids
-        </SelectOption>
+        <SelectOption value="mineable-fluids">Mineable fluids</SelectOption>
         <SelectOption value="obstacles">Obstacles</SelectOption>
         <SelectOption value="corpses">Corpses</SelectOption>
         <SelectOption value="remnants">Remnants</SelectOption>
-        <SelectOption value="storage-remnants">
-          Storage remnants
-        </SelectOption>
-        <SelectOption value="belt-remnants">
-          Belt remnants
-        </SelectOption>
-        <SelectOption value="inserter-remnants">
-          Inserter remnants
-        </SelectOption>
+        <SelectOption value="storage-remnants">Storage remnants</SelectOption>
+        <SelectOption value="belt-remnants">Belt remnants</SelectOption>
+        <SelectOption value="inserter-remnants">Inserter remnants</SelectOption>
         <SelectOption value="energy-pipe-distribution-remnants">
           Energy pipe distribution remnants
         </SelectOption>
@@ -204,9 +176,7 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="circuit-network-remnants">
           Circuit network remnants
         </SelectOption>
-        <SelectOption value="energy-remnants">
-          Energy remnants
-        </SelectOption>
+        <SelectOption value="energy-remnants">Energy remnants</SelectOption>
         <SelectOption value="extraction-machine-remnants">
           Extraction machine remnants
         </SelectOption>
@@ -219,9 +189,7 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="defensive-structure-remnants">
           Defensive structure remnants
         </SelectOption>
-        <SelectOption value="generic-remnants">
-          Generic remnants
-        </SelectOption>
+        <SelectOption value="generic-remnants">Generic remnants</SelectOption>
         <SelectOption value="scorchmarks">Scorchmarks</SelectOption>
         <SelectOption value="wrecks">Wrecks</SelectOption>
       </SelectGroup>
@@ -231,14 +199,10 @@ function SubGroupSelect({ ...props }) {
           url: `${process.env.API_URL}/icon/core/icons/category/tiles-editor.png?crop=128x128`,
         }}
       >
-        <SelectOption value="artificial-tiles">
-          Artificial tiles
-        </SelectOption>
+        <SelectOption value="artificial-tiles">Artificial tiles</SelectOption>
         <SelectOption value="nauvis-tiles">Nauvis tiles</SelectOption>
         <SelectOption value="vulcanus-tiles">Vulcanus tiles</SelectOption>
-        <SelectOption value="gleba-water-tiles">
-          Gleba water tiles
-        </SelectOption>
+        <SelectOption value="gleba-water-tiles">Gleba water tiles</SelectOption>
         <SelectOption value="gleba-tiles">Gleba tiles</SelectOption>
         <SelectOption value="fulgora-tiles">Fulgora tiles</SelectOption>
         <SelectOption value="aquilo-tiles">Aquilo tiles</SelectOption>
@@ -253,9 +217,7 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="storage-explosions">
           Storage explosions
         </SelectOption>
-        <SelectOption value="belt-explosions">
-          Belt explosions
-        </SelectOption>
+        <SelectOption value="belt-explosions">Belt explosions</SelectOption>
         <SelectOption value="inserter-explosions">
           Inserter explosions
         </SelectOption>
@@ -274,9 +236,7 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="circuit-network-explosions">
           Circuit network explosions
         </SelectOption>
-        <SelectOption value="energy-explosions">
-          Energy explosions
-        </SelectOption>
+        <SelectOption value="energy-explosions">Energy explosions</SelectOption>
         <SelectOption value="extraction-machine-explosions">
           Extraction machine explosions
         </SelectOption>
@@ -286,39 +246,27 @@ function SubGroupSelect({ ...props }) {
         <SelectOption value="production-machine-explosions">
           Production machine explosions
         </SelectOption>
-        <SelectOption value="module-explosions">
-          Module explosions
-        </SelectOption>
+        <SelectOption value="module-explosions">Module explosions</SelectOption>
         <SelectOption value="campaign-explosions">
           Campaign explosions
         </SelectOption>
-        <SelectOption value="gun-explosions">
-          Gun explosions
-        </SelectOption>
+        <SelectOption value="gun-explosions">Gun explosions</SelectOption>
         <SelectOption value="defensive-structure-explosions">
           Defensive structure explosions
         </SelectOption>
         <SelectOption value="capsule-explosions">
           Capsule explosions
         </SelectOption>
-        <SelectOption value="tree-explosions">
-          Tree explosions
-        </SelectOption>
-        <SelectOption value="rock-explosions">
-          Rock explosions
-        </SelectOption>
-        <SelectOption value="ground-explosions">
-          Ground explosions
-        </SelectOption>
+        <SelectOption value="tree-explosions">Tree explosions</SelectOption>
+        <SelectOption value="rock-explosions">Rock explosions</SelectOption>
+        <SelectOption value="ground-explosions">Ground explosions</SelectOption>
         <SelectOption value="decorative-explosions">
           Decorative explosions
         </SelectOption>
         <SelectOption value="enemy-death-explosions">
           Enemy death explosions
         </SelectOption>
-        <SelectOption value="fluid-explosions">
-          Fluid explosions
-        </SelectOption>
+        <SelectOption value="fluid-explosions">Fluid explosions</SelectOption>
         <SelectOption value="explosions">Explosions</SelectOption>
         <SelectOption value="hit-effects">Hit effects</SelectOption>
         <SelectOption value="particles">Particles</SelectOption>

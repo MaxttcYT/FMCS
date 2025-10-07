@@ -45,7 +45,7 @@ const MainEditorTabControl = forwardRef(
           if (index === selectedTab) {
             const validIndices = newTabs.map((_, i) => i);
             const updatedHistory = tabHistory.filter(
-              (i) => i !== index && validIndices.includes(i)
+              (i) => i !== index && validIndices.includes(i),
             );
             const fallbackTab =
               updatedHistory.length > 0
@@ -58,7 +58,7 @@ const MainEditorTabControl = forwardRef(
             setTabHistory((prev) =>
               prev
                 .map((i) => (i > index ? i - 1 : i))
-                .filter((i) => i !== index)
+                .filter((i) => i !== index),
             );
           } else {
             setTabHistory((prev) => prev.filter((i) => i !== index));
@@ -69,17 +69,19 @@ const MainEditorTabControl = forwardRef(
       },
       updateTabContent: (id, content) => {
         setTabs((tabs) =>
-          tabs.map((tab) => (tab.id === id ? { ...tab, content } : tab))
+          tabs.map((tab) => (tab.id === id ? { ...tab, content } : tab)),
         );
       },
       updateTabIcon: (id, icon, hoverIcon) => {
         setTabs((tabs) =>
-          tabs.map((tab) => (tab.id === id ? { ...tab, icon, hoverIcon } : tab))
+          tabs.map((tab) =>
+            tab.id === id ? { ...tab, icon, hoverIcon } : tab,
+          ),
         );
       },
       updateTabCloseEvent: (id, handleClose) => {
         setTabs((tabs) =>
-          tabs.map((tab) => (tab.id === id ? { ...tab, handleClose } : tab))
+          tabs.map((tab) => (tab.id === id ? { ...tab, handleClose } : tab)),
         );
       },
       updateTabData: (id, data) => {
@@ -87,24 +89,26 @@ const MainEditorTabControl = forwardRef(
           tabs.map((tab) =>
             tab.id === id
               ? { ...tab, dataStorage: { ...tab.dataStorage, ...data } }
-              : tab
-          )
+              : tab,
+          ),
         );
       },
       updateTabId: (oldId, newId) => {
         setTabs((tabs) =>
-          tabs.map((tab) => (tab.id === oldId ? { ...tab, id: newId } : tab))
+          tabs.map((tab) => (tab.id === oldId ? { ...tab, id: newId } : tab)),
         );
       },
       updateTabTitle: (id, title) => {
         console.log("NEW TITLE ", title, " FOR ID ", id);
         setTabs((tabs) =>
-          tabs.map((tab) => (tab.id === id ? { ...tab, title } : tab))
+          tabs.map((tab) => (tab.id === id ? { ...tab, title } : tab)),
         );
       },
-      updateTabMessage: (id, message, messageClassnames="") => {
+      updateTabMessage: (id, message, messageClassnames = "") => {
         setTabs((tabs) =>
-          tabs.map((tab) => (tab.id === id ? { ...tab, message, messageClassnames } : tab))
+          tabs.map((tab) =>
+            tab.id === id ? { ...tab, message, messageClassnames } : tab,
+          ),
         );
       },
       setSelectedTab: (index) => {
@@ -200,7 +204,11 @@ const MainEditorTabControl = forwardRef(
             } ${selectedChild?.message ? "pb-7" : ""}`}
             style={{ overflow: "hidden" }}
           >
-            <span className={`text-gray-light ${selectedChild?.messageClassnames}`}>{selectedChild?.message}</span>
+            <span
+              className={`text-gray-light ${selectedChild?.messageClassnames}`}
+            >
+              {selectedChild?.message}
+            </span>
             <div
               className="h-full overflow-auto"
               style={{ padding: tabHasSmallPadding ? "0" : "0.5rem" }}
@@ -217,7 +225,7 @@ const MainEditorTabControl = forwardRef(
         </div>
       </div>
     );
-  }
+  },
 );
 
 MainEditorTabControl.displayName = "TabControl";

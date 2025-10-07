@@ -110,7 +110,7 @@ const CommandEditor = forwardRef(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default CommandEditor;
