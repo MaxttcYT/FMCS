@@ -9,6 +9,8 @@ def sendBuildLog(socketio, content, logType="default", overrideLast=False):
         + Back.RED,  # bg-red/20 -> LIGHTBLACK_EX (approx), text-red -> Fore.RED
         "success": Fore.GREEN
         + Back.GREEN,  # bg-green-light/30 -> LIGHTGREEN_EX, text-green-light -> Fore.GREEN
+        "warn": Fore.YELLOW
+        + Back.YELLOW,
     }
 
     print("[BUILD LOG]: " + log_styles[logType] + content)

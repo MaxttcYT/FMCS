@@ -49,6 +49,7 @@ def build_with_error_handling(socketio, projectId):
         error_string = f"{type(e).__name__} in {filename}:{lineno} - {e}"
         sendBuildLog(socketio, str(error_string), logType="error")
         sendBuildLog(socketio, "TO GET DETAILED INFO, LOOK IN CONSOLE!", logType="info")
+        sendBuildLog(socketio, "TIP: It sometimes helps to save the item again, this will try to fix it", logType="info")
         sendBuildLog(socketio, str("BUILD FAILED!"), logType="error")
         raise e
 

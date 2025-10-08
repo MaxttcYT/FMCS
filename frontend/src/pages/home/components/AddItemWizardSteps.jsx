@@ -185,6 +185,7 @@ export function ItemConfigWizardStep({
     subgroup: "",
     icon: "",
     stack_size: 100,
+    editor_selectedIcon: { value: null },
   });
   const { projectId } = useParams();
 
@@ -226,21 +227,36 @@ export function ItemConfigWizardStep({
   };
 
   const handleSelectIcon = (icon) => {
+    setValues((prev) => {
+      const newValues = {
+        ...prev,
+        editor_selectedIcon: icon,
+      };
+      return newValues;
+    });
     if (icon?.type === "custom") {
-      alert("CUS")
       setValues((prev) => ({
         ...prev,
+        icon: icon.value,
         FMCS_REFERENCES: [
           {
             FMCS_ID: icon.fmcs_id,
-            FIELDS: [["path", "icon"]],
+            FIELDS: [
+              [
+                "path",
+                "icon",
+                { prefix: "__FMCS:REPLACE_AT_RESOLVE#PROJECT_NAME__" },
+                // "FMCS:REPLACE_AT_RESOLVE#PROJECT_NAME" will  be replaced when resolving,
+                // __ __ are wrapped for factorio to see that its scope
+              ],
+            ],
           },
         ],
       }));
       return;
     }
     setValues((prev) => {
-      const newValues = { ...prev, icon: icon.value };
+      const newValues = { ...prev, icon: icon.value, FMCS_REFERENCES: [] };
       return newValues;
     });
   };
@@ -286,7 +302,7 @@ export function ItemConfigWizardStep({
             </Label>
             <IconSelect
               id="newItem-icon"
-              value={values.icon}
+              value={values.editor_selectedIcon}
               onChange={handleSelectIcon}
             />
           </div>
