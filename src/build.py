@@ -50,7 +50,7 @@ def retriveProjectInfo(projectId):
     ) as f:
         project_registry = json.load(f)
 
-    project_registry = resolve_project_registry(project_registry)
+    project_registry = resolve_project_registry(project_registry, projectInfo=project_info)
     
     project_info["registry"] = project_registry
     return project_info

@@ -251,7 +251,7 @@ export const handleFileOpening = async (
     <IconComponent
       theme={iconTheme}
       style={{ width: 22, height: 22 }}
-      className="bg-gray-medium rounded-full p-1 box-content"
+      className="bg-[#2b2b2b] rounded-full p-1 box-content"
     />
   ) : (
     <FileIcon />

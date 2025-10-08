@@ -5,7 +5,7 @@ import FileTree from "@/components/FileTree";
 
 import { DotFilled } from "@/components/CustomIcons";
 import ModalManager from "@/components/ModalManager";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ProjectProvider } from "@/context/ProjectContext";
 import TopNav from "./components/TopNav";
 import LeftSidebar from "./components/LeftSidebar";
@@ -25,6 +25,10 @@ import { Inventory } from "@/components/Inventory";
 import ItemPicker from "@/components/ItemPicker";
 import CommandPalette from "@/components/CommandPalette";
 import SciencePicker from "@/components/SciencePicker";
+import AnimatedSpriteSheet from "@/components/AnimatedSpriteSheet";
+import Modal from "@/components/Modal";
+import ButtonLink from "@/components/ButtonLink";
+import { HomeIcon } from "lucide-react";
 
 export default function Home() {
   const { socket, reconnectSocket } = useSocketIO();
@@ -78,7 +82,7 @@ export default function Home() {
             tabControlRef,
             setFsStatus,
             projectId,
-            refreshProjectInfo,
+            refreshProjectInfo
           );
           break;
         case "item":
@@ -86,7 +90,7 @@ export default function Home() {
             tabControlRef,
             setFsStatus,
             projectId,
-            refreshProjectInfo,
+            refreshProjectInfo
           );
           break;
         default:
@@ -251,7 +255,7 @@ export default function Home() {
               projectId,
               refreshProjectInfo,
               handleSave,
-              modalManagerRef,
+              modalManagerRef
             )
           }
         />
@@ -271,7 +275,7 @@ export default function Home() {
                     projectId,
                     tabControlRef,
                     handleSave,
-                    modalManagerRef,
+                    modalManagerRef
                   )
                 }
               />
@@ -292,18 +296,76 @@ export default function Home() {
               {
                 id: "welcome",
                 title: "Welcome!",
+                typeIcon: < HomeIcon />,
                 dataStorage: {
                   isEditor: false,
                 },
                 content: (
-                  <editorViews.ImgViewer
-                    key="test"
-                    imageUrl="http://localhost:8000/static/img/logo_gray.svg"
-                    className="h-[200px]"
-                  />
+                  <>
+                    <div
+                      className={`flex gap-8 h-full w-full items-center justify-center text-white bg-gray-dark accentuated relative overflow-hidden`}
+                    >
+                        <img
+                          src={"http://localhost:8000/static/img/logo_gray.svg"}
+                          alt="Preview"
+                          className={"h-[200px]"}
+                        />
+                        <div className="flex flex-col gap-4">
+                          <h1 className="text-dirty-white text-3xl">Welcome!</h1>
+                          <h2 className="text-xl">Get started with FMCS <Link className="text-blue underline" to="https://docs.fmcs.maxttc.me/docs/the-editor/create-project">here</Link></h2>
+                        </div>
+                    </div>
+                  </>
                 ),
               },
             ]}
+          />
+          <Modal
+            isOpen={false}
+            title={"Editor Crash"}
+            content={
+              <div className="flex gap-4">
+                <AnimatedSpriteSheet
+                  filename="http://127.0.0.1:8000/asset/base/entity/medium-explosion/medium-explosion-2.png"
+                  initialFrame={0}
+                  frameSize={{ width: 154, height: 212 }}
+                  isPlaying
+                  loop
+                  fps={10}
+                  rows={7}
+                  columns={6}
+                />
+                <div className="flex w-full flex-col items-center">
+                  <h1 className="text-dirty-white text-xl text-center">
+                    The Editor crashed
+                  </h1>
+                  <p>
+                    Please file a bug report if this bug isn't your fault (:
+                  </p>
+                  <div className="bg-gray-dark border-l-[4px] border-l-red-light w-full p-2 my-2 font-bold">
+                    <p>demo.test.example is not a function</p>
+                    <p>TestError: demo.test.example is not a function</p>
+                  </div>
+                  <div className="mt-auto flex justify-evenly gap-4 items-center w-full">
+                    <ButtonLink
+                      type={"success"}
+                      href="https://docs.fmcs.maxttc.me/docs/feedback"
+                    >
+                      Report Bug
+                    </ButtonLink>
+                    <Button
+                      type={"danger"}
+                      onClick={(e) => {
+                        window.location.relodad();
+                        e.target.innerHTML = "Reloading...";
+                      }}
+                    >
+                      Reload Editor
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            }
           />
         </div>
 

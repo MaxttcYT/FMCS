@@ -1,9 +1,9 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faSkull, faStop } from "@fortawesome/free-solid-svg-icons";
 import Button from "@/components/Button";
 import MenuBar from "@/components/MenuBar";
-import { faPlay, faSkull, faStop } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 function TopNav({
   showFileTree,
@@ -21,35 +21,42 @@ function TopNav({
 
   const menuData = {
     File: {
-      Save: () => handleSave(),
-      Build: () => handleStartBuild(),
-      "Build and Run": () => handleStart(),
+      "Save File": {
+        action: handleSave,
+        keybind: "Ctrl+S",
+      },
+      Build: {
+        Build: handleStartBuild,
+        "Build and Run": handleStart,
+      },
+      "Reload Editor": {
+        action: () => window.location.reload(),
+      },
+      "Close Editor": () => navigate("/"),
       New: {
         Project: () => navigate("/?newproject=true"),
       },
-      "Project Dashboard": () => navigate("/"),
-      Restart: () => window.location.reload(),
     },
     Server: {
-      Reconnect: () => {
-        reconnectSocket();
-      },
+      Reconnect: reconnectSocket,
     },
     Window: {
-      [`${showFileTree ? "✓ " : ""}Show File Viewer`]: () => {
-        setShowFileTree(!showFileTree);
-      },
-      [`Docs`]: () => {
-        window.open("https://docs.fmcs.maxttc.me", "_blank");
-      },
+      [`${showFileTree ? "✓ " : ""}Show File Tree Panel`]: () =>
+        setShowFileTree(!showFileTree),
+    },
+    Help: {
+      "Open Docs": () => window.open("https://docs.fmcs.maxttc.me", "_blank"),
     },
   };
 
   return (
     <div className="col-span-5 row-start-1 row-end-2 bg-gray-dark p-2 text-dirty-white flex items-center justify-between">
+      {/* Left: Menu Bar */}
       <div className="flex-1 flex items-center pl-10">
         <MenuBar menuData={menuData} />
       </div>
+
+      {/* Center: Factorio Controls */}
       <div
         className="flex-none flex items-center justify-center gap-2"
         id="nav-preview_controlls"
@@ -89,6 +96,8 @@ function TopNav({
           </Button>
         )}
       </div>
+
+      {/* Right: Project Info */}
       <div className="flex-1 flex items-center justify-center">
         <span className="pr-5">{projectInfo?.title || "LOADING..."}</span>
       </div>

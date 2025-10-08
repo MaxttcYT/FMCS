@@ -38,7 +38,36 @@
                 "icon_size": 64,
                 "order": "z[u]",
                 "stack_size": 100,
-                "fmcs_id": "e846506e-5d42-4ecb-b079-64ec196ce785"
+                "fmcs_id": "e846506e-5d42-4ecb-b079-64ec196ce785",
+                "editor_selectedIcon": {
+                    "fmcs_id": "ccf08029-2351-4f2f-a319-2407edc1e311",
+                    "name": "fmcs-item",
+                    "path": "/graphics/icons/fmcs-item.png",
+                    "scope": "defaultProject",
+                    "sizes": [
+                        64,
+                        32,
+                        16,
+                        8
+                    ],
+                    "type": "custom",
+                    "url": "/icon/custom/1/graphics/icons/fmcs-item.png",
+                    "value": "__defaultProject__/graphics/icons/fmcs-item.png"
+                },
+                "FMCS_REFERENCES": [
+                    {
+                        "FMCS_ID": "ccf08029-2351-4f2f-a319-2407edc1e311",
+                        "FIELDS": [
+                            [
+                                "path",
+                                "icon",
+                                {
+                                    "prefix": "__FMCS:REPLACE_AT_RESOLVE#PROJECT_NAME__"
+                                }
+                            ]
+                        ]
+                    }
+                ]
             }
         ],
         "tech": [
@@ -93,7 +122,7 @@
         "icons": [
             {
                 "name": "fmcs-item",
-                "type": "icon",
+                "fmcs_id": "ccf08029-2351-4f2f-a319-2407edc1e311",
                 "path": "/graphics/icons/fmcs-item.png",
                 "sizes": [
                     64,

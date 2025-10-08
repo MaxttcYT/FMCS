@@ -8,13 +8,4 @@ data:extend({
         order = "z[u]",
         stack_size = 100,
     },
-    {
-        type = "item",
-        name = "iron-spring",
-        icon = "__defaultProject__/graphics/icons/iron-spring.png",
-        icon_size = 64,
-        subgroup = "intermediate-product",
-        order = "z[u]",
-        stack_size = 100,
-    },
 })

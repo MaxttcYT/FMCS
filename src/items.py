@@ -35,8 +35,21 @@ def flatten_registry(obj):
 
     return flat_list
 
+def modify_string(s: str, mods: dict, projectInfo) -> str:
+    """
+    Adds a prefix and/or suffix to the input string based on the dictionary.
+    Example:
+        mods = {"prefix": "abc", "suffix": "123"}
+        s = "file"
+        -> "abcfile123"
+    """
+    prefix = mods.get("prefix", "")
+    suffix = mods.get("suffix", "")
+    
+    prefix = prefix.replace("FMCS:REPLACE_AT_RESOLVE#PROJECT_NAME", projectInfo.get("name", "FMCS:ERROR#UNRESOLVED"))
+    return f"{prefix}{s}{suffix}"
 
-def apply_fmcs_references(data):
+def apply_fmcs_references(data, projectInfo):
     items_lookup = {}
 
     # Build a lookup table of all objects with FMCS_ID
@@ -73,6 +86,10 @@ def apply_fmcs_references(data):
                                 src_field, dest_field = field
                                 if src_field in source_obj:
                                     obj[dest_field] = source_obj[src_field]
+                            elif isinstance(field, list) and len(field) == 3:
+                                src_field, dest_field, arguments = field
+                                if src_field in source_obj:
+                                    obj[dest_field] = modify_string(source_obj[src_field], arguments, projectInfo)
                             # Single-field copy
                             elif isinstance(field, str):
                                 if field in source_obj:
@@ -89,5 +106,5 @@ def apply_fmcs_references(data):
     return data
 
 
-def resolve_project_registry(registry):
-    return apply_fmcs_references(registry)
+def resolve_project_registry(registry, projectInfo):
+    return apply_fmcs_references(registry, projectInfo)

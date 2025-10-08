@@ -27,7 +27,7 @@ export const CustomSelect = forwardRef(
       noSelectionLabel = "Select...",
       showGroupIconAsIcon = false,
     },
-    ref,
+    ref
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(defaultValue);
@@ -99,7 +99,7 @@ export const CustomSelect = forwardRef(
           return React.cloneElement(child, {
             children: injectGroupIcons(
               child.props.children,
-              child.props.icon || parentIcon,
+              child.props.icon || parentIcon
             ),
           });
         }
@@ -108,20 +108,24 @@ export const CustomSelect = forwardRef(
 
     const childrenWithIcons = injectGroupIcons(children);
 
-    // Find selected option
     const findSelectedOption = (childrenArray) => {
       for (let child of React.Children.toArray(childrenArray)) {
         if (!child) continue;
-        if (
-          child.type === SelectOption &&
-          String(child.props.value) === String(currentValue)
-        )
-          return child;
+
+        if (child.type === SelectOption) {
+          const isActive = child.props.isActiveFunction
+            ? child.props.isActiveFunction(currentValue)
+            : String(child.props.value) === String(currentValue);
+
+          if (isActive) return child;
+        }
+
         if (child.type === SelectGroup) {
           const found = findSelectedOption(child.props.children);
           if (found) return found;
         }
       }
+
       return null;
     };
 
@@ -142,7 +146,7 @@ export const CustomSelect = forwardRef(
           }
           if (child.type === SelectGroup) {
             const filteredChildren = filterChildren(
-              child.props.children,
+              child.props.children
             ).filter(Boolean);
             if (
               child.props.label
@@ -212,7 +216,7 @@ export const CustomSelect = forwardRef(
         </div>
       </SelectContext.Provider>
     );
-  },
+  }
 );
 
 export const LazyImage = ({ src, width = 32, alt = "icon" }) => {
@@ -227,7 +231,7 @@ export const LazyImage = ({ src, width = 32, alt = "icon" }) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -242,12 +246,19 @@ export const LazyImage = ({ src, width = 32, alt = "icon" }) => {
   );
 };
 
-export const SelectOption = ({ value, children, icon }) => {
+export const SelectOption = ({
+  value,
+  isActiveFunction = (selected) => {
+    return selected == value;
+  },
+  children,
+  icon,
+}) => {
   const { selected, handleSelect, disabled } = useContext(SelectContext);
   return (
     <div
       className={`flex items-center gap-2 accentuated px-3 py-2 cursor-pointer bg-gray-light hover:bg-orange hover:glow-orange text-black ${
-        selected === value ? "font-semibold" : ""
+        isActiveFunction(selected) ? "font-semibold bg-orange" : ""
       }`}
       onClick={() => !disabled && handleSelect(value)}
     >

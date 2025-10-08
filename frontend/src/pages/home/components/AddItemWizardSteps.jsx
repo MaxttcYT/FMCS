@@ -28,7 +28,7 @@ const handleCreateItem = async (
   itemName,
   refreshProjectInfo,
   projectId,
-  openItemEditor,
+  openItemEditor
 ) => {
   const content = values;
   const item = {
@@ -48,7 +48,7 @@ const handleCreateItem = async (
             name: itemName,
             type: itemType,
           }),
-        },
+        }
       );
 
       if (!response.ok) throw new Error("Failed to create item");
@@ -116,7 +116,7 @@ export function RecipeConfigWizardStep({
       values.name,
       refreshProjectInfo,
       projectId,
-      openItemEditor,
+      openItemEditor
     );
 
     return true;
@@ -212,7 +212,7 @@ export function ItemConfigWizardStep({
       values.name,
       refreshProjectInfo,
       projectId,
-      openItemEditor,
+      openItemEditor
     );
 
     return true;
@@ -223,6 +223,26 @@ export function ItemConfigWizardStep({
     // Only allow letters, numbers, and hyphens
     const filtered = value.replace(/[^A-Za-z0-9-]/g, "");
     setValues((prev) => ({ ...prev, name: filtered }));
+  };
+
+  const handleSelectIcon = (icon) => {
+    if (icon?.type === "custom") {
+      alert("CUS")
+      setValues((prev) => ({
+        ...prev,
+        FMCS_REFERENCES: [
+          {
+            FMCS_ID: icon.fmcs_id,
+            FIELDS: [["path", "icon"]],
+          },
+        ],
+      }));
+      return;
+    }
+    setValues((prev) => {
+      const newValues = { ...prev, icon: icon.value };
+      return newValues;
+    });
   };
 
   return (
@@ -267,7 +287,7 @@ export function ItemConfigWizardStep({
             <IconSelect
               id="newItem-icon"
               value={values.icon}
-              onChange={handleChange("icon")}
+              onChange={handleSelectIcon}
             />
           </div>
 
@@ -369,7 +389,7 @@ export function GraphicConfigWizardStep({
     if (!values.selectedFile?.path) return "Please select a file";
 
     const filteredValues = Object.fromEntries(
-      Object.entries(values).filter(([key]) => key !== "selectedFile"),
+      Object.entries(values).filter(([key]) => key !== "selectedFile")
     );
 
     handleCreateItem(
@@ -378,7 +398,7 @@ export function GraphicConfigWizardStep({
       values.name,
       refreshProjectInfo,
       projectId,
-      openItemEditor,
+      openItemEditor
     );
     return true;
   };

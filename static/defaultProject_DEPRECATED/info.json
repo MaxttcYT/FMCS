@@ -1,8 +1,8 @@
 {
-    "name": "d",
-    "author": "d",
-    "version": "0.1.0",
-    "title": "d",
+    "name": "defaultProject",
+    "author": "FMCS",
+    "version": "1.0.0",
+    "title": "defaultProject",
     "description": "",
     "factorio_version": "2.0",
     "dependencies": [

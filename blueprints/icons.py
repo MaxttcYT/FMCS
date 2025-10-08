@@ -50,7 +50,7 @@ def create_icon(image_path, crop, tint):
     img_io.seek(0)
     return img_io
 
-def find_icons(base_path, scope="base"):
+def find_icons(base_path, scope="base", iconType="base"):
     """
     Recursively find PNG files in base_path and return info usable for /api/icon/<scope>/<path>.
     Keeps subfolders intact.
@@ -71,6 +71,7 @@ def find_icons(base_path, scope="base"):
                         "scope": scope,
                         "rel_path": rel_path,
                         "value": f"__{scope}__/graphics/{rel_path}",
+                        "type": iconType,
                     }
                 )
     return icon_list
@@ -145,7 +146,7 @@ def asset_provider(subpath, scope):
 @icons_bp.route("/api/list_icons/<projectID>")
 def list_icons(projectID):
     base_path = os.path.join(main_dir, "static", "factorioAssets", "base", "graphics")
-    all_base_icons = find_icons(os.path.join(base_path, "icons"))
+    all_base_icons = find_icons(os.path.join(base_path, "icons"), iconType="base")
     project_dir = os.path.join(main_dir, "projects")
     register = getProjectRegister()
 
@@ -169,16 +170,18 @@ def list_icons(projectID):
         item["scope"] = project_info["name"]
         item["value"] = f"__{project_info['name']}__{item['path']}"
         item["url"] = f"/icon/custom/{projectID}{item['path']}"
+        item["type"] = "custom"
 
     all_icons = [
         {
-            "data": {"icon_url": "/icon/base/icons/blueprint.png", "title": "Custom"},
+            "data": {"icon_url": "/icon/base/icons/blueprint.png", "title": "Custom", "type": "custom"},
             "icons": all_custom_icons,
         },
         {
             "data": {
                 "icon_url": "/icon/base/icons/iron-gear-wheel.png",
                 "title": "Base",
+                "type": "base"
             },
             "icons": all_base_icons,
         },

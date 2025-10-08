@@ -7,11 +7,10 @@ import useProjectInfo from "@/hooks/useProjectInfo";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
-function IconSelect({ ...props }) {
+function IconSelect({ value, onChange, ...props }) {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const { projectId } = useParams();
-
   useEffect(() => {
     setIsLoading(true);
     fetch(`${process.env.API_URL}/api/list_icons/${projectId}`)
@@ -25,9 +24,15 @@ function IconSelect({ ...props }) {
       });
   }, []);
 
+  const onChangeHandler = (val) => {
+    console.log(val);
+    onChange?.(val);
+  };
+
   return (
     <CustomSelect
-      onChange={(val) => console.log(val)}
+      value={value}
+      onChange={onChangeHandler}
       {...props}
       disabled={isLoading}
       noSelectionLabel={isLoading ? "Loading..." : "Select..."}
@@ -44,7 +49,11 @@ function IconSelect({ ...props }) {
           {group.icons.map((icon, iconIndex) => (
             <SelectOption
               key={iconIndex}
-              value={icon.value}
+              value={icon}
+              isActiveFunction={(selected) => {
+                console.log("ACTIVE? ",selected.value, icon.value, selected.value === icon.value);
+                return selected.value === icon.value;
+              }}
               icon={{ url: `${process.env.API_URL}${icon.url}` }}
             >
               {icon.name}

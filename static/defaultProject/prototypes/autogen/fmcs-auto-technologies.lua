@@ -6,7 +6,7 @@ data:extend({
         icon_size = 256,
         prerequisites = { "steel-processing" },
         effects = {
-            { type = "unlock-recipe", recipe = "iron-spring-recipe" },
+            { type = "unlock-recipe", recipe = "fmcs-item-recipe" },
         },
         unit = {
             time = 30,

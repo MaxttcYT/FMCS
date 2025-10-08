@@ -1,8 +1,8 @@
-import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = ({ label, submenu, clickHandler, closeMenu }) => {
+const MenuItem = ({ label, submenu, clickHandler, closeMenu, keybind }) => {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef(null);
   const hasSubmenu = submenu && typeof submenu === "object";
@@ -15,13 +15,13 @@ const MenuItem = ({ label, submenu, clickHandler, closeMenu }) => {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpen(false);
-    }, 200); // slight delay to allow moving into submenu
+    }, 200); // Slight delay for smoother submenu hover
   };
 
   const handleClick = () => {
     if (clickHandler) {
-      clickHandler(); // Trigger the click handler for this menu item
-      closeMenu(); // Close the menu after the click handler finishes
+      clickHandler();
+      closeMenu(); // Close all menus after an action
     }
   };
 
@@ -32,38 +32,39 @@ const MenuItem = ({ label, submenu, clickHandler, closeMenu }) => {
       onMouseLeave={handleMouseLeave}
     >
       <div
-        className="accentuated px-4 py-2 hover:bg-gray-dark hover:text-blue cursor-pointer whitespace-nowrap transition-colors duration-150 rounded flex justify-between items-center"
-        onClick={handleClick} // Add click handler here
+        className="min-w-[11rem] accentuated px-4 py-2 hover:bg-gray-dark hover:text-blue cursor-pointer whitespace-nowrap transition-colors duration-150 rounded flex justify-between items-center"
+        onClick={handleClick}
       >
         {label}
+        {keybind && (
+          <span className="text-sm text-gray-light font-bold ml-4">{keybind}</span>
+        )}
         {hasSubmenu && (
-          <span className="ml-2">
-            <FontAwesomeIcon icon={faCaretRight}></FontAwesomeIcon>
-          </span>
+          <FontAwesomeIcon icon={faCaretRight} className="ml-2" />
         )}
       </div>
 
       {hasSubmenu && open && (
         <div
-          className="absolute top-0 left-full ml-1 bg-gray-medium border-gray-light border rounded shadow-lg z-50 min-w-max"
+          className="absolute top-0 left-full ml-1 bg-gray-medium border border-gray-light rounded shadow-lg z-50 min-w-max"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {Object.entries(submenu).map(([subLabel, subClickHandler]) => (
+          {Object.entries(submenu).map(([subLabel, subValue]) => (
             <MenuItem
               key={subLabel}
               label={subLabel}
               submenu={
-                typeof subClickHandler === "object"
-                  ? subClickHandler
+                typeof subValue === "object" && !("action" in subValue)
+                  ? subValue
                   : undefined
               }
               clickHandler={
-                typeof subClickHandler === "function"
-                  ? subClickHandler
-                  : undefined
-              } // Correctly pass click handler
-              closeMenu={closeMenu} // Pass the closeMenu function down
+                typeof subValue === "function"
+                  ? subValue
+                  : subValue?.action || undefined
+              }
+              closeMenu={closeMenu}
             />
           ))}
         </div>
@@ -91,6 +92,7 @@ const MenuBar = ({ menuData }) => {
   const handleMenuClick = (menu) => {
     setActiveMenu((prev) => (prev === menu ? null : menu));
   };
+
   const handleClickOutside = (event) => {
     if (
       menuRef.current &&
@@ -128,16 +130,23 @@ const MenuBar = ({ menuData }) => {
           </button>
 
           {activeMenu === menu && (
-            <div className="absolute top-full left-0 mt-1 bg-gray-medium border-gray-light border rounded shadow-lg z-50">
-              {Object.entries(items).map(([itemLabel, subMenu]) => (
+            <div className="absolute top-full left-0 mt-1 bg-gray-medium border border-gray-light rounded shadow-lg z-50">
+              {Object.entries(items).map(([label, value]) => (
                 <MenuItem
-                  key={itemLabel}
-                  label={itemLabel}
-                  submenu={typeof subMenu === "object" ? subMenu : undefined}
+                  key={label}
+                  label={label}
+                  submenu={
+                    typeof value === "object" && !("action" in value)
+                      ? value
+                      : undefined
+                  }
                   clickHandler={
-                    typeof subMenu === "function" ? subMenu : undefined
+                    typeof value === "function"
+                      ? value
+                      : value?.action || undefined
                   }
                   closeMenu={() => setActiveMenu(null)}
+                  keybind={value?.keybind || undefined}
                 />
               ))}
             </div>

@@ -21,6 +21,7 @@ const ItemEditor = forwardRef(
       order: item.order || "z[u]",
       stack_size: Number(item.stack_size),
       fmcs_id: item.fmcs_id,
+      editor_selectedIcon: {value:item.icon},
     });
 
     // Imperative handlers
@@ -52,6 +53,42 @@ const ItemEditor = forwardRef(
 
     const handleIconChange = (value) => {
       setValues((prev) => ({ ...prev, icon: value }));
+      handleChange();
+    };
+    const handleSelectIcon = (icon) => {
+      setValues((prev) => {
+        const newValues = {
+          ...prev,
+          editor_selectedIcon: icon,
+        };
+        return newValues;
+      });
+      if (icon?.type === "custom") {
+        setValues((prev) => ({
+          ...prev,
+          icon: icon.value,
+          FMCS_REFERENCES: [
+            {
+              FMCS_ID: icon.fmcs_id,
+              FIELDS: [
+                [
+                  "path",
+                  "icon",
+                  { prefix: "__FMCS:REPLACE_AT_RESOLVE#PROJECT_NAME__" },
+                  // "FMCS:REPLACE_AT_RESOLVE#PROJECT_NAME" will  be replaced when resolving,
+                  // __ __ are wrapped for factorio to see that its scope
+                ],
+              ],
+            },
+          ],
+        }));
+        handleChange();
+        return;
+      }
+      setValues((prev) => {
+        const newValues = { ...prev, icon: icon.value, FMCS_REFERENCES: [] };
+        return newValues;
+      });
       handleChange();
     };
 
@@ -100,7 +137,7 @@ const ItemEditor = forwardRef(
               Icon:
               <HelpIcon>The icon representing this item</HelpIcon>
             </Label>
-            <IconSelect value={values.icon} onChange={handleIconChange} />
+            <IconSelect value={values.editor_selectedIcon} onChange={handleSelectIcon} />
           </div>
 
           <div>
@@ -125,7 +162,7 @@ const ItemEditor = forwardRef(
         )}
       </div>
     );
-  },
+  }
 );
 
 export default ItemEditor;

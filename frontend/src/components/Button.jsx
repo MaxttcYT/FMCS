@@ -58,7 +58,7 @@ const Button = ({
       disabled={isDisabled || isLoading}
       className={`${className ? className : null} ${
         isDisabled || isLoading ? "bg-opacity-50 cursor-not-allowed" : null
-      } ${padding} ${color} inline-block accentuated text-black font-bold`}
+      } ${padding} ${color} flex items-center accentuated text-black font-bold`}
       type={isSubmit ? "submit" : "button"}
       {...props}
     >
