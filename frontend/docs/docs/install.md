@@ -93,3 +93,18 @@ python graphic_copy.py
 ```
 
 The script will copy all icons from the data, base and core folder to static/factorioAssets
+
+### Starting FMCS
+
+Run the following in FMCS root to start the backend server:
+
+```powershell
+python app.py
+```
+
+Then, in a seperate terminal, run:
+
+```powershell
+cd frontend
+npm run start
+```

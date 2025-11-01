@@ -101,19 +101,6 @@
                     16,
                     8
                 ]
-            },
-            {
-                "fmcs_id": "e2fab10f-7cd6-4a62-8d90-c5de99de81a6",
-                "name": "d",
-                "path": "/graphics/icons/fmcs-item.png",
-                "sizes": [
-                    64,
-                    32,
-                    16,
-                    8
-                ],
-                "type": "icon",
-                "editor": "IconEditor"
             }
         ]
     }

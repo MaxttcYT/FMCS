@@ -78,7 +78,7 @@ export default function ImgViewer({
         </Button>
       </div>
       <div className="h-fit w-fit max-h-full max-w-full" style={wrapperStyle}>
-        <img src={imageUrl} alt="Preview" className={"" + className} />
+        <img src={imageUrl} alt="Preview" className={"" + className} style={{imageRendering: "pixelated"}} />
       </div>
     </div>
   );

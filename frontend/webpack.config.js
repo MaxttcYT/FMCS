@@ -5,10 +5,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-const envFile =
-  process.env.NODE_ENV === "production"
-    ? path.resolve(__dirname, "prod.env")
-    : path.resolve(__dirname, "dev.env");
+const isDevelopment = process.env.NODE_ENV !== "production";
+
+const envFile = isDevelopment
+  ? path.resolve(__dirname, "dev.env")
+  : path.resolve(__dirname, "prod.env");
 
 const myEnv = dotenv.config({ path: envFile });
 dotenvExpand.expand(myEnv);
@@ -22,7 +23,7 @@ module.exports = {
     globalObject: "self",
     publicPath: "",
   },
-  mode: "development",
+  mode: isDevelopment ? "development" : "production",
   module: {
     rules: [
       {
@@ -32,7 +33,13 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: "babel-loader",
+        use: {
+          loader: "babel-loader",
+          options: {
+            // only enable React Refresh plugin in development
+            plugins: isDevelopment ? ["react-refresh/babel"] : [],
+          },
+        },
         dependency: { not: ["url"] },
       },
       {
@@ -53,9 +60,6 @@ module.exports = {
     extensions: [".js", ".jsx"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-
-      //vscode: "@codingame/monaco-vscode-api",
-
       "vscode-languageclient": "vscode-languageclient/browser.js",
     },
     mainFields: ["browser", "module", "main"],
@@ -76,17 +80,18 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env.API_URL": JSON.stringify(process.env.API_URL),
     }),
-    new ReactRefreshWebpackPlugin(),
+    // only include React Refresh in development
+    ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, "public"),
-    },
-    historyApiFallback: true,
-    hot: true,
-    liveReload: false,
-    port: 3000,
-    open: true,
-    watchFiles: ["src/**/*"],
-  },
+  devServer: isDevelopment
+    ? {
+        static: { directory: path.join(__dirname, "public") },
+        historyApiFallback: true,
+        hot: true,
+        liveReload: false,
+        port: 3000,
+        open: true,
+        watchFiles: ["src/**/*"],
+      }
+    : undefined,
 };

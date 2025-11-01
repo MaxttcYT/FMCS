@@ -54,4 +54,4 @@ def build_exe():
         sys.exit(1)
 
 
-build_exe()
+buildFrontend()
